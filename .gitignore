@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Generated artifacts. The packaged reference tables under
+# src/gcam_emissions/reference/ are the tracked inputs and stay in Git.
+/data/
+/results/
+/model_inputs/
+
+# OS
+.DS_Store
