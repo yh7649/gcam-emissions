@@ -455,8 +455,49 @@ exceptions listed, stock GCAM v9's.
 - CEDS documentation states that its default estimates are scaled to country-level inventories where
   available. It lists `http://airemiss.nier.go.kr/`, NIER's national air pollutant emission service,
   which publishes CAPSS, as the South Korea source (see Sources).
+- CEDS's own code confirms the Korea step (checked against the JGCRI/CEDS repository, March 2025
+  release). `code/module-E/E.South_Korea_emissions.R` reads the CAPSS inventory
+  (`input/emissions-inventories/Korea/Korea_CAPSS_Emissions.xlsx`) for 1999–2021, and
+  `code/module-F/F1.1.South_Korea_scaling.R` scales CEDS's default Korean estimates to it for SO2, NOx,
+  CO, NMVOC and NH3 (1999–2021) and BC/OC (2011–2021). For BC/OC,
+  `input/mappings/scaling/South_Korea_BCOC_scaling_method.csv` lists only `1A3b_Road`.
 - **Not verified here:** which CEDS release GCAM v9 uses, and which Korean sectors and species that
-  release actually scales to CAPSS.
+  release actually scales to CAPSS. The current release also runs a second Korea scaling to
+  EDGAR-HTAPv3.1 (`F1.1.South_Korea_EDGAR-HTAPv3.1_scaling.R`; CO, NH3, NMVOC, NOx, SO2; 2000–2018),
+  so in that release some Korean sector-years may end up matched to EDGAR-HTAP rather than directly to
+  CAPSS.
+
+**Why some cells match exactly and others are far off.** CEDS scales to CAPSS by broad *scaling
+sector*, not by detailed sector. `input/mappings/scaling/South_Korea_scaling_mapping.csv` groups CEDS's
+detailed sectors into groups that mirror CAPSS's categories: `energy` (public electricity, heat,
+`1A1bc_Other-transformation`), `industry` (industrial fuel combustion), `1A3b_Road`, `non road` (rail,
+shipping, domestic aviation, construction machinery), `other_combustion` (residential, commercial,
+agriculture/forestry/fishing fuel), `fugitive`, `industry_process` and `solvent`. For each group,
+species and year, CEDS multiplies its own estimate so the group total equals CAPSS. CEDS's split *within*
+a group stays its own.
+
+A CAPSS number therefore takes a three-step round trip before it is compared with CAPSS again:
+CAPSS category → CEDS scaling sector → GCAM sector group (`ceds_sector_map.csv`) → CAPSS category (this
+repo's crosswalk). A cell comes back exact only when every step is one-to-one for that category and the
+species was actually scaled:
+
+- **Exact (B5.4):** agricultural NH3, road transport, industrial-process NH3 and waste SOx. Each passes
+  through one CEDS group and one GCAM group that both map back to a single CAPSS category.
+- **Off because a step re-sorts mass:** CEDS counts `1A1bc_Other-transformation` (which includes
+  refining) under `energy`, but GCAM maps it to `industry_energy`, so refinery emissions come back as
+  Manufacturing industry rather than Energy production (B5.5; **Inferred**). Construction machinery is
+  `non road` in CEDS but is split differently by GCAM and the crosswalk. Residential wood can land in
+  Non-industry or Biomass burning.
+- **Off because the species was never scaled:** for BC, CEDS scales only road transport, so all other
+  Korean BC keeps CEDS's default estimates. This is consistent with BC agreeing in Road transport
+  (ratio 1.0) and differing 9–65× in the stationary-combustion categories (B5.4).
+- **Off because GCAM has no matching tag, or re-splits it:** mass on untagged technologies (B4), and
+  placeholder-driven sources (B6.4) whose split differs from CAPSS's. This plausibly explains cells
+  such as fuel storage and distribution VOCs at 12–18% of CAPSS (**Inferred**).
+
+The mapping search (`results/diagnostics/capss_calibration_test/`) shows the misses are not a
+crosswalk-labelling problem: no assignment of the ambiguous GCAM sectors reproduces CAPSS. A possible
+additional source of difference, not checked, is CAPSS revising past years after CEDS ingested them.
 
 #### B5.4 Agreement with CAPSS
 
