@@ -32,9 +32,10 @@ We can't. The core reasons:
 3. **After 2021 the factors don't respond to policy.** They stay frozen or follow a GDP-based curve
    that's the same in both scenarios. Technologies with no emissions tag count as zero, and the
    net-zero scenario shifts activity toward exactly those technologies.
-4. **These limits change the policy answer.** Keeping GCAM-KAIST's activity and swapping only the
-   emission factors, the projected net-zero change in steel SOx flips from −88% to +19%, and the
-   power-sector NOx and SOx avoided varies 2.6–9.7×.
+4. **These limits make the policy answer unreliable.** Keeping GCAM-KAIST's activity and swapping
+   only the emission factors, the projected net-zero change in steel SOx flips from −88% to +19%, and
+   the power-sector NOx and SOx avoided varies 2.6–9.7×. This is a sensitivity test of GCAM-KAIST's
+   answer, not a new projection.
 
 **What we do instead:** keep GCAM-KAIST's *activity*, and replace its *emission factors* with
 bottom-up, technology-specific Korean factors, validated against CAPSS in the base years.
@@ -354,7 +355,7 @@ For context, in 2021 Korean fleet factors × GCAM generation give 1.4× GCAM's n
 *Figure 8. NOx and SOx avoided by the net-zero scenario in 2050, power sector, under each set of
 factors.*
 
-**Steel: the direction flips** (Figure 9).
+**Steel: the sign depends on the factors** (Figure 9).
 
 | 2050, steel sector, nz vs ref | NOx | SOx | VOCs |
 |---|---|---|---|
@@ -365,9 +366,21 @@ The 88% SOx cut comes from the net-zero scenario's steel moving onto routes with
 hydrogen-based DRI, 4.2 Mt blast furnace with CCS). Once their electric-arc-furnace process emissions
 are counted, steel SOx and VOCs *rise* under net zero.
 
+The +19% is not a projection. The fill corrects only the untagged routes; every other route keeps
+GCAM-KAIST's own factor. Back-calculated from the variant totals, GCAM's conventional blast-furnace
+route carries only about 0.03 kg SOx/t, a tenth of the 0.35 kg/t given to hydrogen DRI, although an
+integrated blast-furnace route with sinter and coke ovens is physically the larger SOx source
+(**Inferred**; no measured Korean blast-furnace factor was checked). Moving tonnes from blast furnaces
+to hydrogen DRI therefore raises emissions only because the old route is under-counted. The reference
+scenario also carries about 10.3 Mt of hydrogen DRI in 2050 (recovered identically from the NOx, SOx
+and VOC fills), which is why its filled level rises too. What the steel result shows is that the native
+−88% depends on counting the new routes as zero; even the sign of the net-zero change cannot be read
+from GCAM-KAIST's native output. A fair comparison needs consistent Korean factors for every steel
+route in both scenarios.
+
 ![Policy experiment: steel](figures/fig09_policy_steel.png)
 
-*Figure 9. Change in 2050 steel-sector emissions, net zero vs reference.*
+*Figure 9. 2050 steel-sector emissions in the reference and net-zero scenarios, under GCAM-KAIST's own factors and with only the untagged routes filled. Same activity in both; the bold figure is net zero relative to reference.*
 
 **Road: modest** (Figure 10). Counting hybrids raises 2050 road emission levels in both scenarios:
 - NOx: 22–26% higher;
@@ -380,7 +393,8 @@ The relative cut barely changes (NOx −48% native vs −46% filled).
 
 *Figure 10. 2050 road emissions with and without hybrids counted.*
 
-> 🟢 **Takeaway.** Using GCAM-KAIST's native emissions would get the *direction* wrong for steel, and
+> 🟢 **Takeaway.** Using GCAM-KAIST's native emissions would leave even the *direction* of the steel
+> result undetermined, and
 > the *size* of the power-sector benefit wrong by 2.6–9.7×. Road emission levels would be too low by a
 > fifth to a third or more. Because the health benefit of a policy is computed from the emissions it
 > avoids, these errors carry straight through to the health results.
@@ -393,6 +407,10 @@ The relative cut barely changes (NOx −48% native vs −46% filled).
 - **Gas power isn't resolved by technology.** The Korean gas factor is itself a fleet average, so this
   experiment can't separate combined-cycle from steam/turbine plants. The evidence for that lumping is
   GCAM's own identical factors (Step 6a).
+- **The steel fill corrects only the new routes.** Conventional blast furnaces keep GCAM-KAIST's very
+  low implied factor (about 0.03 kg SOx/t), so the filled variant still under-counts the reference
+  scenario. Correcting every route needs coke-oven factors and sinter and coke ratios per tonne of
+  steel, which the repo does not yet have (see roadmap).
 - **Why there is no upper bound for steel.** Filling hydrogen-based DRI with GCAM's own `EAF with DRI`
   factor instead makes net-zero steel NOx *rise* 40%. That factor is itself the anomalous stock
   coefficient (11.66 kg NOx/t; audit §B6.2), so we don't use it as a bound.

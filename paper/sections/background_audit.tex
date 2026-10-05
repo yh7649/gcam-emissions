@@ -2913,27 +2913,62 @@ CAPSS}\label{b5.3-upstream-of-stock-gcam-ceds-and-capss}}
   (see
   Sources).
 \item
-  \textbf{Not
-  verified
-  here:}
-  which
-  CEDS
-  release
-  GCAM v9
-  uses,
-  and
-  which
-  Korean
-  sectors
-  and
-  species
-  that
-  release
-  actually
-  scales
-  to
-  CAPSS.
+  CEDS's own code confirms the Korea step (checked against the JGCRI/CEDS
+  repository, March 2025 release). \texttt{code/\allowbreak{}module-E/\allowbreak{}E.South\_\allowbreak{}Korea\_\allowbreak{}emissions.R} reads the
+  CAPSS inventory (\texttt{Korea\_\allowbreak{}CAPSS\_\allowbreak{}Emissions.xlsx}) for 1999--2021, and
+  \texttt{code/\allowbreak{}module-F/\allowbreak{}F1.1.South\_\allowbreak{}Korea\_\allowbreak{}scaling.R} scales CEDS's default Korean
+  estimates to it for SO2, NOx, CO, NMVOC and NH3 (1999--2021) and BC/OC (2011--2021). For
+  BC/OC, \texttt{South\_\allowbreak{}Korea\_\allowbreak{}BCOC\_\allowbreak{}scaling\_\allowbreak{}method.csv} lists only \texttt{1A3b\_\allowbreak{}Road}.
+\item
+  \textbf{Not verified here:} which CEDS release GCAM v9 uses, and which Korean sectors and
+  species that release actually scales to CAPSS. The current release also runs a second Korea
+  scaling to EDGAR-HTAPv3.1 (\texttt{F1.1.South\_\allowbreak{}Korea\_\allowbreak{}EDGAR-HTAPv3.1\_\allowbreak{}scaling.R}; CO, NH3,
+  NMVOC, NOx, SO2; 2000--2018), so in that release some Korean sector-years may end up matched to
+  EDGAR-HTAP rather than directly to CAPSS.
 \end{itemize}
+
+\textbf{Why some cells match exactly and others are far off.} CEDS scales to CAPSS by broad
+\emph{scaling sector}, not by detailed sector. \texttt{South\_\allowbreak{}Korea\_\allowbreak{}scaling\_\allowbreak{}mapping.csv} groups
+CEDS's detailed sectors into groups that mirror CAPSS's categories: \texttt{energy} (public
+electricity, heat, \texttt{1A1bc\_\allowbreak{}Other-transformation}), \texttt{industry} (industrial
+fuel combustion), \texttt{1A3b\_\allowbreak{}Road}, \texttt{non road} (rail, shipping, domestic
+aviation, construction machinery), \texttt{other\_\allowbreak{}combustion} (residential, commercial,
+agriculture/forestry/fishing fuel), \texttt{fugitive}, \texttt{industry\_\allowbreak{}process} and
+\texttt{solvent}. For each group, species and year, CEDS multiplies its own estimate so the
+group total equals CAPSS. CEDS's split \emph{within} a group stays its own.
+
+A CAPSS number therefore takes a three-step round trip before it is compared with CAPSS again:
+CAPSS category $\to$ CEDS scaling sector $\to$ GCAM sector group (\texttt{ceds\_\allowbreak{}sector\_\allowbreak{}map.csv})
+$\to$ CAPSS category (this repo's crosswalk). A cell comes back exact only when every step is
+one-to-one for that category and the species was actually scaled:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Exact (B5.4):} agricultural NH3, road transport, industrial-process NH3 and waste SOx.
+  Each passes through one CEDS group and one GCAM group that both map back to a single CAPSS
+  category.
+\item
+  \textbf{Off because a step re-sorts mass:} CEDS counts \texttt{1A1bc\_\allowbreak{}Other-transformation}
+  (which includes refining) under \texttt{energy}, but GCAM maps it to
+  \texttt{industry\_\allowbreak{}energy}, so refinery emissions come back as Manufacturing industry rather
+  than Energy production (B5.5; \textbf{Inferred}). Construction machinery is \texttt{non road}
+  in CEDS but is split differently by GCAM and the crosswalk. Residential wood can land in
+  Non-industry or Biomass burning.
+\item
+  \textbf{Off because the species was never scaled:} for BC, CEDS scales only road transport, so all
+  other Korean BC keeps CEDS's default estimates. This is consistent with BC agreeing in Road
+  transport (ratio 1.0) and differing 9--65$\times$ in the stationary-combustion categories (B5.4).
+\item
+  \textbf{Off because GCAM has no matching tag, or re-splits it:} mass on untagged technologies (B4),
+  and placeholder-driven sources (B6.4) whose split differs from CAPSS's. This plausibly explains
+  cells such as fuel storage and distribution VOCs at 12--18\% of CAPSS (\textbf{Inferred}).
+\end{itemize}
+
+The mapping search (\texttt{results/\allowbreak{}diagnostics/\allowbreak{}capss\_\allowbreak{}calibration\_\allowbreak{}test/\allowbreak{}}) shows the misses are
+not a crosswalk-labelling problem: no assignment of the ambiguous GCAM sectors reproduces CAPSS. A
+possible additional source of difference, not checked, is CAPSS revising past years after CEDS
+ingested them.
 
 \hypertarget{b5.4-agreement-with-capss}{%
 \paragraph{B5.4
