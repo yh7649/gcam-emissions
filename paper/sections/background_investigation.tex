@@ -231,37 +231,10 @@ reasons:
   those
   technologies.
 \item
-  \textbf{These
-  limits
-  change
-  the
-  policy
-  answer.}
-  Keeping
-  GCAM-KAIST's
-  activity
-  and
-  swapping
-  only the
-  emission
-  factors,
-  the
-  projected
-  net-zero
-  change
-  in steel
-  SOx
-  flips
-  from
-  −88\% to
-  +19\%,
-  and the
-  power-sector
-  NOx and
-  SOx
-  avoided
-  varies
-  2.6--9.7×.
+  \textbf{These limits make the policy answer unreliable.} Keeping GCAM-KAIST's activity and
+  swapping only the emission factors, the projected net-zero change in steel SOx flips from
+  −88\% to +19\%, and the power-sector NOx and SOx avoided varies 2.6--9.7×. This is a
+  sensitivity test of GCAM-KAIST's answer, not a new projection.
 \end{enumerate}
 
 \textbf{What
@@ -2254,12 +2227,7 @@ under each
 set of
 factors.}
 
-\textbf{Steel:
-the
-direction
-flips}
-(Figure
-9).
+\textbf{Steel: the sign depends on the factors} (Figure 9).
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.5833}}
@@ -2323,28 +2291,26 @@ DRI, 4.2
 Mt blast
 furnace
 with CCS).
-Once their
-electric-arc-furnace
-process
-emissions
-are
-counted,
-steel SOx
-and VOCs
-\emph{rise}
-under net
-zero.
+Once their electric-arc-furnace process emissions are counted, steel SOx and VOCs \emph{rise}
+under net zero.
+
+The +19\% is not a projection. The fill corrects only the untagged routes; every other route keeps
+GCAM-KAIST's own factor. Back-calculated from the variant totals, GCAM's conventional blast-furnace
+route carries only about 0.03 kg SOx/t, a tenth of the 0.35 kg/t given to hydrogen DRI, although an
+integrated blast-furnace route with sinter and coke ovens is physically the larger SOx source
+(\textbf{Inferred}; no measured Korean blast-furnace factor was checked). Moving tonnes from blast
+furnaces to hydrogen DRI therefore raises emissions only because the old route is under-counted. The
+reference scenario also carries about 10.3 Mt of hydrogen DRI in 2050 (recovered identically from
+the NOx, SOx and VOC fills), which is why its filled level rises too. What the steel result shows is
+that the native −88\% depends on counting the new routes as zero; even the sign of the net-zero
+change cannot be read from GCAM-KAIST's native output. A fair comparison needs consistent Korean
+factors for every steel route in both scenarios.
 
 \figslot{fig09_policy_steel.png}
 
-\emph{Figure
-9. Change
-in 2050
-steel-sector
-emissions,
-net zero
-vs
-reference.}
+\emph{Figure 9. 2050 steel-sector emissions in the reference and net-zero scenarios, under
+GCAM-KAIST's own factors and with only the untagged routes filled. Same activity in both; the bold
+figure is net zero relative to reference.}
 
 \textbf{Road:
 modest}
@@ -2398,15 +2364,7 @@ counted.}
 \begin{quote}
 \plainmark{}
 \textbf{Takeaway.}
-Using
-GCAM-KAIST's
-native
-emissions
-would get
-the
-\emph{direction}
-wrong for
-steel, and
+Using GCAM-KAIST's native emissions would leave even the \emph{direction} of the steel result undetermined, and
 the
 \emph{size}
 of the
@@ -2511,12 +2469,12 @@ results.
   (Step
   6a).
 \item
-  \textbf{Why
-  there is
-  no upper
-  bound
-  for
-  steel.}
+  \textbf{The steel fill corrects only the new routes.} Conventional blast furnaces keep
+  GCAM-KAIST's very low implied factor (about 0.03 kg SOx/t), so the filled variant still
+  under-counts the reference scenario. Correcting every route needs coke-oven factors and sinter
+  and coke ratios per tonne of steel, which the repo does not yet have (see roadmap).
+\item
+  \textbf{Why there is no upper bound for steel.}
   Filling
   hydrogen-based
   DRI with

@@ -107,6 +107,25 @@ power tables and "2.6–9.7×" claims in `docs/gcam_nonco2_investigation.md` and
 `paper/sections/background_investigation.tex`, `paper/Figures/fig08_policy_power.png`,
 and the deck's power slide.
 
+### Pending: a consistent steel comparison
+
+The steel leg of the policy experiment fills only the untagged routes (hydrogen DRI at the CAPSS VI
+EAF factor, blast furnace with CCS at GCAM's blast-furnace factor). Every other route keeps
+GCAM-KAIST's own factor, and its conventional blast furnace implies only about 0.03 kg SOx/t, so the
+filled variant under-counts the reference scenario and its +19% is not a projection (investigation
+§4.3). Figure 9 now shows reference vs net-zero levels under each factor set so this is visible.
+
+To compare the scenarios fairly, apply one Korean factor set to every steel route in both scenarios:
+
+- **Activity:** 2050 output by route for `ref` and `nz` (`BLASTFUR`, BF with CCS, `EAF with DRI`,
+  hydrogen DRI, `EAF with scrap`) and steel fuel inputs, via `gcam_kaist_native_activity_crosswalk.csv`.
+  These come from the untracked GCAM-KAIST databases, so this runs locally.
+- **Factors available:** CAPSS VI EAF (NOx/SOx/VOCs/PM), sinter plant per tonne sinter, BOF (PM only),
+  all `superseded_pending_capss_vii_diff`.
+- **Factors missing:** coke-oven process factors; blast-furnace process factors; sinter and coke
+  tonnes per tonne of crude steel to convert the sinter and coke factors; steel fuel-combustion
+  factors by fuel. Record each as a gap until sourced; never as zero.
+
 **Regions other than Korea.** Nothing is structurally Korea-specific in the
 three-leg design, but only the CAPSS factor tables and Korean spatial inputs are
 wired. GCAM-global and GCAM-USA would need their own factor and surrogate

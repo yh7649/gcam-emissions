@@ -524,6 +524,79 @@ def policy_power() -> None:
     _save(fig, "fig08_policy_power", s.sort_values(["pollutant", "variant"]))
 
 
+STEEL_VARIANT_LABELS = {
+    "native": "GCAM-KAIST\nfactors",
+    "filled_low": "New routes\nfilled*",
+}
+
+
+def plot_policy_steel(s: pd.DataFrame) -> None:
+    """Draw fig 9 from rows with pollutant, variant, ref and nz (kt in 2050).
+
+    Each panel compares the two scenarios under one set of emission factors, so the reader sees
+    the levels behind each percentage change rather than the change alone.
+    """
+    pols = ["SOx", "NOx", "VOCs"]
+    variants = ["native", "filled_low"]
+    fig, axes = plt.subplots(1, 3, figsize=(10, 3.6))
+    w = 0.36
+    x = np.arange(len(variants))
+    for ax, pol in zip(axes, pols):
+        p = s[s.pollutant == pol].set_index("variant").reindex(variants)
+        top = max(p.ref.max(), p.nz.max())
+        for off, col, color, label in (
+            (-w / 2 - 0.01, "ref", BLUE, "Reference"),
+            (w / 2 + 0.01, "nz", ORANGE, "Net-zero"),
+        ):
+            ax.bar(x + off, p[col], width=w, color=color, label=label)
+            for xi, val in zip(x, p[col]):
+                ax.text(
+                    xi + off, val + top * 0.02, f"{val:.2f}", ha="center", color=INK2, fontsize=8
+                )
+        for xi, (_, r) in zip(x, p.iterrows()):
+            change = f"{(r.nz / r.ref - 1) * 100:+.0f}%".replace("-", "\u2212")
+            ax.text(xi, top * 1.16, change, ha="center", color=INK, fontsize=10, fontweight="bold")
+        ax.set_xticks(x, [STEEL_VARIANT_LABELS[v] for v in variants])
+        ax.set_ylim(0, top * 1.3)
+        ax.set_ylabel("kt in 2050")
+        ax.set_title(pol, loc="left")
+        _style(ax, grid_axis="y")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper right", ncol=2, fontsize=8, bbox_to_anchor=(0.99, 0.95))
+    fig.suptitle(
+        "Steel, 2050: same GCAM-KAIST activity in both scenarios, two sets of emission factors",
+        x=0.01,
+        ha="left",
+        fontsize=11,
+        fontweight="semibold",
+        color=INK,
+    )
+    fig.text(
+        0.01,
+        0.885,
+        "Bold figure above each pair: change in net-zero relative to reference.",
+        ha="left",
+        color=INK2,
+        fontsize=8,
+    )
+    fig.text(
+        0.01,
+        -0.04,
+        "*Only the untagged routes get a factor: hydrogen DRI at the CAPSS EAF process factor, "
+        "blast furnace with CCS at GCAM's blast-furnace factor.\n"
+        "Every other route, including conventional blast furnaces, keeps GCAM-KAIST's own (very "
+        "low) factor, so this is a sensitivity test, not a projection.",
+        ha="left",
+        va="top",
+        color=MUTED,
+        fontsize=8,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.87))
+    out = s[["pollutant", "variant", "ref", "nz"]].copy()
+    out["change_pct"] = (out.nz / out.ref - 1) * 100
+    _save(fig, "fig09_policy_steel", out)
+
+
 def policy_steel() -> None:
     s = pd.read_csv(POLICY / "policy_experiment_summary.csv")
     s = s[
@@ -531,33 +604,7 @@ def policy_steel() -> None:
         & s.variant.isin(["native", "filled_low"])
         & s.pollutant.isin(["NOx", "SOx", "VOCs"])
     ].copy()
-    s["change_pct"] = -s.reduction_pct  # nz relative to ref
-    pols = ["NOx", "SOx", "VOCs"]
-    fig, ax = plt.subplots(figsize=(8, 3.2))
-    y = np.arange(len(pols))
-    h = 0.3
-    for off, v, c in ((-h / 2 - 0.02, "native", BLUE), (h / 2 + 0.02, "filled_low", ORANGE)):
-        p = s[s.variant == v].set_index("pollutant").reindex(pols)
-        ax.barh(y + off, p.change_pct, height=h, color=c, label=VARIANT_LABELS[v])
-        for yi, val in enumerate(p.change_pct):
-            ax.text(
-                val + (2 if val >= 0 else -2),
-                yi + off,
-                f"{val:+.0f}%",
-                va="center",
-                ha="left" if val >= 0 else "right",
-                color=INK2,
-                fontsize=8,
-            )
-    ax.axvline(0, color=AXIS, linewidth=0.8)
-    ax.set_yticks(y, pols)
-    ax.invert_yaxis()
-    ax.set_xlim(-110, 50)
-    ax.set_xlabel("change in steel-sector emissions, nz vs ref, 2050 (%)")
-    ax.set_title("Steel: filling the untagged routes flips the sign for SOx and VOCs", loc="left")
-    ax.legend(loc="lower left", fontsize=8)
-    _style(ax)
-    _save(fig, "fig09_policy_steel", s[["pollutant", "variant", "ref", "nz", "change_pct"]])
+    plot_policy_steel(s)
 
 
 def policy_road() -> None:
