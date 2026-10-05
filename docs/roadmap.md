@@ -74,6 +74,39 @@ structural gaps remain before power can run like non-power:
   emissions are already present per fuel/technology), so this leg may be
   faster to stand up than non-power was, once the inventory entries exist.
 
+### Pending: rerun the power policy experiment with KEPCO factors
+
+The power leg of the policy experiment (investigation §4, Figure 8) compares
+2050 NOx/SOx avoided by `nz` vs `ref` under four factor sets. Its fourth set,
+the 2017 official MOTIE factors (coal NOx/SOx 0.291/0.258 kg/MWh), is too high
+for current Korean coal and is to be replaced by KEPCO's 2021
+generation-weighted factors from NZK-APHIAM
+(`docs/references/thermal/kepco_ef_external_validation.md`):
+
+| kg/MWh | NOx | SOx |
+|---|---|---|
+| Coal (conventional steam) | 0.126 | 0.139 |
+| Gas combined cycle (also applied to steam/CT) | 0.164 | 0.000 |
+| Oil (conventional steam) | 0.301 | 0.011 |
+
+Keep the Lee et al. 2022 coal-fleet variant; biomass stays at GCAM native.
+
+Not done yet: the experiment script
+(`results/diagnostics/policy_experiment/policy_experiment.py`) and the
+GCAM-KAIST databases are untracked and were not available, so this needs to be
+rerun locally. An estimate from the saved outputs in
+`docs/figures/data/fig08_policy_power.csv` (2050 `ref` coal generation,
+101.0 TWh, is recovered exactly from the two Korean variants; gas and oil are
+bounded) gives about 29.5–29.8 kt NOx avoided (≈4.0× native) and
+14.0–14.5 kt SOx (≈5.1–5.3×), so the headline range moves from 2.6–9.7× to
+about 2.6–5.3×. The PI deck already shows these marked as estimates.
+
+After the rerun, update: `docs/figures/data/fig08_policy_power.csv` and the
+figure (`docs/figures/make_figures.py`, including its `korea_2017` label), the
+power tables and "2.6–9.7×" claims in `docs/gcam_nonco2_investigation.md` and
+`paper/sections/background_investigation.tex`, `paper/Figures/fig08_policy_power.png`,
+and the deck's power slide.
+
 **Regions other than Korea.** Nothing is structurally Korea-specific in the
 three-leg design, but only the CAPSS factor tables and Korean spatial inputs are
 wired. GCAM-global and GCAM-USA would need their own factor and surrogate
