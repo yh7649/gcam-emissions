@@ -1,0 +1,4712 @@
+Status as
+of
+2026-10-05.
+Scope: the
+South
+Korea
+region of
+the two
+GCAM-KAIST
+scenario
+databases,
+\texttt{KAIST\_\allowbreak{}9\_\allowbreak{}ref\_\allowbreak{}u0902v3}
+(\texttt{ref})
+and
+\texttt{KAIST\_\allowbreak{}9\_\allowbreak{}NZ\_\allowbreak{}u0902v3}
+(\texttt{nz}).
+This is a
+screening
+audit.
+Nothing in
+it is a
+reviewed
+or
+production-ready
+input.
+
+The
+document
+has two
+parts:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Part
+  A}
+  explains,
+  in plain
+  language,
+  what a
+  GCAM-KAIST
+  non-CO2
+  number
+  is made
+  of and
+  what we
+  found.
+\item
+  \textbf{Part
+  B} gives
+  the
+  technical
+  detail
+  and
+  evidence
+  behind
+  every
+  statement
+  in Part
+  A.
+\end{itemize}
+
+Where a
+statement
+is an
+inference
+rather
+than
+something
+read
+directly
+from the
+data, it
+is marked
+\textbf{Inferred}.
+
+\hypertarget{part-a-plain-language-guide}{%
+\subsection{Part
+A:
+Plain-language
+guide}\label{part-a-plain-language-guide}}
+
+\hypertarget{a1.-the-units-a-non-co2-number-is-built-from}{%
+\subsubsection{A1.
+The units
+a non-CO2
+number is
+built
+from}\label{a1.-the-units-a-non-co2-number-is-built-from}}
+
+Every
+non-CO2
+emission
+value
+GCAM-KAIST
+reports
+belongs to
+exactly
+one
+combination
+of the
+following:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1481}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4259}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4259}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Unit
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+What it is
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Example
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Scenario &
+One model
+run &
+\texttt{ref},
+\texttt{nz} \\
+Region &
+Geographic
+unit &
+South
+Korea \\
+Sector &
+Something
+GCAM
+produces
+or
+supplies &
+\texttt{electricity},
+\texttt{process\ heat\ cement},
+\texttt{trn\_\allowbreak{}pass\_\allowbreak{}road\_\allowbreak{}LDV\_\allowbreak{}4W}
+(cars and
+large
+cars) \\
+Subsector
+& A group
+inside a
+sector,
+usually by
+fuel or
+vehicle
+type &
+\texttt{gas},
+\texttt{coal},
+\texttt{Car} \\
+Technology
+& One
+specific
+way of
+producing
+the
+sector's
+output &
+\texttt{gas\ (CC)}
+(combined-cycle
+gas
+plant),
+\texttt{Liquids}
+(petrol/diesel
+car) \\
+Vintage &
+The year a
+piece of
+equipment
+was built
+& the
+2021-built
+\texttt{gas\ (CC)}
+fleet \\
+Model year
+& The year
+being
+reported &
+2015,
+2021,
+2050 \\
+Pollutant
+& The
+emitted
+species &
+\texttt{NOx},
+\texttt{SO2\_\allowbreak{}2}
+(sulfur
+dioxide),
+\texttt{NH3} \\
+\end{longtable}
+
+On top of
+these
+units sit
+four
+ideas.
+
+\textbf{Activity.}
+Every
+technology
+has
+activity
+in every
+model
+year: what
+it
+produces
+(its
+\emph{output},
+for
+example
+exajoules
+(EJ) of
+electricity,
+megatonnes
+(Mt) of
+cement, or
+billions
+of
+passenger-km)
+and what
+it
+consumes
+(its
+\emph{inputs},
+for
+example EJ
+of coal).
+
+\textbf{Non-CO2
+tag.} A
+non-CO2
+emission
+exists
+only where
+the model
+attaches
+an
+emissions
+object to
+a
+technology,
+one per
+pollutant.
+In the
+database
+this is an
+element
+called
+\texttt{Non-\allowbreak{}CO2}
+(for
+example
+\texttt{\textless{}Non-\allowbreak{}CO2\ name=\allowbreak{}"NOx"\textgreater{}}).
+In the
+model
+output the
+tag holds
+\textbf{only
+one thing:
+an
+emission
+mass for
+each model
+year}. It
+does not
+hold an
+emission
+factor,
+the
+activity
+it is tied
+to, or
+anything
+about
+pollution-control
+equipment.
+
+\begin{quote}
+If a
+technology
+has no tag
+for a
+pollutant,
+GCAM-KAIST
+reports
+nothing
+for it.
+Not zero:
+the
+technology
+simply
+never
+appears in
+any
+non-CO2
+output.
+\end{quote}
+
+\textbf{Driver.}
+Each tag
+is tied to
+one
+activity
+quantity,
+called its
+driver. In
+the GCAM
+input
+files the
+driver is
+either a
+named fuel
+input
+(coal
+burned in
+a cement
+kiln,
+petrol
+burned by
+cars) or
+the
+technology's
+output
+(electricity
+generated,
+tonnes of
+steel,
+tonnes of
+meat).
+
+\textbf{Emission
+factor
+(coefficient).}
+The tag's
+mass
+divided by
+its
+driver:
+for
+example
+kilograms
+of NOx per
+gigajoule
+(GJ) of
+coal
+burned, or
+per
+megawatt-hour
+(MWh)
+generated.
+\textbf{The
+model
+output
+does not
+store this
+number.}
+We
+calculate
+it, and
+call it
+the
+\emph{implied}
+coefficient.
+
+Two more
+details
+matter
+when
+reading
+the data.
+
+\textbf{Vintages.}
+In the
+historical
+years each
+technology
+has one
+vintage.
+In future
+years
+older
+equipment
+keeps
+running
+alongside
+new
+equipment,
+and the
+database
+lists a
+separate
+tag value
+for each
+vintage.
+For
+example,
+the NOx
+tag on
+coal
+burned for
+cement-kiln
+heat has 3
+vintage
+entries in
+2030 and 7
+in 2050. A
+technology's
+total for
+a year is
+the sum
+over its
+vintages.
+
+\textbf{Model
+years.}
+GCAM's
+base
+(calibration)
+years are
+1975,
+1990,
+2005,
+2010, 2015
+and 2021.
+Future
+model
+years in
+these runs
+are 2025
+to 2050 in
+5-year
+steps.
+Technologies
+are listed
+out to
+2100, but
+carry no
+output
+after
+2050.
+
+\hypertarget{worked-example}{%
+\paragraph{Worked
+example}\label{worked-example}}
+
+\texttt{ref},
+2021,
+technology
+\texttt{coal}
+in
+subsector
+\texttt{coal}
+of sector
+\texttt{process\ heat\ cement}
+(coal
+burned to
+heat
+cement
+kilns):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5541}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4459}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Quantity
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Value
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Driver:
+coal input
+(\texttt{delivered\ coal})
+& 0.0835
+EJ \\
+NOx tag &
+0.0220 Tg
+(22.0
+kt) \\
+Implied
+coefficient
+= tag ÷
+driver &
+0.264 kg
+NOx per GJ
+of coal \\
+\end{longtable}
+
+\hypertarget{unit-conversions-used-in-this-document}{%
+\paragraph{Unit
+conversions
+used in
+this
+document}\label{unit-conversions-used-in-this-document}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4762}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5238}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+From
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+To
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 Tg
+(teragram)
+& 1,000 kt
+= 1
+million
+tonnes \\
+1 EJ
+(exajoule)
+& 10⁹ GJ =
+2.778 ×
+10⁸ MWh \\
+Tg per EJ
+& kg per
+GJ \\
+Tg per EJ
+of
+electricity
+& × 3.6 →
+kg per
+MWh \\
+Tg per Mt
+& 1,000 kg
+per
+tonne \\
+\end{longtable}
+
+\hypertarget{a2.-how-a-number-gets-into-a-tag}{%
+\subsubsection{A2.
+How a
+number
+gets into
+a
+tag}\label{a2.-how-a-number-gets-into-a-tag}}
+
+There are
+two
+phases.
+
+\textbf{Base
+years (up
+to 2021):
+the mass
+is given.}
+For most
+sectors,
+GCAM's
+input data
+supplies a
+total
+emission
+mass for
+each
+technology,
+pollutant
+and year.
+GCAM then
+divides
+that mass
+by its own
+modelled
+activity
+for the
+technology
+to get the
+coefficient.
+The
+coefficient
+is not
+measured
+or looked
+up; it is
+whatever
+is left
+after the
+division.
+
+For a few
+sectors
+(iron and
+steel,
+fuel
+extraction,
+and two
+crop
+residue-burning
+species)
+the input
+data gives
+the
+coefficient
+directly
+instead.
+
+\textbf{Future
+years
+(2025 to
+2050):
+emissions
+=
+coefficient
+×
+activity.}
+The
+coefficient
+is either
+kept at
+its 2021
+value or
+reduced
+along a
+pre-set
+curve. In
+the stock
+GCAM
+inputs,
+that curve
+is tied to
+GDP.
+Almost all
+coefficients
+are the
+same in
+both
+scenarios,
+so what
+differs
+between
+\texttt{ref}
+and
+\texttt{nz}
+is mainly
+the
+activity.
+
+\hypertarget{a3.-what-we-found}{%
+\subsubsection{A3.
+What we
+found}\label{a3.-what-we-found}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Only
+  tagged
+  technologies
+  report,
+  and some
+  large
+  activities
+  have no
+  tags.}
+  All
+  fossil
+  power
+  plants
+  in
+  operation
+  are
+  tagged.
+  But
+  several
+  large
+  activities
+  are not:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Cement
+    making.}
+    Only
+    the
+    fuel
+    burned
+    for
+    kiln
+    heat
+    is
+    tagged;
+    the
+    kiln
+    process
+    itself
+    is
+    not.
+    Paper,
+    food
+    processing
+    and
+    chemicals
+    are
+    the
+    same:
+    fuel
+    only.
+  \item
+    \textbf{Oil
+    refining.}
+    No tag
+    at
+    all,
+    despite
+    4.69
+    EJ of
+    output
+    in
+    2021.
+  \item
+    \textbf{Chemical
+    feedstocks
+    and
+    industrial
+    cogeneration.}
+  \item
+    \textbf{Several
+    technologies
+    that
+    grow
+    in the
+    net-zero
+    scenario:}
+    hybrid
+    vehicles,
+    hydrogen-based
+    steel,
+    and
+    steel
+    and
+    cement
+    with
+    carbon
+    capture.
+    These
+    show
+    zero
+    emissions
+    even
+    though,
+    for
+    example,
+    hydrogen-based
+    steel
+    still
+    burns
+    gas
+    and
+    oil.
+  \end{itemize}
+\item
+  \textbf{For
+  most
+  sectors,
+  base-year
+  numbers
+  are
+  inventory
+  numbers,
+  not
+  model
+  results.}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    GCAM-KAIST's
+    2015
+    and
+    2021
+    tags
+    equal
+    those
+    in
+    stock
+    GCAM
+    v9
+    (2,244
+    of
+    2,251
+    checked
+    values
+    match
+    within
+    0.1\%),
+    so
+    KAIST
+    largely
+    kept
+    GCAM's
+    standard
+    calibration.
+  \item
+    Stock
+    GCAM's
+    calibration
+    comes
+    from
+    CEDS,
+    the
+    Community
+    Emissions
+    Data
+    System.
+    CEDS
+    documents
+    scaling
+    its
+    Korean
+    estimates
+    to
+    NIER's
+    national
+    inventory,
+    which
+    is
+    published
+    as
+    CAPSS.
+  \item
+    Eleven
+    GCAM-KAIST
+    totals
+    reproduce
+    CAPSS
+    category
+    totals
+    to
+    within
+    0.12\%,
+    for
+    example
+    agricultural
+    NH3:
+    200,384.0
+    t vs
+    CAPSS
+    200,384
+    t in
+    2021.
+  \end{itemize}
+\item
+  \textbf{Technologies
+  inside
+  the same
+  inventory
+  total
+  share
+  one
+  coefficient.}
+  Because
+  the
+  coefficient
+  is a
+  by-product
+  of
+  dividing
+  a total,
+  distinct
+  technologies
+  end up
+  with the
+  same
+  value:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    combined-cycle
+    and
+    steam/turbine
+    gas
+    plants
+    have
+    identical
+    coefficients
+    per
+    unit
+    of
+    fuel
+    in
+    every
+    base
+    year
+    from
+    2005
+    to
+    2021;
+  \item
+    commercial
+    heating,
+    cooling
+    and
+    ``other''
+    uses
+    of gas
+    share
+    one
+    coefficient;
+  \item
+    all
+    ten
+    household
+    income
+    groups
+    share
+    one
+    coefficient;
+  \item
+    mobile
+    and
+    stationary
+    machinery
+    in
+    agriculture,
+    construction
+    and
+    mining
+    carry
+    exactly
+    equal
+    masses
+    in
+    every
+    base
+    year
+    from
+    2005
+    to
+    2021.
+  \end{itemize}
+\item
+  \textbf{Some
+  emissions
+  are not
+  tied to
+  any
+  activity.}
+  Industrial
+  process,
+  solvent
+  and
+  waste
+  emissions
+  are
+  attached
+  to a
+  fixed
+  placeholder,
+  not to
+  production.
+  In 2021
+  these
+  placeholder-driven
+  tags
+  hold
+  81\% of
+  GCAM-KAIST's
+  Korean
+  VOCs and
+  55\% of
+  its SO2,
+  excluding
+  international
+  shipping
+  and
+  aviation.
+\item
+  \textbf{Base-year
+  coefficients
+  are
+  unstable.}
+  For the
+  typical
+  technology
+  and
+  pollutant,
+  the
+  implied
+  coefficient
+  varies
+  by a
+  factor
+  of 2
+  between
+  2005 and
+  2021;
+  for one
+  in ten
+  it
+  varies
+  by more
+  than
+  11×.
+\item
+  \textbf{Future
+  coefficients
+  don't
+  respond
+  to
+  policy.}
+  From
+  2021 to
+  2050:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    46\%
+    of
+    coefficients
+    stay
+    frozen
+    at
+    their
+    2021
+    value;
+  \item
+    52\%
+    decline
+    along
+    the
+    pre-set
+    curve;
+  \item
+    in
+    2050,
+    93\%
+    are
+    identical
+    in
+    \texttt{ref}
+    and
+    \texttt{nz}.
+  \end{itemize}
+\item
+  \textbf{No
+  primary
+  particulate
+  matter.}
+  GCAM-KAIST
+  reports
+  black
+  carbon
+  (BC) and
+  organic
+  carbon
+  (OC),
+  but not
+  PM2.5,
+  PM10 or
+  total
+  suspended
+  particulates.
+\end{enumerate}
+
+\hypertarget{a4.-glossary}{%
+\subsubsection{A4.
+Glossary}\label{a4.-glossary}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5750}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Term
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Meaning
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+GCAM &
+Global
+Change
+Analysis
+Model
+(PNNL/JGCRI).
+GCAM-KAIST
+is KAIST's
+version of
+it, run
+here with
+the
+scenario
+names
+above. \\
+Stock GCAM
+v9 & The
+standard
+JGCRI
+release,
+unpacked
+locally at
+\texttt{.\allowbreak{}.\allowbreak{}/\allowbreak{}gcam-\allowbreak{}v9},
+used as
+the
+comparison
+baseline. \\
+CEDS &
+Community
+Emissions
+Data
+System. A
+global
+historical
+emissions
+inventory;
+GCAM
+calibrates
+its
+base-year
+non-CO2
+emissions
+to it. \\
+CAPSS &
+Clean Air
+Policy
+Support
+System.
+Korea's
+national
+air
+pollutant
+emissions
+inventory,
+published
+by NIER
+(National
+Institute
+of
+Environmental
+Research). \\
+Base year
+/
+calibration
+year & A
+historical
+model year
+in which
+GCAM is
+fitted to
+observed
+data
+(1975--2021
+here). \\
+Pass-through
+sector & A
+GCAM
+sector
+that only
+routes a
+flow, such
+as the
+\texttt{elec\_\allowbreak{}*}
+sectors
+that
+choose
+power-plant
+cooling
+systems. \\
+\texttt{\_\allowbreak{}AGR},
+\texttt{\_\allowbreak{}AWB}
+&
+Pollutant-name
+suffixes:
+agricultural
+emissions
+(fertilizer,
+livestock)
+and
+agricultural
+waste
+(crop
+residue)
+burning. \\
+\texttt{SO2\_\allowbreak{}2}
+& GCAM's
+name for
+sulfur
+dioxide. \\
+NMVOC /
+VOCs &
+Non-methane
+volatile
+organic
+compounds.
+CAPSS
+calls them
+VOCs. \\
+BaseX &
+The XML
+database
+engine the
+scenario
+outputs
+are stored
+in. \\
+\end{longtable}
+
+\hypertarget{part-b-technical-audit}{%
+\subsection{Part
+B:
+Technical
+audit}\label{part-b-technical-audit}}
+
+\hypertarget{b1.-data-tools-and-definitions}{%
+\subsubsection{B1.
+Data,
+tools and
+definitions}\label{b1.-data-tools-and-definitions}}
+
+\textbf{GCAM-KAIST
+outputs.}
+
+\begin{itemize}
+\tightlist
+\item
+  Two
+  BaseX
+  databases
+  under
+  \texttt{model\_\allowbreak{}inputs/\allowbreak{}gcam/\allowbreak{}gcam\_\allowbreak{}kaist/\allowbreak{}},
+  registered
+  as
+  \texttt{ref}
+  and
+  \texttt{nz}.
+\item
+  Each
+  holds
+  one
+  scenario:
+  \texttt{KAIST\_\allowbreak{}9\_\allowbreak{}ref\_\allowbreak{}u0902v3}
+  and
+  \texttt{KAIST\_\allowbreak{}9\_\allowbreak{}NZ\_\allowbreak{}u0902v3},
+  with
+  \texttt{date}
+  attributes
+  2026-02-09T14:37:41+09:00
+  and
+  14:39:03+09:00.
+\item
+  Only the
+  region
+  \texttt{South\ Korea}
+  is
+  analysed.
+\end{itemize}
+
+\textbf{GCAM-KAIST
+inputs.}
+The input
+XMLs KAIST
+used to
+build
+these runs
+are
+\textbf{not
+available
+locally}.
+Every
+statement
+about how
+GCAM-KAIST
+sets its
+tags is
+therefore
+based on
+its
+outputs,
+compared
+with stock
+GCAM v9's
+inputs.
+
+\textbf{Stock
+GCAM v9.}
+\texttt{.\allowbreak{}.\allowbreak{}/\allowbreak{}gcam-\allowbreak{}v9},
+the JGCRI
+GCAM
+release.
+Its
+\texttt{input/\allowbreak{}gcamdata}
+R code and
+\texttt{extdata}
+contain no
+reference
+to CAPSS
+or KAIST.
+Files
+used:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5412}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4588}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+File
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Used for
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{input/\allowbreak{}gcamdata/\allowbreak{}xml/\allowbreak{}all\_\allowbreak{}energy\_\allowbreak{}emissions.\allowbreak{}xml}
+&
+Energy-sector
+base-year
+tags \\
+\texttt{input/\allowbreak{}gcamdata/\allowbreak{}xml/\allowbreak{}all\_\allowbreak{}aglu\_\allowbreak{}emissions\_\allowbreak{}IRR\_\allowbreak{}MGMT.\allowbreak{}xml}
+&
+Agriculture
+tags \\
+\texttt{input/\allowbreak{}gcamdata/\allowbreak{}xml/\allowbreak{}all\_\allowbreak{}unmgd\_\allowbreak{}emissions.\allowbreak{}xml},
+\texttt{all\_\allowbreak{}protected\_\allowbreak{}unmgd\_\allowbreak{}emissions.\allowbreak{}xml}
+&
+Unmanaged-land
+tags \\
+\texttt{input/\allowbreak{}gcamdata/\allowbreak{}xml/\allowbreak{}emission\_\allowbreak{}factor\_\allowbreak{}controls.\allowbreak{}xml}
+&
+Future-year
+coefficient
+overrides \\
+\texttt{output/\allowbreak{}queries/\allowbreak{}Main\_\allowbreak{}queries.\allowbreak{}xml}
+& Stock
+reporting
+queries \\
+\texttt{input/\allowbreak{}gcamdata/\allowbreak{}R/\allowbreak{}constants.\allowbreak{}R}
+&
+Base-year
+definition \\
+\texttt{input/\allowbreak{}gcamdata/\allowbreak{}inst/\allowbreak{}extdata/\allowbreak{}emissions/\allowbreak{}CEDS/\allowbreak{}ceds\_\allowbreak{}sector\_\allowbreak{}map.\allowbreak{}csv}
+& CEDS →
+GCAM
+sector
+mapping \\
+\end{longtable}
+
+\textbf{CAPSS.}
+\texttt{docs/\allowbreak{}2015\%20Emissions\%20by\%20Source\%20Category.\allowbreak{}xlsx}
+and
+\texttt{docs/\allowbreak{}2021\%20Emissions\%20by\%20Source\%20Category.\allowbreak{}xlsx}.
+These hold
+first-level
+source-category
+totals
+only, in
+tonnes.
+
+\textbf{Definitions.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Active:}
+  a
+  technology
+  with
+  output
+  above
+  zero in
+  at least
+  one
+  model
+  year up
+  to 2050,
+  in
+  either
+  scenario.
+\item
+  \textbf{Air-quality
+  (AQ)
+  species:}
+  BC, OC,
+  CO, NH3,
+  NMVOC,
+  NOx, SO2
+  (including
+  their
+  \texttt{\_\allowbreak{}AGR}
+  and
+  \texttt{\_\allowbreak{}AWB}
+  variants
+  unless
+  stated).
+\item
+  \textbf{Identical:}
+  within
+  0.1\%
+  relative
+  difference,
+  unless
+  stated
+  otherwise.
+\end{itemize}
+
+\hypertarget{b2.-how-tags-are-stored}{%
+\subsubsection{B2.
+How tags
+are
+stored}\label{b2.-how-tags-are-stored}}
+
+\textbf{Element
+structure.}
+A tag is a
+child of a
+technology
+element:
+
+\begin{Verbatim}[breaklines,fontsize=\footnotesize]
+<technology year="2021" name="other industrial processes" type="technology">
+  <output-primary name="industrial processes" type="output">
+    <physical-output unit="NA" vintage="2021">0.000243714</physical-output>
+  </output-primary>
+  <!-- share-weight and the BC, CH4, CO, N2O, NH3, NMVOC tags omitted -->
+  <Non-CO2 name="NOx" type="GHG">
+    <emissions unit="Tg" year="2021">0.0390991</emissions>
+  </Non-CO2>
+  <input-energy name="misc emissions sources" type="input">
+    <demand-physical unit="NA" vintage="2021">0.000243714</demand-physical>
+    ...
+\end{Verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  In the
+  output
+  database,
+  the only
+  child
+  element
+  of any
+  \texttt{Non-\allowbreak{}CO2}
+  is
+  \texttt{emissions}.
+  No
+  coefficient,
+  driver,
+  control
+  parameter
+  or data
+  source
+  is
+  stored.
+\item
+  CO2 is a
+  separate
+  element
+  named
+  \texttt{CO2}.
+  Every
+  element
+  with
+  \texttt{type=\allowbreak{}"GHG"}
+  is
+  either
+  \texttt{CO2}
+  or
+  \texttt{Non-\allowbreak{}CO2}.
+  In
+  \texttt{ref},
+  South
+  Korea
+  has
+  23,117
+  \texttt{Non-\allowbreak{}CO2}
+  and
+  1,676
+  \texttt{CO2}
+  elements,
+  counting
+  each
+  technology
+  vintage
+  separately.
+\end{itemize}
+
+\textbf{Where
+tags
+occur.}
+\texttt{Non-\allowbreak{}CO2}
+appears
+under
+exactly
+six
+element
+paths:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Path
+(below
+\texttt{region})
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{supplysector/\allowbreak{}subsector/\allowbreak{}technology/\allowbreak{}Non-\allowbreak{}CO2} \\
+\texttt{supplysector/\allowbreak{}subsector/\allowbreak{}pass-\allowbreak{}through-\allowbreak{}technology/\allowbreak{}Non-\allowbreak{}CO2} \\
+\texttt{supplysector/\allowbreak{}tranSubsector/\allowbreak{}tranTechnology/\allowbreak{}Non-\allowbreak{}CO2} \\
+\texttt{AgSupplySector/\allowbreak{}AgSupplySubsector/\allowbreak{}AgProductionTechnology/\allowbreak{}Non-\allowbreak{}CO2} \\
+\texttt{AgSupplySector/\allowbreak{}AgSupplySubsector/\allowbreak{}UnmanagedLandTechnology/\allowbreak{}Non-\allowbreak{}CO2} \\
+\texttt{resource/\allowbreak{}reserve-\allowbreak{}subresource/\allowbreak{}resource-\allowbreak{}reserve-\allowbreak{}technology/\allowbreak{}Non-\allowbreak{}CO2} \\
+\end{longtable}
+
+It never
+appears
+under
+\texttt{pass-\allowbreak{}through-\allowbreak{}sector},
+\texttt{renewresource},
+\texttt{unlimited-\allowbreak{}resource},
+or
+technologies
+nested
+under a
+\texttt{nesting-\allowbreak{}subsector}.
+
+\textbf{Units
+and
+species}
+(South
+Korea,
+\texttt{ref}):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3134}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6866}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Unit
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Species
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Tg & BC,
+CH4, CO,
+H2, N2O,
+NH3,
+NMVOC,
+NOx, OC,
+SO2\_2;
+CH4\_AGR,
+N2O\_AGR,
+NH3\_AGR,
+NMVOC\_AGR,
+NOx\_AGR;
+BC\_AWB,
+CH4\_AWB,
+CO\_AWB,
+H2\_AWB,
+N2O\_AWB,
+NH3\_AWB,
+NMVOC\_AWB,
+NOx\_AWB,
+OC\_AWB,
+SO2\_2\_AWB \\
+Gg & C2F6,
+CF4,
+HFC125,
+HFC134a,
+HFC143a,
+HFC227ea,
+HFC23,
+HFC236fa,
+HFC32,
+HFC43,
+SF6 \\
+MTC (Mt
+carbon) &
+CO2\_FUG
+(fugitive
+CO2,
+stored
+under
+\texttt{Non-\allowbreak{}CO2}) \\
+\end{longtable}
+
+There is
+no PM2.5,
+PM10 or
+TSP
+species.
+
+\textbf{Years
+and
+vintages.}
+
+\begin{itemize}
+\tightlist
+\item
+  Technology
+  elements
+  repeat
+  once per
+  vintage,
+  using
+  the
+  \texttt{year}
+  attribute.
+\item
+  Within a
+  technology,
+  \texttt{emissions/\allowbreak{}@year}
+  and
+  \texttt{physical-\allowbreak{}output/\allowbreak{}@vintage}
+  both
+  give the
+  \emph{model
+  year}
+  being
+  reported,
+  despite
+  the
+  attribute
+  name.
+\item
+  Base
+  years
+  have one
+  vintage
+  per
+  technology.
+  Future
+  years
+  have
+  several
+  (cement-kiln
+  coal
+  NOx: 3
+  in 2030,
+  7 in
+  2050).
+\item
+  Model
+  years
+  present:
+  1975,
+  1990,
+  2005,
+  2010,
+  2015,
+  2021,
+  2025,
+  2030,
+  2035,
+  2040,
+  2045,
+  2050.
+  Technology
+  elements
+  for
+  2055--2100
+  carry
+  only
+  share
+  weights.
+\item
+  Stock
+  \texttt{constants.\allowbreak{}R}
+  defines
+  \texttt{MODEL\_\allowbreak{}BASE\_\allowbreak{}YEARS}
+  as 1975,
+  1990,
+  2005,
+  2010,
+  2015 and
+  the
+  final
+  historical
+  year,
+  which is
+  2021 in
+  these
+  outputs.
+\end{itemize}
+
+\textbf{Scenario
+independence
+of base
+years.}
+For model
+years up
+to 2021,
+11,519 of
+11,521
+technology-pollutant-year
+emission
+values are
+exactly
+equal in
+\texttt{nz}
+and
+\texttt{ref}.
+The other
+two differ
+by at most
+1 × 10⁻⁹
+Tg.
+
+\hypertarget{b3.-how-the-model-reports-them-native-queries}{%
+\subsubsection{B3.
+How the
+model
+reports
+them:
+native
+queries}\label{b3.-how-the-model-reports-them-native-queries}}
+
+Stock
+GCAM's
+\texttt{output/\allowbreak{}queries/\allowbreak{}Main\_\allowbreak{}queries.\allowbreak{}xml}
+defines
+five
+non-CO2
+queries:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1786}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8214}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Line
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Query
+title
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+4916 &
+\texttt{nonCO2\ emissions\ by\ region} \\
+4928 &
+\texttt{nonCO2\ emissions\ by\ sector\ (excluding\ resource\ production)} \\
+4934 &
+\texttt{nonCO2\ emissions\ by\ resource\ production} \\
+4945 &
+\texttt{nonCO2\ emissions\ by\ subsector\ (excluding\ resource\ production)} \\
+4952 &
+\texttt{nonCO2\ emissions\ by\ tech\ (excluding\ resource\ production)} \\
+\end{longtable}
+
+Each
+selects
+\texttt{*{[}@type\ =\allowbreak{}\ \textquotesingle{}GHG\textquotesingle{}\ and\ @name\ !=\allowbreak{}\ \textquotesingle{}CO2\textquotesingle{}\ and\ @name\ !=\allowbreak{}\ \textquotesingle{}CO2\_\allowbreak{}FUG\textquotesingle{}{]}/\allowbreak{}emissions}
+beneath
+sector
+and/or
+resource
+nodes.
+None of
+them names
+a sector.
+
+\textbf{Consequence:
+there are
+no
+sector-specific
+non-CO2
+queries.}
+A sector
+reports
+non-CO2
+emissions
+if, and
+only if,
+its
+technologies
+carry
+\texttt{Non-\allowbreak{}CO2}
+tags. ``Is
+there a
+query for
+cement
+non-CO2?''
+reduces to
+``does any
+cement
+technology
+carry a
+tag?'',
+and the
+answer is
+no (B4).
+
+The repo's
+query
+\texttt{src/\allowbreak{}gcam\_\allowbreak{}emissions/\allowbreak{}gcam/\allowbreak{}queries/\allowbreak{}nonco2\_\allowbreak{}emissions\_\allowbreak{}by\_\allowbreak{}sector.\allowbreak{}xq}
+selects
+every
+\texttt{Non-\allowbreak{}CO2/\allowbreak{}emissions}.
+That is
+the same
+set of
+tags as
+the stock
+queries,
+plus
+\texttt{CO2\_\allowbreak{}FUG}.
+
+\hypertarget{b4.-coverage-which-activity-carries-tags}{%
+\subsubsection{B4.
+Coverage:
+which
+activity
+carries
+tags}\label{b4.-coverage-which-activity-carries-tags}}
+
+\textbf{Method.}
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}nonco2\_\allowbreak{}coverage/\allowbreak{}activity\_\allowbreak{}inventory.\allowbreak{}xq}
+lists
+every
+technology
+under
+\texttt{supplysector},
+\texttt{AgSupplySector},
+\texttt{pass-\allowbreak{}through-\allowbreak{}sector},
+\texttt{resource},
+\texttt{renewresource}
+and
+\texttt{unlimited-\allowbreak{}resource}.
+For each
+it records
+output by
+year and
+the
+\texttt{Non-\allowbreak{}CO2}
+species it
+carries.
+The set of
+tagged
+(sector,
+subsector,
+technology)
+triples it
+finds, 286
+in total,
+is
+identical
+to the set
+in the
+repo's
+emissions
+detail
+table.
+
+\textbf{Counts}
+(active
+nodes
+only; each
+household
+income
+decile
+counts as
+its own
+sector):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5606}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1970}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2424}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Sectors
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Subsectors
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+All active
+technologies
+tagged &
+77 &
+169 \\
+Some
+active
+technologies
+tagged &
+50 & 36 \\
+No active
+technology
+tagged &
+139 &
+281 \\
+\textbf{Total
+active} &
+\textbf{266}
+&
+\textbf{486} \\
+\end{longtable}
+
+No tagged
+technology
+has
+all-zero
+emissions
+in every
+year up to
+2050.
+
+\textbf{Power.}
+
+\begin{itemize}
+\tightlist
+\item
+  Power
+  tags sit
+  on
+  \texttt{electricity/\allowbreak{}\textless{}fuel\textgreater{}/\allowbreak{}\textless{}pass-\allowbreak{}through-\allowbreak{}technology\textgreater{}},
+  for
+  example
+  \texttt{electricity/\allowbreak{}gas/\allowbreak{}gas\ (CC)}.
+\item
+  That
+  technology's
+  only
+  energy
+  input is
+  the
+  pass-through
+  sector
+  \texttt{elec\_\allowbreak{}gas\ (CC)},
+  in a
+  quantity
+  equal to
+  the
+  electricity
+  generated.
+\item
+  The 18
+  \texttt{elec\_\allowbreak{}*}
+  pass-through
+  sectors,
+  which
+  hold the
+  cooling-system
+  choices,
+  carry no
+  \texttt{Non-\allowbreak{}CO2}
+  tags.
+  The
+  fossil
+  ones
+  carry
+  \texttt{CO2}
+  tags.
+\item
+  Every
+  fossil
+  power
+  technology
+  with
+  activity
+  is
+  tagged.
+  The
+  untagged
+  fossil
+  power
+  technologies
+  have
+  zero
+  output
+  through
+  2050 in
+  both
+  scenarios:
+  \texttt{coal\ (IGCC)},
+  \texttt{coal\ (conv\ pul\ CCS)},
+  \texttt{coal\ (IGCC\ CCS)},
+  \texttt{refined\ liquids\ (CC)},
+  \texttt{refined\ liquids\ (CC\ CCS)},
+  \texttt{biomass\ (conv\ CCS)}
+  and
+  \texttt{biomass\ (IGCC\ CCS)}.
+\end{itemize}
+
+\textbf{Active
+technologies
+with no
+tag that
+burn fuel
+on site or
+run an
+industrial
+process:}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3622}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1102}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1102}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1024}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1811}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sector /
+technology
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Output
+unit
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2021
+\texttt{ref}
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\texttt{ref}
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\texttt{nz}
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Carries a
+CO2 tag
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{cement}
+/
+\texttt{cement}
+& Mt &
+50.45 &
+47.87 &
+6.774 &
+yes \\
+\texttt{cement}
+/
+\texttt{cement\ CCS}
+& Mt & 0 &
+0 & 30.41
+& yes \\
+\texttt{paper}
+/
+\texttt{paper}
+& Mt &
+10.83 &
+9.917 &
+9.741 &
+no \\
+\texttt{food\ processing}
+/
+\texttt{food\ processing}
+& Pcal &
+59.36 &
+56.43 &
+56.22 &
+no \\
+\texttt{chemical}
+/
+\texttt{chemical}
+& EJ &
+2.422 &
+3.150 &
+3.026 &
+no \\
+\texttt{chemical\ feedstocks}
+/
+\texttt{refined\ liquids}
+& EJ &
+2.086 &
+2.453 &
+2.408 &
+yes \\
+\texttt{other\ industry}
+/
+\texttt{other\ industry}
+& EJ &
+1.090 &
+1.314 &
+1.289 &
+no \\
+\texttt{construction}
+/
+\texttt{construction}
+& EJ &
+0.0871 &
+0.0850 &
+0.0810 &
+no \\
+\texttt{N\ fertilizer}
+/
+\texttt{N\ fertilizer}
+& Mt N &
+0.2279 &
+0.2058 &
+0.1757 &
+no \\
+\texttt{refining}
+/
+\texttt{oil\ refining}
+& EJ &
+4.694 &
+3.666 &
+2.405 &
+yes \\
+\texttt{other\ industrial\ energy\ use}
+/
+\texttt{coal\ cogen}
+& EJ &
+0.1436 &
+0.06497 &
+0.00004 &
+yes \\
+\texttt{other\ industrial\ energy\ use}
+/
+\texttt{gas\ cogen}
+& EJ &
+0.0473 &
+0.01101 &
+0.0003 &
+yes \\
+\texttt{other\ industrial\ energy\ use}
+/
+\texttt{refined\ liquids\ cogen}
+& EJ &
+0.0408 &
+0.00411 &
+0.00002 &
+yes \\
+\texttt{other\ industrial\ energy\ use}
+/
+\texttt{biomass\ cogen}
+& EJ &
+0.00374 &
+0.00228 &
+0.00008 &
+yes \\
+\texttt{iron\ and\ steel}
+/
+\texttt{Hydrogen-\allowbreak{}based\ DRI}
+& Mt & 0 &
+10.29 &
+16.36 &
+yes \\
+\texttt{iron\ and\ steel}
+/
+\texttt{BLASTFUR\ CCS}
+& Mt & 0 &
+0 & 4.150
+& yes \\
+\end{longtable}
+
+None of the technologies in this table has an entry in stock GCAM v9's
+Korea block of
+\texttt{all\_\allowbreak{}energy\_\allowbreak{}emissions.\allowbreak{}xml}.
+\texttt{Hybrid\ Liquids} and \texttt{oil\ refining} have no entry for any
+region. These gaps are therefore inherited from stock GCAM, not introduced
+by KAIST.
+
+The
+fuel-combustion
+emissions
+of
+\texttt{cement},
+\texttt{paper},
+\texttt{food\ processing},
+\texttt{chemical},
+\texttt{other\ industry}
+and
+\texttt{construction}
+\emph{are}
+tagged,
+but on
+companion
+energy-use
+sectors:
+\texttt{process\ heat\ cement},
+\texttt{process\ heat\ paper},
+\texttt{waste\ biomass\ for\ paper},
+\texttt{process\ heat\ food\ processing},
+\texttt{chemical\ energy\ use},
+\texttt{other\ industrial\ energy\ use}
+and
+\texttt{construction\ energy\ use}.
+What has
+no tag
+anywhere
+is the
+non-combustion
+process
+emissions
+of these
+industries,
+apart from
+the
+unattributed
+lump in
+B6.4.
+
+\textbf{Untagged
+technologies
+still burn
+fuel.} In
+\texttt{nz}
+2050:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Hydrogen-\allowbreak{}based\ DRI}
+  consumes
+  0.0428
+  EJ of
+  \texttt{wholesale\ gas}
+  and
+  0.0180
+  EJ of
+  \texttt{refined\ liquids\ industrial},
+  as well
+  as
+  hydrogen
+  and
+  electricity.
+\item
+  \texttt{BLASTFUR\ CCS}
+  consumes
+  0.0617
+  EJ of
+  \texttt{delivered\ coal}
+  and
+  0.0238
+  EJ of
+  \texttt{wholesale\ gas}.
+\end{itemize}
+
+\textbf{Hybrid
+vehicles}
+(\texttt{Hybrid\ Liquids})
+have no
+tags in
+any mode:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4646}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2626}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1414}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1313}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sector /
+subsector
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Unit
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\texttt{ref}
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\texttt{nz}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{trn\_\allowbreak{}pass\_\allowbreak{}road}
+/
+\texttt{Bus}
+& billion
+passenger-km
+& 108.9 &
+78.02 \\
+\texttt{trn\_\allowbreak{}pass\_\allowbreak{}road\_\allowbreak{}LDV\_\allowbreak{}4W}
+/
+\texttt{Car}
+& billion
+passenger-km
+& 42.91 &
+19.16 \\
+\texttt{trn\_\allowbreak{}pass\_\allowbreak{}road\_\allowbreak{}LDV\_\allowbreak{}4W}
+/
+\texttt{Large\ Car\ and\ Truck}
+& billion
+passenger-km
+& 35.54 &
+18.13 \\
+\texttt{trn\_\allowbreak{}freight\_\allowbreak{}road}
+/
+\texttt{Medium\ truck}
+& billion
+tonne-km &
+6.587 &
+3.587 \\
+\texttt{trn\_\allowbreak{}freight}
+/
+\texttt{Freight\ Rail}
+& billion
+tonne-km &
+4.404 &
+0.644 \\
+\texttt{trn\_\allowbreak{}freight}
+/
+\texttt{Domestic\ Ship}
+& billion
+tonne-km &
+24.18 &
+0 \\
+\texttt{trn\_\allowbreak{}shipping\_\allowbreak{}intl}
+/
+\texttt{International\ Ship}
+& billion
+tonne-km &
+2,837 &
+0.058 \\
+\end{longtable}
+
+\textbf{Tags
+with no
+air-quality
+species}
+(greenhouse
+gases,
+fluorinated
+gases or
+hydrogen
+only):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4889}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sector /
+subsector
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Species
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{comm\ cooling},
+\texttt{resid\ cooling\ modern\_\allowbreak{}d1}--\texttt{\_\allowbreak{}d10}
+/
+\texttt{electricity}
+& HFC125,
+HFC134a,
+HFC143a,
+HFC23,
+HFC32 \\
+\texttt{electricity\_\allowbreak{}net\_\allowbreak{}ownuse}
+& SF6 \\
+\texttt{industrial\ processes}
+/
+\texttt{Al\_\allowbreak{}Mg}
+& SF6 \\
+\texttt{industrial\ processes}
+/
+\texttt{HCFC\_\allowbreak{}22\_\allowbreak{}Prod}
+& HFC23 \\
+\texttt{industrial\ processes}
+/
+\texttt{adipic\ acid},
+\texttt{nitric\ acid}
+& N2O \\
+\texttt{industrial\ processes}
+/
+\texttt{semiconductors}
+& C2F6,
+CF4,
+HFC23,
+SF6 \\
+\texttt{urban\ processes}
+/
+\texttt{fire\_\allowbreak{}exting}
+&
+HFC227ea,
+HFC236fa \\
+\texttt{H2\ LDV},
+\texttt{H2\ MHDV},
+\texttt{LH2},
+\texttt{H2\ liquid\ truck},
+\texttt{H2\ pipeline}
+(delivery)
+& H2 \\
+\texttt{biomass}
+(bioenergy
+crops) &
+N2O\_AGR \\
+\end{longtable}
+
+Two
+hydrofluorocarbon
+(HFC)
+sources,
+\texttt{industrial\ processes\ /\allowbreak{}\ foams}
+and
+\texttt{urban\ processes\ /\allowbreak{}\ aerosols},
+are active
+but carry
+no tag at
+all.
+
+\textbf{The
+remaining
+untagged
+active
+nodes} are
+markets,
+trade
+nodes,
+aggregators,
+fuel
+distribution,
+water
+supply,
+labor and
+capital,
+renewable
+and
+nuclear
+supply,
+and
+electricity-,
+hydrogen-
+or
+human-powered
+end uses.
+The full
+list, with
+a reason
+for each,
+is in
+\texttt{gcam\_\allowbreak{}kaist\_\allowbreak{}nonco2\_\allowbreak{}coverage\_\allowbreak{}by\_\allowbreak{}subsector.\allowbreak{}csv}.
+Those
+reasons
+are our
+screening
+judgment
+and have
+not been
+reviewed.
+
+\hypertarget{b5.-where-base-year-values-come-from}{%
+\subsubsection{B5.
+Where
+base-year
+values
+come
+from}\label{b5.-where-base-year-values-come-from}}
+
+\hypertarget{b5.1-two-ways-of-specifying-a-tag-in-stock-gcam}{%
+\paragraph{B5.1
+Two ways
+of
+specifying
+a tag in
+stock
+GCAM}\label{b5.1-two-ways-of-specifying-a-tag-in-stock-gcam}}
+
+In stock
+GCAM v9's
+inputs,
+each
+base-year
+\texttt{Non-\allowbreak{}CO2}
+entry is
+specified
+in one of
+two ways:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\textless{}input-\allowbreak{}emissions\textgreater{}}:
+  a mass.
+  The
+  coefficient
+  is
+  derived
+  from it.
+\item
+  \texttt{\textless{}emiss-\allowbreak{}coef\textgreater{}}:
+  a
+  coefficient,
+  given
+  directly.
+\end{itemize}
+
+Each entry
+also
+declares a
+driver:
+\texttt{\textless{}input-\allowbreak{}driver\textgreater{}\textless{}input-\allowbreak{}name\textgreater{}…\textless{}/\allowbreak{}input-\allowbreak{}name\textgreater{}\textless{}/\allowbreak{}input-\allowbreak{}driver\textgreater{}}
+for a
+named
+input, or
+\texttt{\textless{}output-\allowbreak{}driver/\allowbreak{}\textgreater{}}
+for the
+technology's
+output.
+For South
+Korea in
+2015 and
+2021:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5349}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2093}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2558}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sectors
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Specified
+as
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Driver
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{electricity}
+& mass &
+output \\
+\texttt{industrial\ processes},
+\texttt{urban\ processes}
+& mass &
+output \\
+Livestock
+(\texttt{Beef},
+\texttt{Dairy},
+\texttt{Pork},
+\texttt{Poultry},
+\texttt{SheepGoat})
+& mass &
+output \\
+Crops
+(\texttt{\_\allowbreak{}AGR}
+species) &
+mass &
+output \\
+Crops
+(\texttt{BC\_\allowbreak{}AWB},
+\texttt{OC\_\allowbreak{}AWB})
+&
+coefficient
+&
+output \\
+\texttt{UnmanagedLand}
+& mass &
+input
+\texttt{land-\allowbreak{}input} \\
+Buildings
+(\texttt{comm\ *},
+\texttt{resid\ *})
+& mass &
+named fuel
+input \\
+Transport
+(\texttt{trn\_\allowbreak{}*})
+& mass &
+named fuel
+input \\
+Industrial
+energy
+(\texttt{chemical\ energy\ use},
+\texttt{other\ industrial\ energy\ use},
+\texttt{process\ heat\ *},
+\texttt{ammonia},
+\texttt{waste\ biomass\ for\ paper})
+& mass &
+named fuel
+input \\
+\texttt{agricultural\ energy\ use},
+\texttt{construction\ energy\ use},
+\texttt{mining\ energy\ use}
+& mass &
+named fuel
+input \\
+\texttt{iron\ and\ steel}
+&
+coefficient
+&
+output \\
+Fuel
+resources
+(\texttt{coal},
+\texttt{crude\ oil},
+\texttt{natural\ gas})
+&
+coefficient
+&
+output \\
+\end{longtable}
+
+The other
+\texttt{\_\allowbreak{}AWB}
+species
+that
+appear in
+GCAM-KAIST's
+outputs
+(for
+example
+\texttt{CO\_\allowbreak{}AWB},
+\texttt{NOx\_\allowbreak{}AWB})
+were not
+found in
+the stock
+files
+examined,
+so how
+they are
+specified
+is
+unknown.
+
+Stock
+inputs
+also
+attach a
+\texttt{gdp-\allowbreak{}control}
+element
+(with
+\texttt{max-\allowbreak{}reduction}
+and
+\texttt{steepness})
+to many
+entries.
+\texttt{emission\_\allowbreak{}factor\_\allowbreak{}controls.\allowbreak{}xml}
+overrides
+some
+future
+coefficients
+directly.
+For
+example,
+for South
+Korea the
+international
+shipping
+SO2
+coefficient
+is 0.16 in
+2020,
+falling to
+0.13 by
+2050, and
+its GDP
+control is
+deleted.
+
+\hypertarget{b5.2-gcam-kaist-compared-with-stock-gcam-v9}{%
+\paragraph{B5.2
+GCAM-KAIST
+compared
+with stock
+GCAM
+v9}\label{b5.2-gcam-kaist-compared-with-stock-gcam-v9}}
+
+Extraction:
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}capss\_\allowbreak{}calibration\_\allowbreak{}test/\allowbreak{}stock\_\allowbreak{}korea2.\allowbreak{}py}.
+
+\textbf{Mass-specified
+tags, 2015
+and 2021,
+AQ
+species.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Cells
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Present in
+both,
+identical
+within
+0.1\% &
+2,244 \\
+Present in
+both,
+different
+& 7 \\
+\textbf{Present
+in both,
+total} &
+\textbf{2,251} \\
+\end{longtable}
+
+The seven
+differing
+cells are
+\texttt{UnmanagedLand}
+rows in
+2015.
+Beyond
+them:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{In
+  stock,
+  absent
+  from
+  GCAM-KAIST:}
+  \texttt{chemical\ energy\ use\ /\allowbreak{}\ gas}
+  in 2015,
+  8.04 kt
+  summed
+  over AQ
+  species,
+  plus
+  small
+  agricultural-
+  and
+  mining-stationary
+  entries.
+\item
+  \textbf{In
+  GCAM-KAIST,
+  absent
+  from the
+  stock
+  files
+  examined:}
+  unmanaged-land fire subsectors (12.5 kt over 2015 and 2021).
+\item
+  \textbf{In GCAM-KAIST, carried forward from a stock 1975 coefficient:}
+  \texttt{refining\ /\allowbreak{}\ biomass\ liquids\ /\allowbreak{}\ biodiesel}
+  (1.40 kt over 2015 and 2021). Stock GCAM sets biodiesel only in 1975, as a
+  coefficient per EJ of \texttt{regional\ biomassOil} input: 0.01 Tg/EJ for
+  SO2, NOx and CO alike, and 0.0001 for N2O and NMVOC. GCAM-KAIST's 2015 and
+  2021 biodiesel emissions equal that coefficient times the biodiesel's
+  \texttt{regional\ biomassOil} input, to five significant figures.
+\end{itemize}
+
+\textbf{Coefficient-specified
+tags.} For
+\texttt{iron\ and\ steel}
+and the
+\texttt{coal},
+\texttt{crude\ oil}
+and
+\texttt{natural\ gas}
+resources,
+GCAM-KAIST's
+implied
+coefficient
+(emissions
+÷ output)
+equals the
+stock
+\texttt{emiss-\allowbreak{}coef}
+to within
+0.001\%.
+This holds
+for NOx,
+SO2, CO
+and NMVOC
+in 2015
+and 2021.
+
+\textbf{Conclusion.}
+In the
+base
+years,
+GCAM-KAIST's
+non-CO2
+emissions
+for South
+Korea are,
+with the
+small
+exceptions
+listed,
+stock GCAM
+v9's.
+
+\hypertarget{b5.3-upstream-of-stock-gcam-ceds-and-capss}{%
+\paragraph{B5.3
+Upstream
+of stock
+GCAM: CEDS
+and
+CAPSS}\label{b5.3-upstream-of-stock-gcam-ceds-and-capss}}
+
+\begin{itemize}
+\tightlist
+\item
+  GCAM's
+  base-year
+  non-CO2
+  emissions
+  are
+  calibrated
+  to CEDS.
+  \texttt{ceds\_\allowbreak{}sector\_\allowbreak{}map.\allowbreak{}csv}
+  maps
+  CEDS
+  sectors
+  to GCAM
+  sector
+  groups.
+  For
+  example
+  \texttt{1A1a\_\allowbreak{}Electricity-\allowbreak{}public}
+  →
+  \texttt{elec\_\allowbreak{}heat},
+  and
+  \texttt{1A1bc\_\allowbreak{}Other-\allowbreak{}transformation}
+  →
+  \texttt{industry\_\allowbreak{}energy}.
+\item
+  CEDS
+  documentation
+  states
+  that its
+  default
+  estimates
+  are
+  scaled
+  to
+  country-level
+  inventories
+  where
+  available.
+  It lists
+  \texttt{http:/\allowbreak{}/\allowbreak{}airemiss.\allowbreak{}nier.\allowbreak{}go.\allowbreak{}kr/\allowbreak{}},
+  NIER's
+  national
+  air
+  pollutant
+  emission
+  service,
+  which
+  publishes
+  CAPSS,
+  as the
+  South
+  Korea
+  source
+  (see
+  Sources).
+\item
+  \textbf{Not
+  verified
+  here:}
+  which
+  CEDS
+  release
+  GCAM v9
+  uses,
+  and
+  which
+  Korean
+  sectors
+  and
+  species
+  that
+  release
+  actually
+  scales
+  to
+  CAPSS.
+\end{itemize}
+
+\hypertarget{b5.4-agreement-with-capss}{%
+\paragraph{B5.4
+Agreement
+with
+CAPSS}\label{b5.4-agreement-with-capss}}
+
+GCAM-KAIST
+emissions
+were
+assigned
+to CAPSS
+first-level
+categories
+using the
+repo
+crosswalk
+(\texttt{src/\allowbreak{}gcam\_\allowbreak{}emissions/\allowbreak{}reference/\allowbreak{}gcam\_\allowbreak{}kaist\_\allowbreak{}capss\_\allowbreak{}category\_\allowbreak{}crosswalk.\allowbreak{}csv})
+plus the
+two
+overrides
+in
+\texttt{capss\_\allowbreak{}category\_\allowbreak{}comparison.\allowbreak{}py}:
+\texttt{\_\allowbreak{}AWB}
+→ Biomass
+burning,
+and
+\texttt{industrial\ processes/\allowbreak{}solvents}
+→ Solvent
+use.
+Eleven
+category ×
+pollutant
+× year
+cells
+agree with
+CAPSS to
+within
+0.12\%:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2857}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1786}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1190}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1786}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2381}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+CAPSS
+category
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Pollutant
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Year
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+CAPSS (t)
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+GCAM-KAIST
+(t)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Agriculture
+& NH3 &
+2015 &
+231,263 &
+231,263.0 \\
+Agriculture
+& NH3 &
+2021 &
+200,384 &
+200,384.0 \\
+Road
+transport
+& NOx &
+2021 &
+287,279 &
+287,340.6 \\
+Road
+transport
+& SOx &
+2015 & 209
+& 208.8 \\
+Road
+transport
+& SOx &
+2021 & 248
+& 248.0 \\
+Road
+transport
+& NH3 &
+2021 &
+1,706 &
+1,706.6 \\
+Road
+transport
+& VOCs &
+2015 &
+46,145 &
+46,146.7 \\
+Industrial
+process &
+NH3 & 2015
+& 39,432 &
+39,467.3 \\
+Industrial
+process &
+NH3 & 2021
+& 41,953 &
+41,991.1 \\
+Waste
+disposal &
+SOx & 2015
+& 2,119 &
+2,119.1 \\
+Waste
+disposal &
+SOx & 2021
+& 1,382 &
+1,383.5 \\
+\end{longtable}
+
+All eleven
+cells come
+from
+mass-specified
+tags
+(B5.1).
+The same
+values are
+present in
+stock GCAM
+v9 (B5.2).
+
+Other
+cells
+agree much
+less well.
+BC, for
+example,
+differs by
+large
+factors in
+the
+stationary-combustion
+categories
+while
+agreeing
+closely in
+Road
+transport
+and
+Biomass
+burning:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3636}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5065}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1299}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+CAPSS
+category
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+BC ratio
+GCAM-KAIST
+/ CAPSS,
+2015
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2021
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Energy
+production
+& 8.9 &
+11.1 \\
+Manufacturing
+industry &
+10.1 &
+36.8 \\
+Non-industry
+& 65.4 &
+17.5 \\
+Waste
+disposal &
+37.8 &
+28.4 \\
+Road
+transport
+& 1.0 &
+1.0 \\
+Biomass
+burning &
+1.0 &
+0.9 \\
+\end{longtable}
+
+\textbf{Inferred.}
+Agreement
+to four or
+five
+significant
+figures
+cannot
+arise from
+independent
+estimation.
+Together
+with B5.2
+and B5.3,
+it
+indicates
+that these
+base-year
+values are
+CAPSS
+totals,
+passed
+through
+CEDS into
+GCAM's
+calibration
+and
+divided
+among GCAM
+technologies.
+
+\hypertarget{b5.5-where-refinery-emissions-sit-inferred}{%
+\paragraph{B5.5
+Where
+refinery
+emissions
+sit
+(Inferred)}\label{b5.5-where-refinery-emissions-sit-inferred}}
+
+\texttt{oil\ refining}
+has no tag
+(B4). CEDS
+sector
+\texttt{1A1bc\_\allowbreak{}Other-\allowbreak{}transformation},
+which
+includes
+petroleum
+refining,
+is mapped
+to GCAM's
+\texttt{industry\_\allowbreak{}energy}
+group
+(B5.3).
+
+The
+comparison
+tested
+reassigning
+\texttt{other\ industrial\ energy\ use\ /\allowbreak{}\ refined\ liquids}
+from
+Manufacturing
+industry
+to Energy
+production
+(CAPSS's
+Energy
+production
+includes
+refineries).
+This was
+done
+together
+with
+moving
+\texttt{refining\ /\allowbreak{}\ biomass\ liquids},
+under 0.3
+kt per
+pollutant,
+the other
+way. The
+result:
+
+\begin{itemize}
+\tightlist
+\item
+  Energy
+  production
+  CO and
+  NH3 come
+  within
+  2.0\% of
+  CAPSS in
+  both
+  years.
+  NH3 in
+  2015 is
+  1,378.2
+  t vs
+  1,379 t.
+\item
+  Energy
+  production
+  VOCs
+  come
+  within
+  2.3\%
+  (2015)
+  and
+  6.1\%
+  (2021).
+\item
+  Manufacturing
+  industry
+  CO in
+  2021
+  moves
+  from
+  85\%
+  above
+  CAPSS to
+  3.6\%
+  above.
+\end{itemize}
+
+This
+indicates
+that
+refinery
+fuel-combustion
+emissions
+are stored
+in
+\texttt{other\ industrial\ energy\ use\ /\allowbreak{}\ refined\ liquids},
+not in
+\texttt{refining}.
+
+\hypertarget{b6.-implied-coefficients}{%
+\subsubsection{B6.
+Implied
+coefficients}\label{b6.-implied-coefficients}}
+
+\hypertarget{b6.1-method}{%
+\paragraph{B6.1
+Method}\label{b6.1-method}}
+
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}nonco2\_\allowbreak{}coverage/\allowbreak{}driver\_\allowbreak{}consistent\_\allowbreak{}coef.\allowbreak{}py}
+computes
+each
+coefficient
+as
+follows:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Numerator:}
+  the
+  tag's
+  emissions,
+  summed
+  over
+  vintages.
+\item
+  \textbf{Denominator:}
+  the
+  driver
+  stock
+  GCAM
+  declares
+  for that
+  tag
+  (B5.1).
+  That is
+  the
+  named
+  fuel
+  input
+  (\texttt{demand-\allowbreak{}physical})
+  or the
+  technology's
+  output
+  (\texttt{physical-\allowbreak{}output}).
+\item
+  \textbf{Included
+  tags:}
+  only
+  mass-specified
+  tags.
+\item
+  \textbf{Deciles:}
+  income
+  deciles
+  \texttt{\_\allowbreak{}d2}--\texttt{\_\allowbreak{}d10}
+  are
+  dropped
+  because
+  they
+  duplicate
+  \texttt{\_\allowbreak{}d1}
+  (shown
+  below).
+\item
+  \textbf{Pollutants:}
+  NOx,
+  SO2,
+  NMVOC,
+  NH3, CO,
+  BC and
+  OC (no
+  \texttt{\_\allowbreak{}AGR}
+  or
+  \texttt{\_\allowbreak{}AWB}).
+\end{itemize}
+
+\hypertarget{b6.2-distinct-technologies-with-the-same-coefficient}{%
+\paragraph{B6.2
+Distinct
+technologies
+with the
+same
+coefficient}\label{b6.2-distinct-technologies-with-the-same-coefficient}}
+
+\textbf{Gas
+power:
+combined
+cycle vs
+steam/turbine.}
+
+\begin{itemize}
+\tightlist
+\item
+  Per unit
+  of fuel
+  burned,
+  \texttt{gas\ (CC)}
+  and
+  \texttt{gas\ (steam/\allowbreak{}CT)}
+  have
+  identical
+  coefficients
+  in every
+  base
+  year
+  from
+  2005 to
+  2021.
+  The fuel
+  burned
+  is the
+  gas
+  input to
+  the
+  matching
+  \texttt{elec\_\allowbreak{}*}
+  sector.
+\item
+  The
+  stock
+  2021
+  masses
+  (0.006297
+  and
+  0.001779
+  Tg NOx)
+  are in
+  the same
+  ratio,
+  3.54, as
+  the two
+  technologies'
+  gas use
+  (0.9943
+  and
+  0.2809
+  EJ).
+\item
+  Per MWh
+  generated,
+  the
+  coefficients
+  differ
+  only by
+  the
+  efficiency
+  ratio:
+  0.0404
+  vs
+  0.0605
+  kg/MWh
+  NOx in
+  2021.
+\item
+  The two
+  diverge
+  only
+  after
+  2021.
+\end{itemize}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.2747}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1209}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1209}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1209}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1209}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1209}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1209}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+kg per TJ
+of gas
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2005
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2010
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2015
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2021
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2030
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+NOx,
+\texttt{gas\ (CC)}
+& 95.01 &
+19.46 &
+21.10 &
+6.33 &
+5.02 &
+4.60 \\
+NOx,
+\texttt{gas\ (steam/\allowbreak{}CT)}
+& 95.01 &
+19.46 &
+21.10 &
+6.33 &
+3.34 &
+2.05 \\
+CO,
+\texttt{gas\ (CC)}
+& 28.99 &
+44.91 &
+56.21 &
+38.25 &
+19.20 &
+11.30 \\
+CO,
+\texttt{gas\ (steam/\allowbreak{}CT)}
+& 28.99 &
+44.91 &
+56.21 &
+38.25 &
+20.17 &
+12.04 \\
+\end{longtable}
+
+\textbf{Inferred.}
+The
+gas-power
+total was
+divided
+between
+the two
+technologies
+in
+proportion
+to fuel
+use, not
+according
+to
+technology-specific
+emission
+rates.
+
+\textbf{Buildings.}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Same
+  coefficient
+  across
+  services.}
+  In 2015
+  and
+  2021,
+  \texttt{comm\ cooling},
+  \texttt{comm\ heating}
+  and
+  \texttt{comm\ others}
+  have the
+  same
+  coefficient
+  per unit
+  of gas
+  for
+  every
+  pollutant
+  (NOx in
+  2021:
+  67.45
+  kg/TJ).
+  \texttt{resid\ heating}
+  and
+  \texttt{resid\ others}
+  match
+  each
+  other
+  for
+  coal,
+  gas and
+  refined
+  liquids
+  (checked
+  in 2021;
+  gas NOx:
+  62.26
+  kg/TJ).
+\item
+  \emph{Same
+  coefficient
+  across
+  income
+  deciles.}
+  Across
+  the ten
+  income
+  deciles,
+  coefficients
+  differ
+  by at
+  most
+  0.09\%.
+\end{itemize}
+
+\textbf{Non-road
+machinery:
+equal
+masses.}
+In
+\texttt{agricultural\ energy\ use},
+\texttt{construction\ energy\ use}
+and
+\texttt{mining\ energy\ use},
+the
+\texttt{refined\ liquids}
+technology
+carries
+\textbf{exactly
+the same
+mass} in
+subsector
+\texttt{mobile}
+and
+subsector
+\texttt{stationary}.
+This holds
+in every
+base year
+(2005,
+2010,
+2015,
+2021) and
+for every
+pollutant
+checked
+(NOx, CO,
+SO2). The
+equal
+masses are
+already
+present in
+stock GCAM
+v9's
+inputs
+(checked
+for
+agricultural
+and
+construction
+NOx in
+2015 and
+2021).
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4328}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2537}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3134}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+2021, kt
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+NOx,
+mobile
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+NOx,
+stationary
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{agricultural\ energy\ use}
+& 12.296 &
+12.296 \\
+\texttt{construction\ energy\ use}
+& 31.103 &
+31.103 \\
+\texttt{mining\ energy\ use}
+& 0.108 &
+0.108 \\
+\end{longtable}
+
+\textbf{Steel:
+EAF
+routes.}
+The stock
+coefficients
+themselves
+give
+electric-arc-furnace
+steel made
+from
+direct-reduced
+iron
+(\texttt{EAF\ with\ DRI})
+a far
+higher NOx
+coefficient
+than EAF
+steel made
+from scrap
+(\texttt{EAF\ with\ scrap}):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5926}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2037}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2037}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+NOx, kg
+per tonne
+of steel
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2015
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2021
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{EAF\ with\ DRI}
+& 0.778 &
+11.66 \\
+\texttt{EAF\ with\ scrap}
+& 0.134 &
+0.216 \\
+\texttt{BLASTFUR}
+(blast
+furnace) &
+1.092 &
+0.478 \\
+\end{longtable}
+
+In 2021
+this gives
+the two
+EAF routes
+nearly
+equal NOx
+masses
+(4.67 and
+4.75 kt),
+although
+their
+outputs
+are 0.400
+and 21.98
+Mt.
+
+\hypertarget{b6.3-base-year-instability}{%
+\paragraph{B6.3
+Base-year
+instability}\label{b6.3-base-year-instability}}
+
+Across the
+436
+mass-specified
+technology-pollutant
+series
+with a
+positive
+coefficient
+in all
+four of
+2005,
+2010, 2015
+and 2021
+(deciles
+collapsed,
+\texttt{ref}),
+the ratio
+of the
+largest to
+the
+smallest
+coefficient
+is:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3235}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6765}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Statistic
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Value
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Median &
+2.04 \\
+Share
+above 1.5×
+& 69\% \\
+Share
+above 2× &
+52\% \\
+90th
+percentile
+& 11.6 \\
+Maximum &
+134.7 (OC
+from
+residential
+coal
+heating) \\
+\end{longtable}
+
+Examples:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4894}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1277}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1277}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1277}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1277}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Coefficient
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2005
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2010
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2015
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2021
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Coal power
+(\texttt{coal\ (conv\ pul)})
+NOx,
+kg/MWh &
+1.753 &
+0.509 &
+0.458 &
+0.150 \\
+Coal power
+SO2,
+kg/MWh &
+0.408 &
+0.214 &
+0.267 &
+0.071 \\
+Gas
+combined-cycle
+(\texttt{gas\ (CC)})
+NOx,
+kg/MWh &
+0.684 &
+0.124 &
+0.134 &
+0.040 \\
+Oil power
+(\texttt{refined\ liquids\ (steam/\allowbreak{}CT)})
+SO2,
+kg/MWh &
+0.395 &
+0.424 &
+0.521 &
+0.374 \\
+Cement-kiln
+coal NOx,
+kg/GJ coal
+& 0.318 &
+0.346 &
+0.247 &
+0.264 \\
+Commercial
+gas
+(\texttt{comm\ others})
+NOx, kg/GJ
+gas &
+0.0366 &
+0.0402 &
+0.0416 &
+0.0674 \\
+Car
+petrol/diesel
+(\texttt{Liquids})
+NOx, kg/GJ
+fuel &
+0.229 &
+0.117 &
+0.119 &
+0.072 \\
+\end{longtable}
+
+\textbf{Inferred.}
+For
+mass-specified
+tags, each
+base-year
+coefficient
+equals the
+inventory
+mass
+divided by
+GCAM's
+modelled
+activity,
+so any
+difference
+between
+GCAM's
+activity
+and the
+activity
+behind the
+inventory
+is
+absorbed
+into the
+coefficient.
+
+\hypertarget{b6.4-placeholder-driven-tags}{%
+\paragraph{B6.4
+Placeholder-driven
+tags}\label{b6.4-placeholder-driven-tags}}
+
+Every
+tagged
+subsector
+of
+\texttt{industrial\ processes}
+and
+\texttt{urban\ processes}
+takes
+\texttt{misc\ emissions\ sources},
+an
+\texttt{unlimited-\allowbreak{}resource},
+as input.
+Stock GCAM
+declares
+an output
+driver for
+these
+tags. That
+output is
+a fixed
+placeholder
+(unit
+\texttt{NA}),
+not a
+production
+quantity:
+
+\begin{itemize}
+\tightlist
+\item
+  In 2021
+  all
+  eight
+  \texttt{industrial\ processes}
+  subsectors
+  output
+  0.000243714.
+\item
+  The
+  \texttt{urban\ processes}
+  subsectors
+  output
+  0.0008.
+\end{itemize}
+
+The NOx
+and SO2 on
+\texttt{industrial\ processes\ /\allowbreak{}\ other\ industrial\ processes}
+fall from
+2021 to
+2050
+almost
+identically
+in both
+scenarios:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4571}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1571}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1857}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\texttt{other\ industrial\ processes}
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2021
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\texttt{ref}
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\texttt{nz}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+NOx, kt &
+39.10 &
+13.62 &
+13.36 \\
+SO2, kt &
+83.81 &
+29.19 &
+28.64 \\
+\end{longtable}
+
+The table
+below
+gives the
+share of
+GCAM-KAIST's
+2021
+Korean
+emissions
+on
+placeholder-driven
+tags. It
+uses
+\texttt{ref}
+and
+excludes
+\texttt{trn\_\allowbreak{}aviation\_\allowbreak{}intl}
+and
+\texttt{trn\_\allowbreak{}shipping\_\allowbreak{}intl}.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2239}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4776}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2985}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Pollutant
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+On
+placeholder-driven
+tags
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Share of
+total
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+VOCs & 760
+kt &
+81\% \\
+SO2 & 85
+kt &
+55\% \\
+NH3 & 42
+kt &
+17\% \\
+NOx & 50
+kt &
+6\% \\
+CO & 35 kt
+& 6\% \\
+\end{longtable}
+
+The VOCs
+are mainly
+\texttt{solvents}
+(574 kt),
+\texttt{other\ industrial\ processes}
+(128 kt)
+and
+\texttt{landfills}
+(48 kt).
+
+\hypertarget{b6.5-future-years}{%
+\paragraph{B6.5
+Future
+years}\label{b6.5-future-years}}
+
+Of 463
+mass-specified
+series
+with a
+positive
+2021
+coefficient
+(deciles
+collapsed,
+\texttt{ref}),
+comparing
+the 2050
+coefficient
+with the
+2021 one:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5208}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2292}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Behaviour
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Series
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Share
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Frozen
+(within
+±1\%) &
+213 &
+46\% \\
+Declining
+& 243 &
+52\% \\
+Rising & 7
+& 2\% \\
+\end{longtable}
+
+Frozen
+series are
+most
+common in
+\texttt{process\ heat\ cement},
+\texttt{construction\ energy\ use},
+\texttt{UnmanagedLand}
+and
+residential
+heating.
+Declining
+series are
+most
+common in
+\texttt{electricity},
+\texttt{chemical\ energy\ use},
+\texttt{other\ industrial\ energy\ use}
+and cars.
+
+In 2050,
+409 of 439
+coefficients
+(93\%) are
+identical
+in
+\texttt{nz}
+and
+\texttt{ref}.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1412}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1412}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1412}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1765}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Coefficient
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2021
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2030
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+2050
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Behaviour
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Cement-kiln
+coal NOx,
+kg/GJ &
+0.264 &
+0.264 &
+0.264 &
+frozen \\
+Commercial
+gas NOx,
+kg/GJ &
+0.0674 &
+0.0674 &
+0.0674 &
+frozen \\
+Oil power
+NOx,
+kg/MWh &
+0.320 &
+0.320 &
+0.320 &
+frozen \\
+Oil power
+SO2,
+kg/MWh &
+0.374 &
+0.193 &
+0.108 &
+declining \\
+Coal power
+NOx,
+kg/MWh &
+0.150 &
+0.077 &
+0.043 &
+declining \\
+Coal power
+SO2,
+kg/MWh &
+0.071 &
+0.037 &
+0.021 &
+declining \\
+Car
+petrol/diesel
+NOx, kg/GJ
+& 0.072 &
+0.037 &
+0.021 &
+declining \\
+\end{longtable}
+
+The stock
+inputs
+contain
+the
+mechanisms
+that
+produce
+this
+behaviour
+(\texttt{gdp-\allowbreak{}control},
+and future
+\texttt{emiss-\allowbreak{}coef}
+overrides
+in
+\texttt{emission\_\allowbreak{}factor\_\allowbreak{}controls.\allowbreak{}xml}).
+For South Korea, that file sets 2025 coefficients for the six CCS power
+technologies (for example \texttt{gas\ (CC\ CCS)} NOx: 0.00246) and SO2
+coefficients for domestic and international shipping.
+GCAM-KAIST's own control settings
+cannot be
+inspected,
+because
+its input
+files are
+not
+available.
+
+\hypertarget{b7.-summary-what-the-encoding-can-and-cannot-represent}{%
+\subsubsection{B7.
+Summary:
+what the
+encoding
+can and
+cannot
+represent}\label{b7.-summary-what-the-encoding-can-and-cannot-represent}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Change in
+a scenario
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+How
+GCAM-KAIST's
+non-CO2
+emissions
+respond
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Shift
+between
+tagged
+technologies
+(for
+example
+coal → gas
+power) &
+Emissions
+change at
+each
+technology's
+coefficient. \\
+Shift
+between
+technologies
+that share
+a
+coefficient
+(gas CC ↔
+steam/CT
+per unit
+of fuel;
+heating ↔
+cooling ↔
+other;
+deciles) &
+Base-year
+coefficients
+do not
+distinguish
+them. \\
+Shift to
+an
+untagged
+technology
+(hybrid
+vehicles,
+hydrogen-based
+DRI, steel
+or cement
+with CCS)
+&
+Emissions
+of that
+activity
+are
+zero. \\
+Change in
+industrial
+output or
+refinery
+throughput
+& Process
+emissions
+do not
+respond:
+they are
+absent, or
+sit on a
+placeholder
+driver.
+Refinery
+combustion
+follows
+\texttt{other\ industrial\ energy\ use\ /\allowbreak{}\ refined\ liquids}
+(Inferred,
+B5.5). \\
+Pollution-control
+policy
+(scrubbers,
+emission
+standards)
+& No
+lever.
+Coefficients
+are
+frozen, or
+follow a
+curve
+shared by
+both
+scenarios. \\
+Primary
+PM2.5 /
+PM10 & Not
+represented. \\
+\end{longtable}
+
+\hypertarget{b8.-limitations-of-this-audit}{%
+\subsubsection{B8.
+Limitations
+of this
+audit}\label{b8.-limitations-of-this-audit}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{KAIST
+  inputs.}
+  GCAM-KAIST's
+  input
+  XMLs
+  were not
+  examined.
+  Statements
+  about
+  how its
+  tags are
+  set rely
+  on its
+  outputs
+  and on
+  stock
+  GCAM
+  v9's
+  inputs.
+\item
+  \textbf{CEDS
+  link.}
+  The CEDS
+  → CAPSS
+  link
+  rests on
+  CEDS
+  documentation
+  and on
+  the
+  numerical
+  agreement
+  in B5.4.
+  It has
+  not been
+  traced
+  through
+  the CEDS
+  release
+  used by
+  GCAM v9.
+\item
+  \textbf{Refinery
+  location.}
+  B5.5 is
+  an
+  inference
+  from a
+  sector
+  map and
+  a
+  mapping
+  test,
+  not from
+  an
+  explicit
+  source
+  record.
+\item
+  \textbf{Coefficient
+  scope.}
+  Implied
+  coefficients
+  use the
+  driver
+  stock
+  GCAM
+  declares.
+  Where
+  GCAM-KAIST
+  declares
+  a
+  different
+  driver,
+  its true
+  coefficient
+  would
+  differ.
+\item
+  \textbf{Reasons
+  for
+  untagged
+  nodes.}
+  The
+  classification
+  of
+  untagged
+  active
+  nodes
+  (B4) is
+  our
+  screening
+  judgment
+  and has
+  not been
+  reviewed.
+\item
+  \textbf{Region.}
+  Only
+  South
+  Korea
+  was
+  examined.
+\end{itemize}
+
+\hypertarget{b9.-reproducing-the-evidence}{%
+\subsubsection{B9.
+Reproducing
+the
+evidence}\label{b9.-reproducing-the-evidence}}
+
+All
+scripts
+and
+outputs
+below are
+local
+diagnostics
+under
+\texttt{results/\allowbreak{}},
+which is
+untracked.
+They
+should be
+moved into
+the
+package
+before
+this
+document
+is
+circulated
+as a
+reproducible
+record.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Evidence
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Script
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Output
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Native
+emissions
+detail
+(all tags)
+&
+\texttt{src/\allowbreak{}gcam\_\allowbreak{}emissions/\allowbreak{}gcam/\allowbreak{}nonco2\_\allowbreak{}by\_\allowbreak{}sector.\allowbreak{}py}
++
+\texttt{queries/\allowbreak{}nonco2\_\allowbreak{}emissions\_\allowbreak{}by\_\allowbreak{}sector.\allowbreak{}xq}
+&
+\texttt{data/\allowbreak{}interim/\allowbreak{}gcam\_\allowbreak{}native\_\allowbreak{}emissions\_\allowbreak{}by\_\allowbreak{}sector/\allowbreak{}gcam\_\allowbreak{}kaist\_\allowbreak{}nonco2\_\allowbreak{}emissions\_\allowbreak{}detail.\allowbreak{}csv} \\
+Activity
+and tag
+coverage
+(B4) &
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}nonco2\_\allowbreak{}coverage/\allowbreak{}activity\_\allowbreak{}inventory.\allowbreak{}xq}
+(run with
+\texttt{basex\ -\allowbreak{}b\ db=\allowbreak{}ref},
+then
+\texttt{db=\allowbreak{}nz}),
+\texttt{build\_\allowbreak{}coverage.\allowbreak{}py}
+&
+\texttt{gcam\_\allowbreak{}kaist\_\allowbreak{}nonco2\_\allowbreak{}coverage\_\allowbreak{}by\_\allowbreak{}technology.\allowbreak{}csv},
+\texttt{.\allowbreak{}.\allowbreak{}.\allowbreak{}\_\allowbreak{}by\_\allowbreak{}subsector.\allowbreak{}csv} \\
+Activity
+drivers by
+technology
+&
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}policy\_\allowbreak{}experiment/\allowbreak{}drivers.\allowbreak{}xq}
+&
+\texttt{drv\_\allowbreak{}ref.\allowbreak{}csv},
+\texttt{drv\_\allowbreak{}nz.\allowbreak{}csv} \\
+Power fuel
+use &
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}nonco2\_\allowbreak{}coverage/\allowbreak{}elecfuel.\allowbreak{}xq}
+&
+\texttt{elecfuel\_\allowbreak{}ref.\allowbreak{}csv},
+\texttt{elecfuel\_\allowbreak{}nz.\allowbreak{}csv} \\
+Stock GCAM
+v9 Korea
+specifications
+(B5.1--B5.2)
+&
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}capss\_\allowbreak{}calibration\_\allowbreak{}test/\allowbreak{}stock\_\allowbreak{}korea2.\allowbreak{}py}
+&
+\texttt{stock\_\allowbreak{}korea2.\allowbreak{}csv} \\
+CAPSS
+agreement
+(B5.4--B5.5)
+&
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}capss\_\allowbreak{}calibration\_\allowbreak{}test/\allowbreak{}mapping\_\allowbreak{}search.\allowbreak{}py}
+&
+\texttt{capss\_\allowbreak{}mapping\_\allowbreak{}search\_\allowbreak{}default.\allowbreak{}csv},
+\texttt{.\allowbreak{}.\allowbreak{}.\allowbreak{}\_\allowbreak{}best.\allowbreak{}csv} \\
+Driver-consistent
+coefficients
+(B6.1,
+B6.3,
+B6.5) &
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}nonco2\_\allowbreak{}coverage/\allowbreak{}driver\_\allowbreak{}consistent\_\allowbreak{}coef.\allowbreak{}py}
+&
+\texttt{driver\_\allowbreak{}consistent\_\allowbreak{}coef.\allowbreak{}csv} \\
+Per-fuel
+power
+coefficients
+and
+placeholder
+shares
+(B6.2,
+B6.4) &
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}nonco2\_\allowbreak{}coverage/\allowbreak{}implied\_\allowbreak{}ef.\allowbreak{}py}
+(its
+sections
+D--E are
+superseded
+by the
+line
+above) &
+\texttt{implied\_\allowbreak{}ef\_\allowbreak{}long.\allowbreak{}csv} \\
+\end{longtable}
+
+Related
+analyses
+that build
+on this
+audit, not
+part of
+it:
+
+\begin{itemize}
+\tightlist
+\item
+  the
+  CAPSS
+  mapping
+  review
+  (\texttt{results/\allowbreak{}diagnostics/\allowbreak{}nonco2\_\allowbreak{}coverage/\allowbreak{}gcam\_\allowbreak{}kaist\_\allowbreak{}capss\_\allowbreak{}mapping\_\allowbreak{}review.\allowbreak{}csv});
+\item
+  the
+  mapping
+  search
+  (\texttt{results/\allowbreak{}diagnostics/\allowbreak{}capss\_\allowbreak{}calibration\_\allowbreak{}test/\allowbreak{}});
+\item
+  the
+  policy-sensitivity
+  experiment
+  (\texttt{results/\allowbreak{}diagnostics/\allowbreak{}policy\_\allowbreak{}experiment/\allowbreak{}}).
+\end{itemize}
+
+\hypertarget{sources}{%
+\subsubsection{Sources}\label{sources}}
+
+\begin{itemize}
+\tightlist
+\item
+  JGCRI,
+  \emph{Community
+  Emissions
+  Data
+  System
+  (CEDS)},
+  \url{https://www.github.com/JGCRI/CEDS}.
+\item
+  CEDS
+  reviewer-response
+  supplement,
+  ESSD
+  preprint
+  essd-2020-103,
+  \url{https://essd.copernicus.org/preprints/essd-2020-103/essd-2020-103-AC1-supplement.pdf}.
+\item
+  Stock
+  GCAM v9
+  files
+  listed
+  in B1.
+\end{itemize}

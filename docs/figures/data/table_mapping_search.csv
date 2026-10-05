@@ -1,0 +1,3 @@
+mapping,misallocated_share_of_capss_mass,cells_with_both_positive,within_0.12pct,within_1pct,within_5pct,within_10pct
+default,0.4441,102,11,11,24,31
+best,0.409,102,12,14,29,41

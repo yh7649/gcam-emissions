@@ -1,0 +1,45 @@
+% Setup
+\documentclass[12pt]{setup/puthesis_undergraduate}
+\input{preamble}
+\input{setup/newcommands}
+
+% Cover page
+\title{Substantial Air Quality and Health Co-Benefits from Early Climate Action in Korea}
+\author{Jinyu Shiwang\textsuperscript{1,\#}, Yehyun Hong\textsuperscript{1,\#}, Wei Peng\textsuperscript{1,*}, Haewon McJeon\textsuperscript{2}, Sungeun~(Rachel)~Kim\textsuperscript{2}}
+\authornotes{%
+\textsuperscript{1}Peng Energy Group, Princeton University\\
+\textsuperscript{2}Integrated Assessment Models Group, Korea Advanced Institute of Science and Technology (KAIST)\\
+All authors are members of Net-Zero Korea.\\[1ex]
+\textsuperscript{\#}Equal contribution. \quad \textsuperscript{*}Corresponding author.\\
+\note{Working title. More authors to be added; order to be decided.}}
+\submitted{Working draft --- \today}
+
+\abstract{\input{sections/abstract}}
+\acknowledgements{\input{sections/acknow}}
+
+\begin{document}
+
+\chapter{Introduction}\label{ch:intro}
+\input{sections/intro}
+
+\chapter{Background}\label{ch:background}
+\input{sections/background}
+
+\chapter{Methods}\label{ch:methods}
+\input{sections/methods}
+
+\chapter{Results}\label{ch:results}
+\input{sections/results}
+
+\appendix
+\chapter{Project Plan}\label{app:plan}
+\input{sections/plan}
+
+\chapter{Code}\label{app:code}
+\input{sections/code}
+
+% Uncomment once you have at least one \cite{} (BibTeX errors on an empty bibliography)
+% \bibliographystyle{abbrv}
+% \bibliography{refs}
+
+\end{document}

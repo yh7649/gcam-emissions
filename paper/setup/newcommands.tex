@@ -1,0 +1,21 @@
+% Units / species
+\newcommand{\PM}{PM\textsubscript{2.5}}
+\newcommand{\COtwo}{CO\textsubscript{2}}
+
+% Drafting notes -- to hide all of them at once, change both bodies to {}
+\newcommand{\note}[1]{\textcolor{blue}{[#1]}}              % general notes, missing citations
+\newcommand{\discuss}[1]{\textcolor{orange!80!black}{[To discuss: #1]}} % open team decisions
+
+% Marker for plain-English sections in the Background investigation
+\newcommand{\plainmark}{\textcolor{green!55!black}{\ensuremath{\bullet}}}
+
+% Figure slot: shows Figures/<file> if it exists, otherwise a labelled placeholder
+% (the investigation figures are copies of docs/figures/*.png, refreshed by
+% docs/figures/make_figures.py in the gcam-emissions repo)
+\newcommand{\figslot}[1]{%
+  \begin{center}
+  \IfFileExists{Figures/#1}%
+    {\includegraphics[width=0.9\textwidth]{Figures/#1}}%
+    {\fbox{\parbox[c][1.4in][c]{0.85\textwidth}{\centering
+      \note{Figure not yet added:}\\[0.5ex]\texttt{Figures/\detokenize{#1}}}}}%
+  \end{center}}

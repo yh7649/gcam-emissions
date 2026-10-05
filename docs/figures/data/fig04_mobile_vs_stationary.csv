@@ -1,0 +1,17 @@
+sector,subsector,year,NOx_kt
+agricultural energy use,mobile,2005,33.8582
+agricultural energy use,mobile,2010,26.6331
+agricultural energy use,mobile,2015,13.8272
+agricultural energy use,mobile,2021,12.296
+agricultural energy use,stationary,2005,33.8582
+agricultural energy use,stationary,2010,26.6331
+agricultural energy use,stationary,2015,13.8272
+agricultural energy use,stationary,2021,12.296
+construction energy use,mobile,2005,18.552699999999998
+construction energy use,mobile,2010,34.3542
+construction energy use,mobile,2015,40.641200000000005
+construction energy use,mobile,2021,31.1033
+construction energy use,stationary,2005,18.552699999999998
+construction energy use,stationary,2010,34.3542
+construction energy use,stationary,2015,40.641200000000005
+construction energy use,stationary,2021,31.1033

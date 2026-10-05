@@ -14,5 +14,19 @@ dist/
 /results/
 /model_inputs/
 
+# LaTeX build files for the paper draft (source stays tracked)
+/paper/*.aux
+/paper/*.log
+/paper/*.toc
+/paper/*.out
+/paper/*.lof
+/paper/*.lot
+/paper/*.bbl
+/paper/*.blg
+/paper/*.fls
+/paper/*.fdb_latexmk
+/paper/*.synctex.gz
+/paper/main.pdf
+
 # OS
 .DS_Store

@@ -1,0 +1,437 @@
+sector,subsector,technology,native_pollutant,max_over_min
+UnmanagedLand,GrasslandFires_Korea,GrasslandFires_Korea,BC,1.0991180224247472
+UnmanagedLand,GrasslandFires_Korea,GrasslandFires_Korea,CO,1.099118673474875
+UnmanagedLand,GrasslandFires_Korea,GrasslandFires_Korea,NH3,1.0991186986998982
+UnmanagedLand,GrasslandFires_Korea,GrasslandFires_Korea,NMVOC,1.1229249891279114
+UnmanagedLand,GrasslandFires_Korea,GrasslandFires_Korea,NOx,1.099115648027431
+UnmanagedLand,GrasslandFires_Korea,GrasslandFires_Korea,OC,1.0991200186128454
+UnmanagedLand,GrasslandFires_Korea,GrasslandFires_Korea,SO2_2,1.0991218095182198
+UnmanagedLand,GrasslandFires_Korea,ProtectedGrasslandFires_Korea,BC,1.099118402479233
+UnmanagedLand,GrasslandFires_Korea,ProtectedGrasslandFires_Korea,CO,1.099122159184189
+UnmanagedLand,GrasslandFires_Korea,ProtectedGrasslandFires_Korea,NH3,1.0991187593202656
+UnmanagedLand,GrasslandFires_Korea,ProtectedGrasslandFires_Korea,NMVOC,1.1229270545500856
+UnmanagedLand,GrasslandFires_Korea,ProtectedGrasslandFires_Korea,NOx,1.099124797812742
+UnmanagedLand,GrasslandFires_Korea,ProtectedGrasslandFires_Korea,OC,1.0991194114784122
+UnmanagedLand,GrasslandFires_Korea,ProtectedGrasslandFires_Korea,SO2_2,1.0991258339732153
+agricultural energy use,mobile,refined liquids,BC,1.9674633119623544
+agricultural energy use,mobile,refined liquids,CO,1.4362747851417388
+agricultural energy use,mobile,refined liquids,NH3,1.5121280143762155
+agricultural energy use,mobile,refined liquids,NMVOC,1.921735532421618
+agricultural energy use,mobile,refined liquids,NOx,1.4031123183283223
+agricultural energy use,mobile,refined liquids,OC,1.9387898218825688
+agricultural energy use,mobile,refined liquids,SO2_2,2.1476543114799744
+agricultural energy use,stationary,gas,BC,1.1384771675287417
+agricultural energy use,stationary,gas,CO,1.468530959581783
+agricultural energy use,stationary,gas,NH3,1.3885023021909364
+agricultural energy use,stationary,gas,NMVOC,2.6214024976827894
+agricultural energy use,stationary,gas,NOx,1.8753245129922698
+agricultural energy use,stationary,gas,OC,1.1387065714021118
+agricultural energy use,stationary,gas,SO2_2,3.3563479679528245
+agricultural energy use,stationary,refined liquids,BC,1.9674500198181282
+agricultural energy use,stationary,refined liquids,CO,1.43628448865207
+agricultural energy use,stationary,refined liquids,NH3,1.512131615203874
+agricultural energy use,stationary,refined liquids,NMVOC,1.9217485157175551
+agricultural energy use,stationary,refined liquids,NOx,1.4031156595572107
+agricultural energy use,stationary,refined liquids,OC,1.9387767234558835
+agricultural energy use,stationary,refined liquids,SO2_2,2.147634687810132
+ammonia,gas,gas,BC,2.6674932026300264
+ammonia,gas,gas,CO,2.4005115896387554
+ammonia,gas,gas,NH3,3.1230346542488263
+ammonia,gas,gas,NMVOC,2.5835433559622203
+ammonia,gas,gas,NOx,4.160234512408776
+ammonia,gas,gas,OC,3.179004086643539
+ammonia,gas,gas,SO2_2,3.656491023912022
+chemical energy use,biomass,biomass,BC,1.0564711651906027
+chemical energy use,biomass,biomass,CO,3.3604808673430333
+chemical energy use,biomass,biomass,NH3,2.1456086474153504
+chemical energy use,biomass,biomass,NMVOC,1.3097462153610524
+chemical energy use,biomass,biomass,NOx,1.2605037720377972
+chemical energy use,biomass,biomass,OC,1.003174146329671
+chemical energy use,biomass,biomass,SO2_2,2.724784723535772
+chemical energy use,coal,coal,BC,1.9152906787606367
+chemical energy use,coal,coal,CO,2.0345351933717106
+chemical energy use,coal,coal,NH3,2.2072298105132013
+chemical energy use,coal,coal,NMVOC,1.8940585545536572
+chemical energy use,coal,coal,NOx,1.2557774248565121
+chemical energy use,coal,coal,OC,1.963045295830332
+chemical energy use,coal,coal,SO2_2,3.0502058109800094
+chemical energy use,refined liquids,refined liquids,BC,11.182845987778059
+chemical energy use,refined liquids,refined liquids,CO,5.56393539077233
+chemical energy use,refined liquids,refined liquids,NH3,4.493017285140914
+chemical energy use,refined liquids,refined liquids,NMVOC,11.73528795432618
+chemical energy use,refined liquids,refined liquids,NOx,6.382329674193184
+chemical energy use,refined liquids,refined liquids,OC,8.924590336065773
+chemical energy use,refined liquids,refined liquids,SO2_2,18.735345658175138
+comm cooling,gas,gas,BC,1.0015282086078172
+comm cooling,gas,gas,CO,1.3102690643676271
+comm cooling,gas,gas,NH3,1.2591465081630793
+comm cooling,gas,gas,NMVOC,2.393737047716538
+comm cooling,gas,gas,NOx,1.8451639958702737
+comm cooling,gas,gas,OC,1.0015282086078174
+comm cooling,gas,gas,SO2_2,3.29859899325673
+comm heating,biomass,biomass,BC,1.0596561965550526
+comm heating,biomass,biomass,CO,1.2698155716494528
+comm heating,biomass,biomass,NH3,1.243409786223861
+comm heating,biomass,biomass,NMVOC,2.255804608504422
+comm heating,biomass,biomass,NOx,2.152438424850332
+comm heating,biomass,biomass,OC,1.0686799988579074
+comm heating,biomass,biomass,SO2_2,3.284044418192668
+comm heating,gas,gas,BC,1.0015314156717154
+comm heating,gas,gas,CO,1.3102653597171376
+comm heating,gas,gas,NH3,1.259148102299122
+comm heating,gas,gas,NMVOC,2.393712132999955
+comm heating,gas,gas,NOx,1.845150297594955
+comm heating,gas,gas,OC,1.0015297877847396
+comm heating,gas,gas,SO2_2,3.2986241102726215
+comm heating,refined liquids,refined liquids,BC,2.4049252431264208
+comm heating,refined liquids,refined liquids,CO,1.2547996435770208
+comm heating,refined liquids,refined liquids,NH3,1.8454293837128202
+comm heating,refined liquids,refined liquids,NMVOC,1.3636656347915226
+comm heating,refined liquids,refined liquids,NOx,1.2857053285805358
+comm heating,refined liquids,refined liquids,OC,2.1760828964164514
+comm heating,refined liquids,refined liquids,SO2_2,4.651224130114748
+comm others,biomass,biomass,BC,1.0596643770170864
+comm others,biomass,biomass,CO,1.2698039569181294
+comm others,biomass,biomass,NH3,1.2434447938319733
+comm others,biomass,biomass,NMVOC,2.2557285683309938
+comm others,biomass,biomass,NOx,2.1523789077437563
+comm others,biomass,biomass,OC,1.0686923650249431
+comm others,biomass,biomass,SO2_2,3.2841360633647136
+comm others,gas,gas,BC,1.001529659528266
+comm others,gas,gas,CO,1.3102674768430933
+comm others,gas,gas,NH3,1.2591502485945911
+comm others,gas,gas,NMVOC,2.3937224965945507
+comm others,gas,gas,NOx,1.8451571689093107
+comm others,gas,gas,OC,1.0015296595282661
+comm others,gas,gas,SO2_2,3.2986049676269973
+comm others,refined liquids,refined liquids,BC,2.4049254080366183
+comm others,refined liquids,refined liquids,CO,1.254800954151667
+comm others,refined liquids,refined liquids,NH3,1.8454262842515525
+comm others,refined liquids,refined liquids,NMVOC,1.3636693756033713
+comm others,refined liquids,refined liquids,NOx,1.285696945412311
+comm others,refined liquids,refined liquids,OC,2.1760763055528862
+comm others,refined liquids,refined liquids,SO2_2,4.6512062747594385
+construction energy use,mobile,refined liquids,BC,2.167566439164977
+construction energy use,mobile,refined liquids,CO,2.9473286573063606
+construction energy use,mobile,refined liquids,NH3,45.212295729318875
+construction energy use,mobile,refined liquids,NMVOC,3.729857515585807
+construction energy use,mobile,refined liquids,NOx,1.6042984334639638
+construction energy use,mobile,refined liquids,OC,2.167530736050486
+construction energy use,mobile,refined liquids,SO2_2,4.602982780486405
+construction energy use,stationary,refined liquids,BC,2.1675478095281773
+construction energy use,stationary,refined liquids,CO,2.947307492054167
+construction energy use,stationary,refined liquids,NH3,45.21190714208863
+construction energy use,stationary,refined liquids,NMVOC,3.7298307308650838
+construction energy use,stationary,refined liquids,NOx,1.6042743584725865
+construction energy use,stationary,refined liquids,OC,2.16751210672053
+construction energy use,stationary,refined liquids,SO2_2,4.602946760094163
+electricity,biomass,biomass (conv),BC,1.372734350386506
+electricity,biomass,biomass (conv),CO,4.8278492778841215
+electricity,biomass,biomass (conv),NH3,1.5620753367117899
+electricity,biomass,biomass (conv),NMVOC,2.750250928943972
+electricity,biomass,biomass (conv),NOx,8.380387890369592
+electricity,biomass,biomass (conv),OC,1.3727293186617502
+electricity,biomass,biomass (conv),SO2_2,2.6441574939776107
+electricity,coal,coal (conv pul),BC,2.39344835532362
+electricity,coal,coal (conv pul),CO,7.430882090548329
+electricity,coal,coal (conv pul),NH3,1.1859928319172819
+electricity,coal,coal (conv pul),NMVOC,3.050736010041531
+electricity,coal,coal (conv pul),NOx,11.725106768995142
+electricity,coal,coal (conv pul),OC,2.5412404591173368
+electricity,coal,coal (conv pul),SO2_2,5.736380296303428
+electricity,gas,gas (CC),BC,1.2075263181761187
+electricity,gas,gas (CC),CO,1.7161259579522363
+electricity,gas,gas (CC),NH3,1.3836436123819156
+electricity,gas,gas (CC),NMVOC,3.151212218326321
+electricity,gas,gas (CC),NOx,16.951789158712142
+electricity,gas,gas (CC),OC,1.207526318175756
+electricity,gas,gas (CC),SO2_2,2.8536794480854395
+electricity,gas,gas (steam/CT),BC,1.2208040007219738
+electricity,gas,gas (steam/CT),CO,1.697473106898058
+electricity,gas,gas (steam/CT),NH3,1.398857918642967
+electricity,gas,gas (steam/CT),NMVOC,3.116955930029328
+electricity,gas,gas (steam/CT),NOx,17.138232107731987
+electricity,gas,gas (steam/CT),OC,1.2208040007216054
+electricity,gas,gas (steam/CT),SO2_2,2.885065673815442
+electricity,refined liquids,refined liquids (steam/CT),BC,2.439556202172791
+electricity,refined liquids,refined liquids (steam/CT),CO,4.410091507424936
+electricity,refined liquids,refined liquids (steam/CT),NH3,2.5443517006359646
+electricity,refined liquids,refined liquids (steam/CT),NMVOC,2.708906067650393
+electricity,refined liquids,refined liquids (steam/CT),NOx,4.351164637852465
+electricity,refined liquids,refined liquids (steam/CT),OC,2.2341945063127584
+electricity,refined liquids,refined liquids (steam/CT),SO2_2,1.3913780201857129
+industrial processes,other industrial processes,other industrial processes,BC,2.0988740011260605
+industrial processes,other industrial processes,other industrial processes,CO,1.2678417984043835
+industrial processes,other industrial processes,other industrial processes,NH3,1.3068195011975998
+industrial processes,other industrial processes,other industrial processes,NMVOC,1.4725002617764877
+industrial processes,other industrial processes,other industrial processes,NOx,1.640516909957992
+industrial processes,other industrial processes,other industrial processes,SO2_2,1.4633587729687632
+industrial processes,solvents,solvents,NMVOC,1.6080537394138072
+mining energy use,mobile,refined liquids,BC,1.2385447642732481
+mining energy use,mobile,refined liquids,CO,1.5267516449111007
+mining energy use,mobile,refined liquids,NH3,1.807913395668687
+mining energy use,mobile,refined liquids,NMVOC,2.353089767598714
+mining energy use,mobile,refined liquids,NOx,2.449878153235601
+mining energy use,mobile,refined liquids,OC,2.1651610991872454
+mining energy use,mobile,refined liquids,SO2_2,2.237869475653933
+mining energy use,stationary,refined liquids,BC,1.2385882772533958
+mining energy use,stationary,refined liquids,CO,1.526803858490728
+mining energy use,stationary,refined liquids,NH3,1.8080982512691484
+mining energy use,stationary,refined liquids,NMVOC,2.3531724371569744
+mining energy use,stationary,refined liquids,NOx,2.4501286484739566
+mining energy use,stationary,refined liquids,OC,2.165159078702927
+mining energy use,stationary,refined liquids,SO2_2,2.237948097253144
+other industrial energy use,biomass,biomass,BC,1.825807429945683
+other industrial energy use,biomass,biomass,CO,2.5732215204911566
+other industrial energy use,biomass,biomass,NH3,1.8621611295835465
+other industrial energy use,biomass,biomass,NMVOC,1.6330709532140633
+other industrial energy use,biomass,biomass,NOx,1.4445630122287991
+other industrial energy use,biomass,biomass,OC,1.8258099283119233
+other industrial energy use,biomass,biomass,SO2_2,3.5583892796215557
+other industrial energy use,coal,coal,BC,84.57752569782515
+other industrial energy use,coal,coal,CO,65.62800744933753
+other industrial energy use,coal,coal,NH3,63.417140264047056
+other industrial energy use,coal,coal,NMVOC,49.37262363010473
+other industrial energy use,coal,coal,NOx,44.917254972553074
+other industrial energy use,coal,coal,OC,86.13483890090247
+other industrial energy use,coal,coal,SO2_2,40.85064065453432
+other industrial energy use,refined liquids,refined liquids,BC,2.009004458071335
+other industrial energy use,refined liquids,refined liquids,CO,4.516321205415916
+other industrial energy use,refined liquids,refined liquids,NH3,2.6966477293458624
+other industrial energy use,refined liquids,refined liquids,NMVOC,4.375056451100915
+other industrial energy use,refined liquids,refined liquids,NOx,2.1106219586206967
+other industrial energy use,refined liquids,refined liquids,OC,2.5779639354408648
+other industrial energy use,refined liquids,refined liquids,SO2_2,1.8984613734014648
+process heat cement,biomass,biomass,BC,1.618948169551342
+process heat cement,biomass,biomass,CO,2.074749927864599
+process heat cement,biomass,biomass,NH3,1.571955964362349
+process heat cement,biomass,biomass,NMVOC,1.4133934775880066
+process heat cement,biomass,biomass,NOx,1.3926827394722232
+process heat cement,biomass,biomass,OC,1.6189535206552463
+process heat cement,biomass,biomass,SO2_2,4.41333000029278
+process heat cement,coal,coal,BC,2.137015091197801
+process heat cement,coal,coal,CO,2.3938446640627546
+process heat cement,coal,coal,NH3,2.0423053134390563
+process heat cement,coal,coal,NMVOC,2.285390288397157
+process heat cement,coal,coal,NOx,1.402013967982834
+process heat cement,coal,coal,OC,2.1902989198773883
+process heat cement,coal,coal,SO2_2,3.6804173714369086
+process heat cement,gas,gas,BC,1.6111324567251726
+process heat cement,gas,gas,CO,1.5606503952679753
+process heat cement,gas,gas,NH3,1.8051235309442983
+process heat cement,gas,gas,NMVOC,2.270674605994695
+process heat cement,gas,gas,NOx,1.545485226169159
+process heat cement,gas,gas,OC,1.3247200017953003
+process heat cement,gas,gas,SO2_2,3.611245305093083
+process heat cement,refined liquids,refined liquids,BC,1.9033027829445246
+process heat cement,refined liquids,refined liquids,CO,1.7049723919218402
+process heat cement,refined liquids,refined liquids,NH3,1.8857339804675823
+process heat cement,refined liquids,refined liquids,NMVOC,2.654546314452501
+process heat cement,refined liquids,refined liquids,NOx,1.8294256277805756
+process heat cement,refined liquids,refined liquids,OC,1.6000577609878726
+process heat cement,refined liquids,refined liquids,SO2_2,2.4561945130980978
+process heat food processing,biomass,biomass,BC,1.1334763349428332
+process heat food processing,biomass,biomass,CO,3.2587134903368744
+process heat food processing,biomass,biomass,NH3,2.1542714296134124
+process heat food processing,biomass,biomass,NMVOC,1.315044015200687
+process heat food processing,biomass,biomass,NOx,1.1796163336357683
+process heat food processing,biomass,biomass,OC,1.0748249005876018
+process heat food processing,biomass,biomass,SO2_2,2.8098664666550923
+process heat food processing,gas,gas,BC,12.172595768442863
+process heat food processing,gas,gas,CO,10.503422788651374
+process heat food processing,gas,gas,NH3,8.592631805517916
+process heat food processing,gas,gas,NMVOC,13.649453761332813
+process heat food processing,gas,gas,NOx,15.621694778299117
+process heat food processing,gas,gas,OC,11.941550668866354
+process heat food processing,gas,gas,SO2_2,24.377633278781015
+process heat food processing,refined liquids,refined liquids,BC,1.4670204840964116
+process heat food processing,refined liquids,refined liquids,CO,1.65057524062337
+process heat food processing,refined liquids,refined liquids,NH3,2.0108353341829193
+process heat food processing,refined liquids,refined liquids,NMVOC,3.4985416717128732
+process heat food processing,refined liquids,refined liquids,NOx,1.7059692725751496
+process heat food processing,refined liquids,refined liquids,OC,1.408841795689216
+process heat food processing,refined liquids,refined liquids,SO2_2,4.482953446139755
+process heat paper,gas,gas,BC,1.2161793956171238
+process heat paper,gas,gas,CO,1.3383906030424753
+process heat paper,gas,gas,NH3,2.1484387448701185
+process heat paper,gas,gas,NMVOC,1.7140321600875363
+process heat paper,gas,gas,NOx,1.3103472277964145
+process heat paper,gas,gas,OC,1.0017037074842479
+process heat paper,gas,gas,SO2_2,2.7259554118703546
+process heat paper,refined liquids,refined liquids,BC,3.569900856614932
+process heat paper,refined liquids,refined liquids,CO,1.5949933080518144
+process heat paper,refined liquids,refined liquids,NH3,1.8483221217539072
+process heat paper,refined liquids,refined liquids,NMVOC,3.3341514350768344
+process heat paper,refined liquids,refined liquids,NOx,1.6845163047831795
+process heat paper,refined liquids,refined liquids,OC,4.5966791558888
+process heat paper,refined liquids,refined liquids,SO2_2,2.6920811386372936
+resid heating TradBio_d1,traditional biomass,traditional biomass,BC,8.786944895325098
+resid heating TradBio_d1,traditional biomass,traditional biomass,CO,9.236747987213837
+resid heating TradBio_d1,traditional biomass,traditional biomass,NH3,3.603322568585083
+resid heating TradBio_d1,traditional biomass,traditional biomass,NMVOC,4.4467514715781675
+resid heating TradBio_d1,traditional biomass,traditional biomass,NOx,1.9137757260922659
+resid heating TradBio_d1,traditional biomass,traditional biomass,OC,10.38663646580443
+resid heating TradBio_d1,traditional biomass,traditional biomass,SO2_2,11.659938663152502
+resid heating coal_d1,coal,coal,BC,102.86849797403205
+resid heating coal_d1,coal,coal,CO,1.2672885457971015
+resid heating coal_d1,coal,coal,NH3,1.18101316239067
+resid heating coal_d1,coal,coal,NMVOC,1.8889090148321792
+resid heating coal_d1,coal,coal,NOx,1.343910934347737
+resid heating coal_d1,coal,coal,OC,134.69838061469918
+resid heating coal_d1,coal,coal,SO2_2,3.324866232565744
+resid heating modern_d1,gas,gas,CO,1.315750174475342
+resid heating modern_d1,gas,gas,NH3,1.256805706644834
+resid heating modern_d1,gas,gas,NMVOC,2.4009614728825746
+resid heating modern_d1,gas,gas,NOx,1.9614983316668246
+resid heating modern_d1,gas,gas,OC,1.0066031113032363
+resid heating modern_d1,gas,gas,SO2_2,3.292670545391548
+resid heating modern_d1,refined liquids,refined liquids,BC,2.0082344981365527
+resid heating modern_d1,refined liquids,refined liquids,CO,1.3316594514099336
+resid heating modern_d1,refined liquids,refined liquids,NH3,1.5447140364398326
+resid heating modern_d1,refined liquids,refined liquids,NMVOC,2.3873066133931005
+resid heating modern_d1,refined liquids,refined liquids,NOx,2.004421595400544
+resid heating modern_d1,refined liquids,refined liquids,OC,2.0353374382095213
+resid heating modern_d1,refined liquids,refined liquids,SO2_2,4.054052614141433
+resid others TradBio_d1,traditional biomass,traditional biomass,BC,8.813009109626682
+resid others TradBio_d1,traditional biomass,traditional biomass,CO,9.264236835025702
+resid others TradBio_d1,traditional biomass,traditional biomass,NH3,3.6109198596633956
+resid others TradBio_d1,traditional biomass,traditional biomass,NMVOC,4.4599722595389295
+resid others TradBio_d1,traditional biomass,traditional biomass,NOx,1.9178174718866436
+resid others TradBio_d1,traditional biomass,traditional biomass,OC,10.41749598195419
+resid others TradBio_d1,traditional biomass,traditional biomass,SO2_2,11.694570960034781
+resid others coal_d1,coal,coal,BC,102.86865308311202
+resid others coal_d1,coal,coal,CO,1.2672615890183858
+resid others coal_d1,coal,coal,NH3,1.1810000051278773
+resid others coal_d1,coal,coal,NMVOC,1.888874283408189
+resid others coal_d1,coal,coal,NOx,1.343895948887503
+resid others coal_d1,coal,coal,OC,134.6980878289842
+resid others coal_d1,coal,coal,SO2_2,3.3248695184771297
+resid others modern_d1,gas,gas,CO,1.3157526960886015
+resid others modern_d1,gas,gas,NH3,1.2568073685562242
+resid others modern_d1,gas,gas,NMVOC,2.400963419967023
+resid others modern_d1,gas,gas,NOx,1.9614974555958342
+resid others modern_d1,gas,gas,OC,1.0066046178201211
+resid others modern_d1,gas,gas,SO2_2,3.29268979871198
+resid others modern_d1,refined liquids,refined liquids,BC,2.008231817682735
+resid others modern_d1,refined liquids,refined liquids,CO,1.3316593816174263
+resid others modern_d1,refined liquids,refined liquids,NH3,1.5447134349856582
+resid others modern_d1,refined liquids,refined liquids,NMVOC,2.3873060194878133
+resid others modern_d1,refined liquids,refined liquids,NOx,2.004415389543586
+resid others modern_d1,refined liquids,refined liquids,OC,2.035340743659465
+resid others modern_d1,refined liquids,refined liquids,SO2_2,4.054050792669366
+trn_aviation_intl,International Aviation,Liquids,BC,1.4847172283801355
+trn_aviation_intl,International Aviation,Liquids,CO,1.484726580815311
+trn_aviation_intl,International Aviation,Liquids,NH3,1.48472742403644
+trn_aviation_intl,International Aviation,Liquids,NMVOC,1.4847294569577918
+trn_aviation_intl,International Aviation,Liquids,NOx,1.4847265808153103
+trn_aviation_intl,International Aviation,Liquids,OC,1.4847265808153138
+trn_aviation_intl,International Aviation,Liquids,SO2_2,1.4847277069604021
+trn_freight,Domestic Ship,Liquids,BC,1.0796429100404217
+trn_freight,Domestic Ship,Liquids,CO,15.955715291043164
+trn_freight,Domestic Ship,Liquids,NH3,3.2494065629242215
+trn_freight,Domestic Ship,Liquids,NMVOC,29.55459008023929
+trn_freight,Domestic Ship,Liquids,NOx,3.0486192414573536
+trn_freight,Domestic Ship,Liquids,OC,1.087036832470322
+trn_freight,Domestic Ship,Liquids,SO2_2,5.056162792567104
+trn_freight,Freight Rail,Liquids,BC,4.453774778471597
+trn_freight,Freight Rail,Liquids,CO,1.324760332485194
+trn_freight,Freight Rail,Liquids,NH3,29.178965188076408
+trn_freight,Freight Rail,Liquids,NMVOC,1.932909933275015
+trn_freight,Freight Rail,Liquids,NOx,4.45377117725895
+trn_freight,Freight Rail,Liquids,OC,4.453777973560516
+trn_freight,Freight Rail,Liquids,SO2_2,13.767393647308614
+trn_freight_road,Medium truck,Liquids,BC,11.796251982889348
+trn_freight_road,Medium truck,Liquids,CO,4.856102244385595
+trn_freight_road,Medium truck,Liquids,NH3,7.911014795981705
+trn_freight_road,Medium truck,Liquids,NMVOC,4.302840204572354
+trn_freight_road,Medium truck,Liquids,NOx,2.7808206015030725
+trn_freight_road,Medium truck,Liquids,OC,16.41618402533575
+trn_freight_road,Medium truck,Liquids,SO2_2,43.56110580407832
+trn_pass,Domestic Aviation,Liquids,BC,4.846250889024929
+trn_pass,Domestic Aviation,Liquids,CO,15.364407299193925
+trn_pass,Domestic Aviation,Liquids,NH3,5.207115015224623
+trn_pass,Domestic Aviation,Liquids,NMVOC,28.46691664732562
+trn_pass,Domestic Aviation,Liquids,NOx,11.517177414919868
+trn_pass,Domestic Aviation,Liquids,OC,4.846250889023387
+trn_pass,Domestic Aviation,Liquids,SO2_2,5.751271892441505
+trn_pass,Passenger Rail,Liquids,BC,4.453771369557418
+trn_pass,Passenger Rail,Liquids,CO,1.3247681561660214
+trn_pass,Passenger Rail,Liquids,NH3,29.179314841061295
+trn_pass,Passenger Rail,Liquids,NMVOC,1.9329029348302011
+trn_pass,Passenger Rail,Liquids,NOx,4.4537882830546
+trn_pass,Passenger Rail,Liquids,OC,4.453760375720278
+trn_pass,Passenger Rail,Liquids,SO2_2,13.767407328267266
+trn_pass_road,Bus,Liquids,BC,11.763257537850203
+trn_pass_road,Bus,Liquids,CO,2.5943883229328537
+trn_pass_road,Bus,Liquids,NH3,4.626392289673191
+trn_pass_road,Bus,Liquids,NMVOC,2.3195663438214136
+trn_pass_road,Bus,Liquids,NOx,1.823725682947402
+trn_pass_road,Bus,Liquids,OC,16.48281284532892
+trn_pass_road,Bus,Liquids,SO2_2,41.420460711436746
+trn_pass_road,Bus,NG,CO,1.3357061229994904
+trn_pass_road,Bus,NG,NH3,1.4949359280753993
+trn_pass_road,Bus,NG,NMVOC,1.6326680755817602
+trn_pass_road,Bus,NG,NOx,1.570738057030394
+trn_pass_road,Bus,NG,SO2_2,1.0040932229568167
+trn_pass_road_LDV,2W and 3W,Liquids,BC,10.961990307889993
+trn_pass_road_LDV,2W and 3W,Liquids,CO,3.600660770385117
+trn_pass_road_LDV,2W and 3W,Liquids,NH3,8.7154286472825
+trn_pass_road_LDV,2W and 3W,Liquids,NMVOC,3.9556872718482445
+trn_pass_road_LDV,2W and 3W,Liquids,NOx,1.965791965653534
+trn_pass_road_LDV,2W and 3W,Liquids,OC,14.44133508865259
+trn_pass_road_LDV,2W and 3W,Liquids,SO2_2,32.215194773410964
+trn_pass_road_LDV_4W,Car,Liquids,BC,4.529621587334471
+trn_pass_road_LDV_4W,Car,Liquids,CO,4.296962392616001
+trn_pass_road_LDV_4W,Car,Liquids,NH3,9.249442727939588
+trn_pass_road_LDV_4W,Car,Liquids,NMVOC,4.629433577002027
+trn_pass_road_LDV_4W,Car,Liquids,NOx,3.184489717545031
+trn_pass_road_LDV_4W,Car,Liquids,OC,10.348601618240462
+trn_pass_road_LDV_4W,Car,Liquids,SO2_2,16.499502328202837
+trn_pass_road_LDV_4W,Car,NG,CO,1.3364619408312104
+trn_pass_road_LDV_4W,Car,NG,NH3,1.4944514260599977
+trn_pass_road_LDV_4W,Car,NG,NMVOC,1.6336023158627098
+trn_pass_road_LDV_4W,Car,NG,NOx,1.5711105325928465
+trn_pass_road_LDV_4W,Car,NG,SO2_2,1.003502025809679
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,BC,4.5296384411464
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,CO,4.296965897481631
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,NH3,9.249445520123665
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,NMVOC,4.629442638709764
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,NOx,3.1844848750394354
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,OC,10.348632682760364
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,SO2_2,16.499453132214246
+trn_pass_road_LDV_4W,Large Car and Truck,NG,CO,1.336320570992574
+trn_pass_road_LDV_4W,Large Car and Truck,NG,NH3,1.4944347493744838
+trn_pass_road_LDV_4W,Large Car and Truck,NG,NMVOC,1.6334250799249932
+trn_pass_road_LDV_4W,Large Car and Truck,NG,NOx,1.570929857573258
+trn_pass_road_LDV_4W,Large Car and Truck,NG,SO2_2,1.003753672445474
+trn_shipping_intl,International Ship,Liquids,BC,1.1947765792211322
+trn_shipping_intl,International Ship,Liquids,CO,1.1754046216567022
+trn_shipping_intl,International Ship,Liquids,NH3,1.1997354947658607
+trn_shipping_intl,International Ship,Liquids,NMVOC,1.1702013525603328
+trn_shipping_intl,International Ship,Liquids,NOx,1.4049414221485417
+trn_shipping_intl,International Ship,Liquids,OC,1.1948188396798585
+trn_shipping_intl,International Ship,Liquids,SO2_2,4.1500385595880065
+urban processes,landfills,landfills,NMVOC,1.7950188062603012
+urban processes,waste_incineration,waste_incineration,BC,1.1055207307681059
+urban processes,waste_incineration,waste_incineration,CO,1.273728624499258
+urban processes,waste_incineration,waste_incineration,NH3,11.056664006387887
+urban processes,waste_incineration,waste_incineration,NMVOC,1.41472731344312
+urban processes,waste_incineration,waste_incineration,NOx,2.300585544672495
+urban processes,waste_incineration,waste_incineration,OC,1.1055208279600652
+urban processes,waste_incineration,waste_incineration,SO2_2,1.5316651488211401
+urban processes,wastewater,wastewater,NH3,12.248676145603133
+urban processes,wastewater,wastewater,NMVOC,3.6809218226581097
+waste biomass for paper,biomass,biomass,BC,1.1756205322068083
+waste biomass for paper,biomass,biomass,CO,3.002179176622136
+waste biomass for paper,biomass,biomass,NH3,1.8211330911342964
+waste biomass for paper,biomass,biomass,NMVOC,1.1689566586511388
+waste biomass for paper,biomass,biomass,NOx,1.2135117470424097
+waste biomass for paper,biomass,biomass,OC,1.1792336001912962
+waste biomass for paper,biomass,biomass,SO2_2,3.049961370061586
+waste biomass for paper,biomass,biomass cogen,BC,1.1756039929301791
+waste biomass for paper,biomass,biomass cogen,CO,3.0022203227427764
+waste biomass for paper,biomass,biomass cogen,NH3,1.821149675617158
+waste biomass for paper,biomass,biomass cogen,NMVOC,1.1689463494549028
+waste biomass for paper,biomass,biomass cogen,NOx,1.2135191659892655
+waste biomass for paper,biomass,biomass cogen,OC,1.1792303455238868
+waste biomass for paper,biomass,biomass cogen,SO2_2,3.0499287793064127

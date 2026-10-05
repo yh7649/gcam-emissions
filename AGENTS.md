@@ -23,6 +23,13 @@ Follow these repo-specific conventions before considering any task complete:
   `electricity_only=true` carry `direct_emissions_scope=none_on_site` and
   `not_applicable` crosswalk rows; their upstream emissions belong to the power
   sector.
+- GCAM's own power-generation sectors (`elec_*`) are back in scope as of
+  2026-09-08 — not just for generality. NZK-APHIAM's MACRO power-sector model
+  isn't ready, and KEPCO unit-level data only covers observed years, not the
+  forward-looking NZK scenario years this project needs. Until MACRO ships,
+  GCAM-KAIST's `elec_*` activity/native emissions are the interim source for
+  projected Korean power-sector emissions. Do not treat `elec_*` rows as
+  out-of-scope or skip them by default; see `docs/roadmap.md` for status.
 - Do not leave superseded scripts or outputs lying around silently. Delete them
   or move them somewhere clearly labeled as archived, and say so in the summary.
 - Keep docs in sync with structure changes. New top-level directories go in the

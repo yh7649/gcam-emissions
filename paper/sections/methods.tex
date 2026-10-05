@@ -1,0 +1,78 @@
+% methods
+
+\section{Study Design}\label{sec:design}
+
+\begin{figure}[htbp]
+  \centering
+  % Replace the \fbox with:
+  % \includegraphics[width=\textwidth]{Figures/pipeline.pdf}
+  \fbox{\parbox[c][2.5in][c]{0.9\textwidth}{\centering
+    \note{Placeholder: modeling framework and pipeline slide}}}
+  \caption{Modeling framework: energy-system modeling, emissions processing,
+    air-quality modeling, and health-impact assessment.}
+  \label{fig:pipeline}
+\end{figure}
+
+The study links four modules (Figure~\ref{fig:pipeline}).
+
+\section{Energy-System Modeling}\label{sec:energy}
+
+We use GCAM-KAIST to model different decarbonization pathways (e.g.\ no
+policy, linear reduction, early reduction). At a high level, we compare linear
+and early-reduction pathway curves with the same endpoints, matching what is
+written into law to keep the analysis policy-relevant.
+
+The main points of interest are temporal and regional (provincial) trade-offs,
+less so cumulative outcomes.
+\note{This differs from the research question in Section~\ref{sec:rq}, which
+focuses on cumulative outcomes. Align the two.}
+
+\discuss{Which exact scenarios can we get from GCAM-KAIST?}
+
+\subsection{Facility Retirement Ordering}\label{sec:retirement}
+
+Each reduction pathway likely requires micro-level decisions about which
+facilities (e.g.\ power plant units) retire and when. We cannot simply
+decrease all units in a sector proportionally: that is unrealistic without
+retirements, and emissions are not linear in activity (there may be a
+non-zero intercept). We propose a retirement ordering algorithm based on
+unit age, emissions, most recent historical activity, and other
+characteristics.
+
+\section{Emissions Processing}\label{sec:emissions}
+
+GCAM-KAIST energy outputs are translated into precursor emissions and
+downscaled to a gridded level. We apply the same downscaling method as in
+\note{cite One Earth paper}: take the national energy structure from
+GCAM-KAIST, multiply by emission factors to obtain national emissions, then
+downscale using a spatial allocation. We could potentially use provincial
+emission factors when downscaling.
+
+Analogous to the use of the U.S.\ National Emissions Inventory (NEI), we
+propose using the Clean Air Policy Support System (CAPSS) National Air
+Pollutant Emissions Inventory for the spatial allocation mapping from sector
+activity to emissions.
+
+\discuss{Resolution of GCAM-KAIST outputs. Should we downscale energy metrics
+and then apply emission factors, or downscale processed emissions?}
+
+\section{Air-Quality Modeling}\label{sec:aq}
+
+We use Global InMAP to estimate annual average \PM{} concentrations in Korea.
+
+\discuss{How to treat emissions outside Korea.}
+\note{Yehyun: Since Global InMAP is global, doesn't it already account for
+transboundary transport, if we also roughly model China?}
+
+Candidate scenario designs for the main analysis:
+\begin{itemize}
+  \item Korea and other countries (China, India) all reach net zero.
+  \item Korea reaches net zero; other countries do not.
+  \item A mismatch in net-zero implementation across countries could also be
+        interesting to examine.
+\end{itemize}
+
+\section{Health-Impact Assessment}\label{sec:hia}
+
+We combine gridded \PM{} exposure with projected population, age structure,
+baseline mortality rates, and established concentration--response functions.

@@ -42,7 +42,7 @@ NONPOWER_DIAGNOSTIC_DIR = RESULTS_DIAGNOSTICS_DIR / "nonpower_emissions"
 
 # GCAM scenario handoffs and the APHIAM-ready interface written from them.
 GCAM_INPUTS_DIR = MODEL_INPUTS_DIR / "gcam"
-GCAM_NZK_ARCHIVE = GCAM_INPUTS_DIR / "CORE_9_NZ_2026-8-7T12_32_50+09_00.xml.zip"
+GCAM_NZK_ARCHIVE = GCAM_INPUTS_DIR / "KAIST_9_NZ_u0902v3.xml.zip"
 GCAM_NZK_APHIAM_DIR = MODEL_INPUTS_DIR / "interface" / "gcam_kaist" / "nzk"
 
 # Korean inputs consumed by the spatial allocator.

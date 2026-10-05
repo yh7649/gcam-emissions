@@ -1,0 +1,75 @@
+% intro
+
+\section{Motivation}\label{sec:motivation}
+
+Climate mitigation is not always linear. Even when pathways share the same
+2050 net-zero target, emissions reductions can be front-loaded, linear, or
+delayed, reflecting different policy choices and technology portfolios.
+
+Air pollution and its long-term health impacts are closely tied to the pace of
+decarbonization. As a result, cumulative health impacts can be path-dependent,
+yet limited research has systematically studied how the nonlinear curvature of
+mitigation pathways shapes health outcomes.
+
+Korea provides a timely test case: its emerging 2035--2050 policy framework
+explicitly considers both a linear pathway and an early-reduction pathway.
+\note{cite policy framework}
+
+\section{Research Question}\label{sec:rq}
+
+How does the curvature of decarbonization pathways affect cumulative health
+outcomes on the way to a net-zero target?
+
+\paragraph{Test case.} \PM-attributable deaths under Korea's 2050 carbon
+neutrality target.
+
+\paragraph{Hypothesis.} Compared with a linear pathway, an early-reduction
+pathway will avoid more cumulative \PM-related deaths by bringing forward
+reductions in fossil-fuel-related air-pollutant emissions through earlier
+climate mitigation.
+
+\section{Contributions}\label{sec:contributions}
+
+\paragraph{Science.} Trade-offs between scenarios. \discuss{overshoot?}
+
+\paragraph{Analytical.} One of the first studies connecting energy, air
+quality, and health modeling. \note{Integrated energy--air quality--health
+studies already exist; consider narrowing the claim, e.g.\ to pathway
+curvature or to Korea.}
+
+\paragraph{Policy.} The pathways compared are those written into Korean law.
+
+\subsection{Proposed Contributions}\label{sec:proposed}
+\note{Proposed by Yehyun}
+
+\paragraph{Modeling.}
+\begin{itemize}
+  \item A GCAM-KAIST air pollution cluster, mirroring GCAM-USA.
+  \item Global InMAP calibrated for Korea.
+  \item A facility retirement ordering algorithm (e.g.\ for power plant units)
+        based on age, emissions, most recent historical activity, and other
+        characteristics. See Section~\ref{sec:retirement}.
+\end{itemize}
+
+\paragraph{Data.}
+\begin{itemize}
+  \item A harmonized dataset of emission factors by sector in Korea.
+  \item A cleaned and harmonized historical air quality dataset for Korea.
+  \item A harmonized spatial allocation of air pollutant emissions by sector,
+        derived from CAPSS and other government sources.
+  \item A harmonized dataset of Korean demographics: district-level
+        population, age structure, baseline mortality rates, and established
+        concentration--response functions for BenMAP-style calculations.
+  \item An original, harmonized power plant dataset: monthly generation and
+        raw mass emissions, combined with characteristics including location,
+        operation dates, fuel type, technology, and stack height. This is
+        important for modeling power sector activity.
+\end{itemize}
+
+\paragraph{Results.}
+\begin{itemize}
+  \item A computationally inexpensive end-to-end model that can generate
+        scenario outputs with limited GPUs, suited to small university
+        research teams. The advantage comes mainly from InMAP as the
+        atmospheric model.
+\end{itemize}

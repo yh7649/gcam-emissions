@@ -1,5 +1,11 @@
 # Korean non-power emissions inventory references
 
+The CSVs described here live under `src/gcam_emissions/reference/` and ship
+with the Python package. Their collection history and review protocol are in
+[`emission_factor_collection.md`](emission_factor_collection.md); supporting
+Korean power-sector literature is indexed under
+[`references/emission_factor_validation/`](references/emission_factor_validation/README.md).
+
 ## Purpose
 
 These tracked CSVs define the sector taxonomy, activity denominators, source
@@ -54,6 +60,12 @@ annual GCAM-KAIST activity
   source-lead records that cannot be represented as mass-normalized factors.
 - `nonpower_ef_collection_gaps.csv`: 11 explicit extraction and access gaps
   linked to affected inventory IDs.
+- `gcam_kaist_ef_sources.csv`: authoritative source registry for the 135-row
+  GCAM-KAIST EF target, including official CAPSS VII and Korean power and
+  combustion studies.
+- `gcam_kaist_ef_review_records.csv`: human review decisions governing which
+  target assignments may be labeled production-ready. Conditional, proxy, and
+  unresolved assignments remain blocked even when the catalog is approved.
 
 Pipe (`|`) is the deterministic delimiter for list-valued fields such as
 `required_pollutants`, aliases, compatible units, and source IDs.
@@ -78,11 +90,19 @@ behavior is now covered by repository code and tests.
 Run the integrated workflow with:
 
 ```bash
-make validate-nonpower-emission-factors
-make scrape-capss-vii-nonpower-efs
-make scrape-capss-vii-nonpower-efs-verified
-make build-nonpower-emissions
+make validate
+make inventory
+make factors
+make scrape-capss
+make scrape-capss-verified
+make fill-kaist-efs
 ```
+
+`fill-kaist-efs` deterministically fills column four of
+`docs/gcam_kaist_ef_target_table.csv` and writes a row-level status/provenance
+audit to `results/diagnostics/ef_target/`. Every target row receives either a
+Korean factor/set/formula, an explicit no-direct-emissions decision, or a
+visible research gap; it never converts missing evidence to zero.
 
 The official VII extractor reads the locally preserved 412-page PDF, extracts
 327 unique inventory-targeted pages, indexes 123 true factor or particulate-
@@ -110,9 +130,9 @@ no direct non-power target.
 
 ## Relationship to GCAM-KAIST and MACRO/NZK-APHIAM
 
-GCAM-KAIST supplies annual scenario activity. The native `CORE_9_NZ` XML is now
-present under `model_inputs/scenarios/team_handoff/` and is streamed directly
-from its DVC-tracked ZIP. The native activity crosswalk uses the XML's
+GCAM-KAIST supplies annual scenario activity. The current NZK archive is
+`model_inputs/gcam/KAIST_9_NZ_u0902v3.xml.zip` under the workspace selected by
+`GCAM_EMISSIONS_HOME`. The native activity crosswalk uses the XML's
 sector/subsector/technology/node fields while retaining the stable inventory
 schema. It currently maps 12 of 50 P1 inventory IDs; conceptual fields remain
 useful compatibility labels, not assertions that every inventory row exists
@@ -122,13 +142,10 @@ The XML also contains national native pollutant emissions. Those values are
 retained only for validation: they lack source coordinates and directly usable
 primary PM2.5, and they do not replace the Korean activity-times-factor lane.
 
-The existing MACRO integrator derives a fallback base-year intensity from
-aggregate CAPSS emissions divided by GCAM sector/fuel activity. That code is
-unchanged. This inventory is the migration path to source-appropriate,
-technology-specific factors. The legacy four-column mapping file at
-`docs/references/macro/gcam_capss_sector_fuel_mapping.csv` is intentionally
-header-only until native GCAM labels exist; passing it to the current integrator
-preserves rows as unmapped rather than inventing a mapping.
+NZK-APHIAM's earlier MACRO integrator derived a fallback base-year intensity
+from aggregate CAPSS emissions divided by GCAM sector/fuel activity. That
+screening workflow remains in the downstream repository; this package is the
+migration path to source-appropriate, technology-specific factors.
 
 The native NZK maximum-coverage POC intentionally goes further than that
 production lane. It first uses a denominator-compatible linked candidate, then

@@ -1,0 +1,128 @@
+sector_type,sector,capss_category,note
+AgSupplySector,Corn,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,FiberCrop,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,FodderGrass,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,Fruits,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,Legumes,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,MiscCrop,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,NutsSeeds,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,OilCrop,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,OtherGrain,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,Rice,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,RootTuber,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,Soybean,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,UnmanagedLand,Biomass burning,"Deforestation and forest/grassland fire technologies (ForestFire_Korea, GrasslandFires_Korea, Deforest_Korea and their Protected variants)."
+AgSupplySector,Vegetables,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,Wheat,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+AgSupplySector,biomass,Agriculture,"Fertilizer/crop-management N2O and NH3 (AGR-tagged). Any _AWB-tagged rows on this sector are residue burning and are re-routed to Biomass burning at the pollutant level, not here -- see the _AWB override in capss_category_comparison.py."
+resource,coal,Energy transport and storage,"Fugitive CH4/CO/NH3/NMVOC from coal resource extraction. CAPSS's category is nominally fuel storage/distribution losses, not extraction -- closest available process analog; South Korea has negligible domestic extraction so magnitudes are small either way."
+resource,crude oil,Energy transport and storage,Fugitive emissions from crude oil resource extraction; see coal note.
+resource,natural gas,Energy transport and storage,Fugitive emissions from natural gas resource extraction; see coal note.
+supplysector,Beef,Agriculture,"Enteric fermentation / manure management (AGR-tagged CH4, N2O, NH3, NOx, NMVOC)."
+supplysector,Dairy,Agriculture,"Enteric fermentation / manure management (AGR-tagged CH4, N2O, NH3, NOx, NMVOC)."
+supplysector,H2 LDV,Road transport,"Vehicle-class hydrogen dispensing node, paired with the equivalent trn_*_road sectors."
+supplysector,H2 MHDV,Road transport,"Vehicle-class hydrogen dispensing node, paired with the equivalent trn_*_road sectors."
+supplysector,H2 central production,Energy production,"Steam methane reforming / biomass-to-H2 -- primary energy transformation, analogous to refining and power generation."
+supplysector,H2 liquid truck,Energy transport and storage,Hydrogen delivery infrastructure.
+supplysector,H2 pipeline,Energy transport and storage,Hydrogen delivery infrastructure.
+supplysector,LH2,Energy transport and storage,Hydrogen delivery infrastructure.
+supplysector,Pork,Agriculture,"Enteric fermentation / manure management (AGR-tagged CH4, N2O, NH3, NOx, NMVOC)."
+supplysector,Poultry,Agriculture,"Enteric fermentation / manure management (AGR-tagged CH4, N2O, NH3, NOx, NMVOC)."
+supplysector,SheepGoat,Agriculture,"Enteric fermentation / manure management (AGR-tagged CH4, N2O, NH3, NOx, NMVOC)."
+supplysector,agricultural energy use,Non-road transport,"Dominated by the 'mobile'/refined-liquids technology (tractors, construction and mining equipment); CAPSS's non-road category explicitly enumerates agricultural/construction/mining machinery. A smaller 'stationary' technology share (irrigation pumps, site heating) is folded in here rather than split into Non-industry."
+supplysector,ammonia,Manufacturing industry,"Gas/refined-liquids combustion technologies (Haber-Bosch feedstock/heat), not a distinct process-emissions tag -- grouped with other manufacturing combustion."
+supplysector,chemical energy use,Manufacturing industry,Explicit industrial combustion sector.
+supplysector,comm cooling,Non-industry,Commercial/institutional stationary combustion.
+supplysector,comm heating,Non-industry,Commercial/institutional stationary combustion.
+supplysector,comm others,Non-industry,Commercial/institutional stationary combustion.
+supplysector,construction energy use,Non-road transport,"Dominated by the 'mobile'/refined-liquids technology (tractors, construction and mining equipment); CAPSS's non-road category explicitly enumerates agricultural/construction/mining machinery. A smaller 'stationary' technology share (irrigation pumps, site heating) is folded in here rather than split into Non-industry."
+supplysector,electricity,Energy production,Power generation.
+supplysector,electricity_net_ownuse,Energy production,SF6 leakage from power-sector electrical equipment.
+supplysector,industrial processes,Industrial process,"GCAM's dedicated non-combustion process-emissions sector (F-gases, process CO/NMVOC/N2O). Its `solvents` subsector is re-routed to Solvent use by the override in capss_category_comparison.py; the rest (adipic/nitric acid, HCFC_22_Prod, semiconductors, Al_Mg, other industrial processes) stays here."
+supplysector,iron and steel,Manufacturing industry,Coke/coal combustion in steel production.
+supplysector,mining energy use,Non-road transport,"Dominated by the 'mobile'/refined-liquids technology (tractors, construction and mining equipment); CAPSS's non-road category explicitly enumerates agricultural/construction/mining machinery. A smaller 'stationary' technology share (irrigation pumps, site heating) is folded in here rather than split into Non-industry."
+supplysector,other industrial energy use,Manufacturing industry,Catch-all industrial combustion.
+supplysector,process heat cement,Manufacturing industry,"Fuel combustion supplying process heat. The paired output sector ('cement'/'food processing'/'paper') carries no Non-CO2 tag at all -- cement tags only calcination CO2 -- so these combustion rows are where those industries' non-CO2 emissions live."
+supplysector,process heat food processing,Manufacturing industry,"Fuel combustion supplying process heat. The paired output sector ('cement'/'food processing'/'paper') carries no Non-CO2 tag at all -- cement tags only calcination CO2 -- so these combustion rows are where those industries' non-CO2 emissions live."
+supplysector,process heat paper,Manufacturing industry,"Fuel combustion supplying process heat. The paired output sector ('cement'/'food processing'/'paper') carries no Non-CO2 tag at all -- cement tags only calcination CO2 -- so these combustion rows are where those industries' non-CO2 emissions live."
+supplysector,refining,Energy production,Petroleum refining is conventionally grouped with power generation as an energy-transformation industry.
+supplysector,resid cooling modern_d1,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d10,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d2,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d3,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d4,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d5,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d6,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d7,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d8,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid cooling modern_d9,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d1,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d10,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d2,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d3,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d4,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d5,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d6,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d7,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d8,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating TradBio_d9,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d1,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d10,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d2,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d3,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d4,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d5,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d6,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d7,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d8,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating coal_d9,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d1,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d10,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d2,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d3,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d4,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d5,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d6,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d7,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d8,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid heating modern_d9,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d1,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d10,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d2,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d3,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d4,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d5,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d6,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d7,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d8,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others TradBio_d9,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d1,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d10,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d2,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d3,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d4,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d5,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d6,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d7,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d8,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others coal_d9,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d1,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d10,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d2,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d3,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d4,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d5,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d6,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d7,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d8,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,resid others modern_d9,Non-industry,Residential stationary combustion (income-decile subsector).
+supplysector,trn_aviation_intl,excluded_international_bunker,International aviation bunker fuel -- outside CAPSS's domestic territorial scope.
+supplysector,trn_freight,Non-road transport,Domestic Ship and Freight Rail subsectors.
+supplysector,trn_freight_road,Road transport,Medium truck subsector.
+supplysector,trn_pass,Non-road transport,Domestic Aviation and Passenger Rail subsectors.
+supplysector,trn_pass_road,Road transport,Bus subsector.
+supplysector,trn_pass_road_LDV,Road transport,2W and 3W (motorcycle) subsector.
+supplysector,trn_pass_road_LDV_4W,Road transport,Car and Large Car and Truck subsectors.
+supplysector,trn_shipping_intl,excluded_international_bunker,International shipping bunker fuel -- outside CAPSS's domestic territorial scope.
+supplysector,urban processes,Waste disposal,landfills/waste_incineration/wastewater subsectors dominate; fire_exting (HFC) is a minor component folded in at sector grain.
+supplysector,waste biomass for paper,Manufacturing industry,"Biomass/cogen combustion of paper-mill residue -- productive industrial energy use, not waste disposal."

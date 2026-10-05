@@ -1,0 +1,3445 @@
+Status as
+of
+2026-10-05.
+This
+document
+is the
+single
+source for
+the
+paper's
+Background
+section
+and the PI
+presentation
+on this
+topic. It
+describes,
+step by
+step, how
+we tested
+GCAM-KAIST's
+native
+non-CO2
+emissions,
+and why
+the
+project
+builds
+bottom-up
+emission
+factors
+instead.
+
+It builds
+on the
+audit in
+{\texttt{gcam\_\allowbreak{}kaist\_\allowbreak{}nonco2\_\allowbreak{}audit.\allowbreak{}md}}
+(cited
+below as
+``audit
+§\ldots{}''),
+which
+documents
+how
+GCAM-KAIST
+stores and
+reports
+non-CO2
+emissions.
+Facts
+established
+there are
+cited, not
+repeated.
+
+\textbf{Framing.}
+Almost
+everything
+described
+here is
+GCAM's
+standard
+non-CO2
+approach,
+which
+GCAM-KAIST
+inherits
+from stock
+GCAM v9
+(audit
+§B5.2).
+The
+critique
+is of that
+approach
+as applied
+to
+policy-driven
+technology
+change in
+Korea, not
+of choices
+made by
+the KAIST
+team.
+
+\textbf{Plain-English
+sections}
+are marked
+\plainmark{}.
+Technical
+sections
+follow
+each one.
+
+\hypertarget{summary}{%
+\subsection*{0. Summary \plainmark{}}\addcontentsline{toc}{subsection}{0. Summary}\label{summary}}
+
+The
+question
+was
+whether we
+can take
+GCAM-KAIST's
+own
+non-CO2
+emissions
+(NOx, SO2,
+VOCs, NH3,
+CO, BC)
+and use
+them to
+estimate
+the
+air-quality
+and health
+effects of
+Korea's
+net-zero
+pathway.
+
+We can't.
+The core
+reasons:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{GCAM-KAIST's
+  close
+  agreement
+  with
+  Korea's
+  national
+  inventory
+  (CAPSS)
+  is not
+  evidence
+  of
+  accuracy.}
+  The
+  base-year
+  numbers
+  \emph{are}
+  inventory
+  numbers:
+  CAPSS
+  totals
+  passed
+  through
+  CEDS
+  into
+  GCAM's
+  calibration.
+  Comparing
+  them
+  with
+  CAPSS
+  compares
+  CAPSS
+  with
+  itself.
+\item
+  \textbf{The
+  emission
+  factors
+  are a
+  by-product
+  of that
+  calibration,
+  not
+  measurements.}
+  GCAM
+  divides
+  each
+  inventory
+  total by
+  its own
+  modelled
+  activity.
+  Different
+  technologies
+  inside
+  the same
+  total
+  therefore
+  get the
+  same
+  factor,
+  and the
+  factors
+  swing
+  from one
+  base
+  year to
+  the
+  next.
+\item
+  \textbf{After
+  2021 the
+  factors
+  don't
+  respond
+  to
+  policy.}
+  They
+  stay
+  frozen
+  or
+  follow a
+  GDP-based
+  curve
+  that's
+  the same
+  in both
+  scenarios.
+  Technologies
+  with no
+  emissions
+  tag
+  count as
+  zero,
+  and the
+  net-zero
+  scenario
+  shifts
+  activity
+  toward
+  exactly
+  those
+  technologies.
+\item
+  \textbf{These
+  limits
+  change
+  the
+  policy
+  answer.}
+  Keeping
+  GCAM-KAIST's
+  activity
+  and
+  swapping
+  only the
+  emission
+  factors,
+  the
+  projected
+  net-zero
+  change
+  in steel
+  SOx
+  flips
+  from
+  −88\% to
+  +19\%,
+  and the
+  power-sector
+  NOx and
+  SOx
+  avoided
+  varies
+  2.6--9.7×.
+\end{enumerate}
+
+\textbf{What
+we do
+instead:}
+keep
+GCAM-KAIST's
+\emph{activity},
+and
+replace
+its
+\emph{emission
+factors}
+with
+bottom-up,
+technology-specific
+Korean
+factors,
+validated
+against
+CAPSS in
+the base
+years.
+
+\hypertarget{the-question}{%
+\subsection*{1. The question \plainmark{}}\addcontentsline{toc}{subsection}{1. The question}\label{the-question}}
+
+The NZK
+health
+analysis
+needs
+emissions
+that
+respond to
+what a
+decarbonization
+pathway
+actually
+changes:
+which
+fuels are
+burned, in
+which
+technologies,
+with what
+pollution
+controls.
+Those
+emissions
+then go
+into InMAP
+and a
+health
+model.
+
+GCAM-KAIST
+is the
+project's
+source of
+projected
+activity:
+how much
+electricity
+each power
+technology
+generates,
+how much
+steel each
+production
+route
+makes, how
+many
+kilometres
+each
+vehicle
+type
+drives,
+and so on.
+It also
+reports
+its own
+non-CO2
+emissions.
+The
+obvious
+shortcut
+would be
+to use
+those
+directly.
+
+Our first
+comparison
+against
+CAPSS
+looked
+encouraging:
+some
+categories
+matched
+closely.
+So the
+question
+became:
+\textbf{does
+that
+agreement
+mean
+GCAM-KAIST's
+native
+non-CO2
+emissions
+can be
+trusted
+for policy
+analysis?}
+
+\hypertarget{how-gcam-represents-non-co2-emissions}{%
+\subsection*{2. How GCAM represents non-CO2 emissions \plainmark{}}\addcontentsline{toc}{subsection}{2. How GCAM represents non-CO2 emissions}\label{how-gcam-represents-non-co2-emissions}}
+
+A non-CO2
+emission
+in GCAM
+exists
+only where
+the model
+attaches
+an
+emissions
+``tag'' to
+a
+technology
+(audit
+§A1). The
+output
+database
+stores
+just the
+emitted
+mass per
+year. The
+emission
+factor is
+not
+stored; we
+compute it
+as mass ÷
+activity.
+
+The mass
+gets there
+in two
+phases
+(audit
+§A2):
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Base
+  years
+  (up to
+  2021).}
+  An
+  inventory
+  total is
+  supplied,
+  and GCAM
+  divides
+  it by
+  its own
+  activity
+  to get
+  the
+  factor.
+\item
+  \textbf{Future
+  years.}
+  That
+  factor
+  is
+  carried
+  forward,
+  either
+  frozen
+  or
+  reduced
+  along a
+  pre-set
+  curve,
+  and
+  multiplied
+  by the
+  scenario's
+  activity.
+\end{itemize}
+
+\hypertarget{the-investigation-step-by-step}{%
+\subsection*{3. The investigation, step by step}\addcontentsline{toc}{subsection}{3. The investigation, step by step}\label{the-investigation-step-by-step}}
+
+Each step
+is laid
+out as:
+the
+question
+we asked,
+what we
+did, what
+we found,
+and a
+plain-English
+takeaway.
+
+\hypertarget{step-1.-compare-gcam-kaist-with-capss-by-source-category}{%
+\subsubsection*{Step 1. Compare GCAM-KAIST with CAPSS by source category}\addcontentsline{toc}{subsubsection}{Step 1. Compare GCAM-KAIST with CAPSS by source category}\label{step-1.-compare-gcam-kaist-with-capss-by-source-category}}
+
+\textbf{Question.}
+How close
+are
+GCAM-KAIST's
+base-year
+emissions
+to CAPSS?
+
+\textbf{What
+we did.}
+
+\begin{itemize}
+\tightlist
+\item
+  Assigned
+  each of
+  127
+  GCAM-KAIST
+  emitting
+  sectors
+  to one
+  of
+  CAPSS's
+  13
+  first-level
+  source
+  categories
+  (crosswalk:
+  \texttt{src/\allowbreak{}gcam\_\allowbreak{}emissions/\allowbreak{}reference/\allowbreak{}gcam\_\allowbreak{}kaist\_\allowbreak{}capss\_\allowbreak{}category\_\allowbreak{}crosswalk.\allowbreak{}csv}).
+\item
+  Applied
+  two
+  finer
+  overrides:
+  residue-burning
+  species
+  →
+  Biomass
+  burning,
+  and the
+  \texttt{solvents}
+  subsector
+  →
+  Solvent
+  use.
+\item
+  Excluded
+  international
+  aviation
+  and
+  shipping
+  as
+  bunker
+  fuel.
+\item
+  Compared
+  the
+  totals
+  with
+  CAPSS's
+  published
+  2015 and
+  2021
+  category
+  totals
+  for the
+  six
+  pollutants
+  both
+  report
+  (SOx,
+  NOx,
+  VOCs,
+  NH3, CO,
+  BC).
+  GCAM
+  reports
+  no PM2.5
+  or PM10.
+\end{itemize}
+
+\textbf{What
+we found.}
+Agreement
+is very
+uneven
+(Figure
+1).
+
+\begin{itemize}
+\tightlist
+\item
+  Some
+  cells
+  are
+  nearly
+  identical:
+  agricultural
+  NH3,
+  road-transport
+  NOx in
+  2021,
+  industrial-process
+  NH3,
+  waste
+  SOx.
+\item
+  Others
+  are far
+  off:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{BC}
+    is
+    9--65×
+    higher
+    than
+    CAPSS
+    in the
+    stationary-combustion
+    categories.
+  \item
+    \textbf{Biomass-burning
+    CO and
+    VOCs}
+    are
+    only
+    6--11\%
+    of
+    CAPSS.
+  \item
+    \textbf{Energy
+    transport
+    and
+    storage
+    VOCs}
+    (fuel
+    storage
+    and
+    distribution)
+    are
+    only
+    12--18\%
+    of
+    CAPSS.
+  \end{itemize}
+\end{itemize}
+
+\figslot{fig01_capss_vs_gcam_2021.png}
+
+\emph{Figure
+1. CAPSS
+vs
+GCAM-KAIST
+by CAPSS
+category,
+2021. The
+2015
+version is
+\texttt{figures/\allowbreak{}fig01\_\allowbreak{}capss\_\allowbreak{}vs\_\allowbreak{}gcam\_\allowbreak{}2015.\allowbreak{}png}.}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+Some
+categories
+match
+almost
+perfectly
+and others
+are off by
+an order
+of
+magnitude.
+Before
+reading
+the good
+matches as
+``GCAM is
+accurate'',
+we needed
+to know
+where
+GCAM's
+numbers
+come from.
+\end{quote}
+
+\hypertarget{step-2.-understand-how-gcam-stores-and-reports-non-co2}{%
+\subsubsection*{Step 2. Understand how GCAM stores and reports non-CO2}\addcontentsline{toc}{subsubsection}{Step 2. Understand how GCAM stores and reports non-CO2}\label{step-2.-understand-how-gcam-stores-and-reports-non-co2}}
+
+\textbf{Question.}
+Is there a
+GCAM
+output
+we're
+missing,
+such as a
+query for
+cement or
+refinery
+emissions?
+
+\textbf{What
+we did.}
+Read the
+output
+database
+structure
+and GCAM's
+standard
+reporting
+queries
+(audit
+§B2, §B3).
+
+\textbf{What
+we found.}
+
+\begin{itemize}
+\tightlist
+\item
+  GCAM has
+  no
+  sector-specific
+  non-CO2
+  queries.
+  The
+  standard
+  queries
+  return
+  every
+  tag that
+  exists.
+\item
+  A sector
+  reports
+  non-CO2
+  emissions
+  if, and
+  only if,
+  its
+  technologies
+  carry
+  tags.
+\end{itemize}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+If
+GCAM-KAIST
+reports
+nothing
+for an
+activity,
+it isn't a
+missing
+query. The
+model
+never
+attached
+emissions
+to that
+activity.
+\end{quote}
+
+\hypertarget{step-3.-check-which-activities-carry-emissions-tags}{%
+\subsubsection*{Step 3. Check which activities carry emissions tags}\addcontentsline{toc}{subsubsection}{Step 3. Check which activities carry emissions tags}\label{step-3.-check-which-activities-carry-emissions-tags}}
+
+\textbf{Question.}
+Does every
+emitting
+activity
+in
+GCAM-KAIST
+have tags?
+
+\textbf{What
+we did.}
+Listed
+every
+technology
+with
+activity
+in either
+scenario
+up to
+2050, and
+checked
+which
+carry tags
+(audit
+§B4).
+
+\textbf{What
+we found.}
+
+\begin{itemize}
+\tightlist
+\item
+  All
+  operating
+  fossil
+  power
+  plants
+  are
+  tagged.
+\item
+  Several
+  large
+  activities
+  are not:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    the
+    cement
+    \emph{process}
+    (only
+    kiln
+    fuel
+    is
+    tagged);
+  \item
+    oil
+    refining
+    (4.69
+    EJ of
+    output
+    in
+    2021);
+  \item
+    chemical
+    feedstocks
+    and
+    industrial
+    cogeneration.
+  \end{itemize}
+\item
+  Several
+  technologies
+  that
+  grow in
+  the
+  net-zero
+  scenario
+  are also
+  untagged:
+  hybrid
+  vehicles,
+  hydrogen-based
+  steel,
+  and
+  steel
+  and
+  cement
+  with
+  carbon
+  capture.
+\item
+  All of
+  these
+  gaps
+  also
+  exist in
+  stock
+  GCAM v9
+  (audit
+  §B4).
+\end{itemize}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+Some real
+sources of
+air
+pollution
+are simply
+absent
+from GCAM,
+and the
+net-zero
+scenario
+moves
+activity
+toward
+technologies
+that the
+model
+treats as
+emission-free.
+\end{quote}
+
+\hypertarget{step-4.-trace-where-the-base-year-numbers-come-from}{%
+\subsubsection*{Step 4. Trace where the base-year numbers come from}\addcontentsline{toc}{subsubsection}{Step 4. Trace where the base-year numbers come from}\label{step-4.-trace-where-the-base-year-numbers-come-from}}
+
+\textbf{Question.}
+Why do
+some CAPSS
+categories
+match so
+closely?
+
+\textbf{What
+we did.}
+
+\begin{itemize}
+\tightlist
+\item
+  Compared
+  GCAM-KAIST's
+  base-year
+  tags
+  with
+  stock
+  GCAM
+  v9's
+  input
+  files
+  (audit
+  §B5.2).
+\item
+  Traced
+  stock
+  GCAM's
+  calibration
+  source
+  through
+  CEDS's
+  documentation
+  (audit
+  §B5.3).
+\item
+  Measured
+  how
+  closely
+  each
+  category
+  ×
+  pollutant
+  × year
+  cell
+  agrees
+  with
+  CAPSS
+  (audit
+  §B5.4).
+\end{itemize}
+
+\textbf{What
+we found.}
+
+\begin{itemize}
+\tightlist
+\item
+  GCAM-KAIST's
+  base-year
+  emissions
+  are
+  stock
+  GCAM
+  v9's:
+  2,244 of
+  2,251
+  values
+  match
+  within
+  0.1\%.
+\item
+  Stock
+  GCAM
+  calibrates
+  to CEDS,
+  and CEDS
+  documents
+  scaling
+  its
+  Korean
+  estimates
+  to
+  NIER's
+  national
+  inventory,
+  which is
+  published
+  as
+  CAPSS.
+\item
+  \textbf{11
+  of the
+  102
+  comparable
+  cells
+  agree
+  with
+  CAPSS to
+  within
+  0.12\%},
+  several
+  to four
+  or five
+  significant
+  figures.
+  For
+  example,
+  agricultural
+  NH3 is
+  200,384.0
+  t vs
+  CAPSS
+  200,384
+  t in
+  2021
+  (Figure
+  2).
+\end{itemize}
+
+\figslot{fig02_capss_agreement.png}
+
+\emph{Figure
+2.
+Relative
+difference
+from CAPSS
+for every
+comparable
+cell (log
+scale).
+The 11
+blue cells
+agree
+within
+0.12\%;
+the rest
+differ by
+1\% to
+over
+1,000\%.}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+Agreement
+to five
+significant
+figures
+doesn't
+happen by
+independent
+estimation.
+These
+base-year
+numbers
+were built
+from the
+inventory
+itself, so
+their
+agreement
+with CAPSS
+is
+circular:
+it shows
+the
+calibration
+worked,
+not that
+GCAM
+represents
+emissions
+correctly.
+\end{quote}
+
+\hypertarget{step-5.-stress-test-the-category-mapping}{%
+\subsubsection*{Step 5. Stress-test the category mapping}\addcontentsline{toc}{subsubsection}{Step 5. Stress-test the category mapping}\label{step-5.-stress-test-the-category-mapping}}
+
+\textbf{Question.}
+Is the
+poor
+agreement
+elsewhere
+just a
+mapping
+problem?
+Would a
+better
+assignment
+of GCAM
+sectors to
+CAPSS
+categories
+make
+everything
+line up?
+
+\textbf{What
+we did.}
+
+\begin{itemize}
+\tightlist
+\item
+  Identified
+  15
+  groups
+  of
+  GCAM-KAIST
+  rows
+  whose
+  CAPSS
+  category
+  is
+  ambiguous.
+  Examples:
+  stationary
+  construction
+  machinery,
+  residential
+  wood
+  burning,
+  iron and
+  steel,
+  international
+  shipping
+  and
+  aviation,
+  and
+  industrial
+  oil use.
+\item
+  Gave
+  each
+  group
+  its 2--3
+  plausible
+  categories,
+  and
+  evaluated
+  all
+  49,152
+  combinations
+  against
+  CAPSS
+  for 2015
+  and
+  2021.
+\item
+  Scored
+  each
+  mapping
+  by the
+  share of
+  CAPSS's
+  emitted
+  mass
+  that
+  ends up
+  in the
+  wrong
+  category,
+  averaged
+  over the
+  12 year
+  ×
+  pollutant
+  combinations.
+\end{itemize}
+
+Script:
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}capss\_\allowbreak{}calibration\_\allowbreak{}test/\allowbreak{}mapping\_\allowbreak{}search.\allowbreak{}py}.
+
+\textbf{What
+we found.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1855}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3710}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1935}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1210}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1290}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Mapping
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Share of
+CAPSS mass
+in the
+wrong
+category
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Cells
+within
+0.12\%
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Within 5\%
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Within
+10\%
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Current
+crosswalk
+& 44.4\% &
+11 & 24 &
+31 \\
+Best of
+49,152 &
+40.9\% &
+12 & 29 &
+41 \\
+\end{longtable}
+
+\emph{(out
+of 102
+comparable
+cells)}
+
+\begin{itemize}
+\tightlist
+\item
+  No
+  mapping
+  comes
+  close to
+  reproducing
+  CAPSS;
+  the best
+  removes
+  only 3.5
+  percentage
+  points
+  of
+  misallocation.
+  The
+  near-exact
+  cells in
+  Step 4
+  appear
+  under
+  the
+  current
+  crosswalk,
+  with no
+  search
+  needed.
+\item
+  The best
+  mapping
+  makes
+  four
+  changes:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    residential
+    traditional
+    biomass
+    →
+    Biomass
+    burning;
+  \item
+    biodiesel
+    refining
+    →
+    Manufacturing
+    industry;
+  \item
+    international
+    aviation
+    →
+    Non-road
+    transport;
+  \item
+    \texttt{other\ industrial\ energy\ use\ /\allowbreak{}\ refined\ liquids}
+    →
+    Energy
+    production.
+  \end{itemize}
+\item
+  The last
+  one is
+  informative.
+  It
+  brings
+  Energy
+  production
+  CO and
+  NH3
+  within
+  2\% of
+  CAPSS.
+  Together
+  with
+  GCAM's
+  own CEDS
+  sector
+  map, it
+  indicates
+  that
+  refinery
+  fuel-combustion
+  emissions
+  sit
+  inside
+  GCAM's
+  industrial
+  energy
+  use
+  (audit
+  §B5.5,
+  an
+  inference).
+\end{itemize}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+The
+mismatches
+are not a
+bookkeeping
+problem we
+can fix by
+relabelling.
+Agreement
+is
+excellent
+where a
+GCAM
+sector
+lines up
+one-to-one
+with a
+CAPSS
+category,
+and poor
+where it
+doesn't.
+That
+pattern is
+what
+calibration
+produces,
+not what
+physics
+produces.
+\end{quote}
+
+\emph{Caveat.}
+With 15
+binary or
+ternary
+choices,
+some
+improvement
+is
+expected
+by chance.
+The search
+is used
+only to
+show that
+remapping
+can't
+\emph{create}
+agreement;
+the
+near-exact
+cells need
+no search.
+
+\hypertarget{step-6.-back-calculate-the-emission-factors}{%
+\subsubsection*{Step 6. Back-calculate the emission factors}\addcontentsline{toc}{subsubsection}{Step 6. Back-calculate the emission factors}\label{step-6.-back-calculate-the-emission-factors}}
+
+\textbf{Question.}
+What
+emission
+factor
+does each
+GCAM-KAIST
+technology
+implicitly
+use, and
+does it
+reflect
+the
+technology?
+
+\textbf{What
+we did.}
+Divided
+each tag's
+emissions
+by the
+activity
+GCAM ties
+it to
+(fuel
+burned, or
+output)
+for every
+base year
+(audit
+§B6.1).
+
+\textbf{What
+we found.}
+
+\textbf{(a)
+Different
+technologies
+share one
+factor.}
+
+\begin{itemize}
+\tightlist
+\item
+  Combined-cycle
+  and
+  steam/turbine
+  gas
+  plants
+  have
+  identical
+  NOx and
+  CO
+  factors
+  per unit
+  of fuel
+  in every
+  base
+  year
+  from
+  2005 to
+  2021
+  (Figure
+  3).
+\item
+  Mobile
+  and
+  stationary
+  machinery
+  carry
+  exactly
+  equal
+  emission
+  masses
+  in every
+  base
+  year
+  (Figure
+  4).
+\item
+  Commercial
+  heating,
+  cooling
+  and
+  ``other''
+  uses of
+  gas
+  share
+  one
+  factor,
+  and so
+  do all
+  ten
+  household
+  income
+  groups
+  (audit
+  §B6.2).
+\end{itemize}
+
+\figslot{fig03_gas_cc_vs_steamct.png}
+
+\emph{Figure
+3. Implied
+NOx and CO
+factors
+per TJ of
+gas for
+the two
+gas-power
+technologies.
+They
+coincide
+in every
+base year
+and
+diverge
+only after
+2021.}
+
+\figslot{fig04_mobile_vs_stationary.png}
+
+\emph{Figure
+4. NOx
+from
+refined-liquids
+machinery:
+mobile and
+stationary
+carry
+identical
+masses in
+every base
+year, in
+both
+agriculture
+and
+construction.
+(Mining,
+not shown,
+behaves
+the
+same.)}
+
+\textbf{(b)
+Factors
+swing
+between
+base
+years.}
+The
+typical
+technology-pollutant
+factor
+varies
+about 2×
+across
+2005--2021,
+and one in
+ten varies
+more than
+11×
+(Figure
+5). A real
+emission
+rate
+doesn't
+move like
+that.
+
+\figslot{fig05_base_year_swing.png}
+
+\emph{Figure
+5. Ratio
+of the
+largest to
+the
+smallest
+implied
+factor
+across
+2005,
+2010, 2015
+and 2021,
+for 436
+technology-pollutant
+series.}
+
+\textbf{(c)
+Large
+shares of
+emissions
+are tied
+to no
+activity
+at all.}
+In 2021,
+81\% of
+GCAM-KAIST's
+Korean
+VOCs and
+55\% of
+its SOx
+sit on
+tags
+driven by
+a fixed
+placeholder,
+not by any
+production
+quantity
+(Figure 6;
+audit
+§B6.4).
+This
+excludes
+international
+shipping
+and
+aviation.
+
+\figslot{fig06_placeholder_shares.png}
+
+\emph{Figure
+6. Share
+of 2021
+emissions
+on
+placeholder-driven
+tags
+(solvents,
+other
+industrial
+processes,
+waste).}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+GCAM's
+factors
+are what's
+left after
+dividing
+an
+inventory
+total
+among
+technologies.
+They can't
+tell a
+combined-cycle
+gas plant
+from an
+older one,
+or a
+tractor
+from a
+farm
+boiler.
+They jump
+around
+between
+years, and
+for most
+VOCs and
+SOx they
+aren't
+attached
+to
+anything
+that
+changes
+with
+production.
+\end{quote}
+
+\hypertarget{step-7.-follow-the-factors-into-the-future}{%
+\subsubsection*{Step 7. Follow the factors into the future}\addcontentsline{toc}{subsubsection}{Step 7. Follow the factors into the future}\label{step-7.-follow-the-factors-into-the-future}}
+
+\textbf{Question.}
+How do the
+factors
+behave in
+the
+scenario
+years we
+actually
+need?
+
+\textbf{What
+we did.}
+Compared
+each
+factor in
+2050 with
+its 2021
+value, and
+the
+\texttt{nz}
+value with
+the
+\texttt{ref}
+value
+(audit
+§B6.5).
+
+\textbf{What
+we found.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{After
+  2021,
+  46\% of
+  factors
+  stay
+  frozen
+  and 52\%
+  decline
+  along
+  the
+  pre-set
+  curve.}
+\item
+  \textbf{In
+  2050,
+  93\% are
+  identical
+  in the
+  reference
+  and
+  net-zero
+  scenarios}
+  (Figure
+  7).
+\item
+  The
+  net-zero
+  scenario
+  therefore
+  changes
+  emissions
+  almost
+  only
+  through
+  activity:
+  how much
+  of each
+  technology
+  runs. It
+  does not
+  change
+  how
+  clean
+  each
+  technology
+  is.
+\end{itemize}
+
+\figslot{fig07_coefficient_trajectories.png}
+
+\emph{Figure
+7. Four
+examples.
+The
+\texttt{nz}
+markers
+sit
+exactly on
+the
+\texttt{ref}
+line. Coal
+power and
+car
+factors
+decline
+along the
+pre-set
+curve;
+cement-kiln
+coal and
+commercial
+gas
+factors
+stay
+frozen at
+their 2021
+values.}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+The model
+has no
+lever for
+pollution-control
+policy:
+scrubbers,
+emission
+standards,
+cleaner
+boilers.
+Any such
+improvement
+is assumed
+identically
+in both
+scenarios,
+so it can
+never show
+up as a
+benefit of
+the
+policy.
+\end{quote}
+
+\hypertarget{does-it-change-the-policy-answer-the-policy-experiment}{%
+\subsection*{4. Does it change the policy answer? The policy experiment}\addcontentsline{toc}{subsection}{4. Does it change the policy answer? The policy experiment}\label{does-it-change-the-policy-answer-the-policy-experiment}}
+
+\hypertarget{what-the-experiment-does}{%
+\subsubsection*{4.1 What the experiment does \plainmark{}}\addcontentsline{toc}{subsubsection}{4.1 What the experiment does}\label{what-the-experiment-does}}
+
+Emissions
+=
+\textbf{activity
+× emission
+factor},
+technology
+by
+technology.
+GCAM-KAIST
+gives us
+both.
+
+The
+experiment
+keeps
+\textbf{GCAM-KAIST's
+activity
+exactly as
+it is} in
+both
+scenarios
+(how much
+coal power
+runs, how
+much steel
+each route
+makes, how
+far hybrid
+buses
+travel)
+and
+\textbf{swaps
+only the
+emission
+factors}.
+Then it
+asks the
+policy
+question:
+
+\begin{quote}
+\emph{How
+much lower
+are 2050
+emissions
+in the
+net-zero
+scenario
+than in
+the
+reference
+scenario?}
+\end{quote}
+
+If GCAM's
+own
+factors
+and more
+realistic
+factors
+give about
+the same
+answer,
+GCAM's
+native
+emissions
+would be
+good
+enough for
+comparing
+policies,
+even if
+their
+levels
+were off.
+If the
+answers
+differ,
+the native
+emissions
+can't be
+used to
+judge the
+policy.
+
+We ran it
+for three
+sectors,
+each
+testing a
+different
+weakness
+from
+Section 3:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Power}
+  tests
+  ``one
+  factor
+  per
+  fuel, on
+  a curve
+  shared
+  by both
+  scenarios''
+  (Steps
+  6--7).
+\item
+  \textbf{Steel}
+  tests
+  ``untagged
+  technologies
+  count as
+  zero''
+  (Step
+  3).
+\item
+  \textbf{Road
+  transport}
+  tests
+  the same
+  thing
+  for
+  hybrid
+  vehicles
+  (Step
+  3).
+\end{itemize}
+
+\hypertarget{design}{%
+\subsubsection*{4.2 Design}\addcontentsline{toc}{subsubsection}{4.2 Design}\label{design}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2750}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5750}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sector
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Variant
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Emission
+factors
+used
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Power &
+native &
+GCAM-KAIST's
+own
+emissions \\
+& GCAM
+2021,
+fixed &
+GCAM's own
+2021
+factor per
+MWh for
+each
+technology,
+held
+constant
+to 2050 \\
+& Korean
+fleet &
+Korean
+factors
+per MWh ×
+GCAM
+generation:
+coal 2022
+fleet (NOx
+0.102, SOx
+0.110);
+gas 2017
+official
+(NOx
+0.171);
+oil
+2015--17
+(NOx
+0.719, SOx
+1.316) \\
+& Korean
+2017 &
+Same, but
+coal at
+the 2017
+official
+national
+factor
+(NOx
+0.291, SOx
+0.258) \\
+Steel &
+native &
+GCAM-KAIST's
+own
+emissions;
+hydrogen-based
+DRI and
+blast
+furnace
+with CCS
+count as
+zero \\
+& filled &
+Hydrogen-based
+DRI at the
+CAPSS
+electric-arc-furnace
+process
+factor
+(NOx 0.2,
+SOx 0.35,
+VOCs 0.09
+kg/t);
+blast
+furnace
+with CCS
+at GCAM's
+own
+blast-furnace
+factor \\
+Road &
+native &
+GCAM-KAIST's
+own
+emissions;
+hybrids
+count as
+zero \\
+& filled &
+Hybrids at
+the same
+vehicle
+type's
+conventional-fuel
+factor per
+unit of
+fuel \\
+\end{longtable}
+
+Notes on
+the
+design:
+
+\begin{itemize}
+\tightlist
+\item
+  Biomass
+  power
+  stays at
+  GCAM's
+  native
+  emissions
+  in the
+  Korean
+  variants.
+  The repo
+  has no
+  usable
+  Korean
+  power-plant
+  biomass
+  factor:
+  biomass
+  IGCC is
+  an
+  explicit
+  gap, and
+  the
+  conventional-biomass
+  factor
+  comes
+  from
+  small
+  boilers.
+\item
+  The
+  steel
+  fill is
+  a
+  \textbf{lower
+  bound}:
+  hydrogen-based
+  DRI also
+  burns
+  gas and
+  oil
+  (audit
+  §B4),
+  and that
+  combustion
+  isn't
+  counted.
+\end{itemize}
+
+Script:
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}policy\_\allowbreak{}experiment/\allowbreak{}policy\_\allowbreak{}experiment.\allowbreak{}py}.
+
+\hypertarget{results}{%
+\subsubsection*{4.3 Results}\addcontentsline{toc}{subsubsection}{4.3 Results}\label{results}}
+
+\textbf{Power:
+same
+direction,
+very
+different
+size}
+(Figure
+8). The
+net-zero
+scenario
+has almost
+no fossil
+power left
+in 2050,
+so every
+variant
+shows a
+cut of
+about
+99\%. What
+differs is
+how much
+is
+\emph{avoided},
+because
+that
+depends on
+how dirty
+the
+reference
+scenario's
+power is:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4359}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2821}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2821}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+2050,
+power
+sector
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+NOx
+avoided
+(kt)
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+SOx
+avoided
+(kt)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+GCAM-KAIST
+native &
+7.5 &
+2.7 \\
+GCAM's
+2021
+factors,
+fixed &
+19.7
+(2.6×) &
+7.4
+(2.7×) \\
+Korean
+fleet
+factors &
+27.9
+(3.7×) &
+11.6
+(4.3×) \\
+Korean
+2017
+official
+factors &
+47.0
+(6.3×) &
+26.5
+(9.7×) \\
+\end{longtable}
+
+Holding
+GCAM's
+\emph{own}
+factors
+fixed
+already
+gives
+2.6×. Most
+of the gap
+therefore
+comes from
+the
+pre-set
+curve that
+shrinks
+the
+reference
+scenario's
+factors.
+The curve
+is an
+assumption
+shared by
+both
+scenarios,
+not a
+policy
+outcome.
+
+For
+context,
+in 2021
+Korean
+fleet
+factors ×
+GCAM
+generation
+give 1.4×
+GCAM's
+native
+power NOx
+and 1.7×
+its SOx.
+
+\figslot{fig08_policy_power.png}
+
+\emph{Figure
+8. NOx and
+SOx
+avoided by
+the
+net-zero
+scenario
+in 2050,
+power
+sector,
+under each
+set of
+factors.}
+
+\textbf{Steel:
+the
+direction
+flips}
+(Figure
+9).
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.5833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1389}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1389}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1389}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+2050,
+steel
+sector, nz
+vs ref
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+NOx
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+SOx
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+VOCs
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+GCAM-KAIST
+native &
+−35\% &
+\textbf{−88\%}
+& −53\% \\
+Untagged
+routes
+filled
+(lower
+bound) &
+−27\% &
+\textbf{+19\%}
+&
+\textbf{+26\%} \\
+\end{longtable}
+
+The 88\%
+SOx cut
+comes from
+the
+net-zero
+scenario's
+steel
+moving
+onto
+routes
+with no
+tags (16.4
+Mt
+hydrogen-based
+DRI, 4.2
+Mt blast
+furnace
+with CCS).
+Once their
+electric-arc-furnace
+process
+emissions
+are
+counted,
+steel SOx
+and VOCs
+\emph{rise}
+under net
+zero.
+
+\figslot{fig09_policy_steel.png}
+
+\emph{Figure
+9. Change
+in 2050
+steel-sector
+emissions,
+net zero
+vs
+reference.}
+
+\textbf{Road:
+modest}
+(Figure
+10).
+Counting
+hybrids
+raises
+2050 road
+emission
+levels in
+both
+scenarios:
+
+\begin{itemize}
+\tightlist
+\item
+  NOx:
+  22--26\%
+  higher;
+\item
+  CO:
+  40--47\%
+  higher;
+\item
+  VOCs:
+  41--48\%
+  higher.
+\end{itemize}
+
+The
+relative
+cut barely
+changes
+(NOx −48\%
+native vs
+−46\%
+filled).
+
+\figslot{fig10_policy_road.png}
+
+\emph{Figure
+10. 2050
+road
+emissions
+with and
+without
+hybrids
+counted.}
+
+\begin{quote}
+\plainmark{}
+\textbf{Takeaway.}
+Using
+GCAM-KAIST's
+native
+emissions
+would get
+the
+\emph{direction}
+wrong for
+steel, and
+the
+\emph{size}
+of the
+power-sector
+benefit
+wrong by
+2.6--9.7×.
+Road
+emission
+levels
+would be
+too low by
+a fifth to
+a third or
+more.
+Because
+the health
+benefit of
+a policy
+is
+computed
+from the
+emissions
+it avoids,
+these
+errors
+carry
+straight
+through to
+the health
+results.
+\end{quote}
+
+\hypertarget{limits-of-the-experiment}{%
+\subsubsection*{4.4 Limits of the experiment}\addcontentsline{toc}{subsubsection}{4.4 Limits of the experiment}\label{limits-of-the-experiment}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{It
+  is
+  illustrative.}
+  None of
+  the
+  Korean
+  or CAPSS
+  factors
+  used are
+  production-ready.
+  The
+  steel
+  factor
+  is from
+  CAPSS VI
+  and is
+  flagged
+  as
+  superseded
+  pending
+  the
+  CAPSS
+  VII
+  update.
+  The
+  power
+  factors
+  mix 2017
+  and 2022
+  evidence.
+\item
+  \textbf{Gas
+  power
+  isn't
+  resolved
+  by
+  technology.}
+  The
+  Korean
+  gas
+  factor
+  is
+  itself a
+  fleet
+  average,
+  so this
+  experiment
+  can't
+  separate
+  combined-cycle
+  from
+  steam/turbine
+  plants.
+  The
+  evidence
+  for that
+  lumping
+  is
+  GCAM's
+  own
+  identical
+  factors
+  (Step
+  6a).
+\item
+  \textbf{Why
+  there is
+  no upper
+  bound
+  for
+  steel.}
+  Filling
+  hydrogen-based
+  DRI with
+  GCAM's
+  own
+  \texttt{EAF\ with\ DRI}
+  factor
+  instead
+  makes
+  net-zero
+  steel
+  NOx
+  \emph{rise}
+  40\%.
+  That
+  factor
+  is
+  itself
+  the
+  anomalous
+  stock
+  coefficient
+  (11.66
+  kg
+  NOx/t;
+  audit
+  §B6.2),
+  so we
+  don't
+  use it
+  as a
+  bound.
+\item
+  \textbf{Some
+  weaknesses
+  aren't
+  tested.}
+  Placeholder-driven
+  sources
+  (solvents,
+  industrial
+  processes)
+  and
+  refining
+  are not
+  part of
+  the
+  experiment,
+  because
+  they
+  have no
+  activity
+  driver
+  to apply
+  a factor
+  to.
+\end{itemize}
+
+\hypertarget{what-this-means-for-using-gcam-kaist}{%
+\subsection*{5. What this means for using GCAM-KAIST \plainmark{}}\addcontentsline{toc}{subsection}{5. What this means for using GCAM-KAIST}\label{what-this-means-for-using-gcam-kaist}}
+
+\textbf{Use
+GCAM-KAIST's
+activity;
+don't use
+its native
+non-CO2
+emissions.}
+GCAM-KAIST
+remains
+the
+project's
+source of
+projected
+activity.
+What it
+can't
+supply is
+emission
+factors
+that
+distinguish
+technologies,
+respond to
+controls,
+or cover
+every
+source.
+
+\hypertarget{limitations-of-gcams-native-non-co2-approach-as-inherited-by-gcam-kaist}{%
+\subsubsection*{5.1 Limitations of GCAM's native non-CO2 approach, as inherited by GCAM-KAIST}\addcontentsline{toc}{subsubsection}{5.1 Limitations of GCAM's native non-CO2 approach, as inherited by GCAM-KAIST}\label{limitations-of-gcams-native-non-co2-approach-as-inherited-by-gcam-kaist}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6389}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3611}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Limitation
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Evidence
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Base-year
+emissions
+are
+calibrated
+inventory
+totals, so
+agreement
+with CAPSS
+is
+circular &
+Step 4;
+audit
+§B5 \\
+One factor
+shared by
+distinct
+technologies
+within an
+inventory
+total &
+Step 6a;
+audit
+§B6.2 \\
+Factors
+swing
+between
+base years
+& Step 6b;
+audit
+§B6.3 \\
+Large
+shares of
+VOCs and
+SOx tied
+to a
+placeholder,
+not to
+activity &
+Step 6c;
+audit
+§B6.4 \\
+Future
+factors
+frozen or
+on a curve
+shared by
+both
+scenarios;
+no
+pollution-control
+lever &
+Step 7;
+audit
+§B6.5 \\
+Untagged
+sources
+and
+technologies
+count as
+zero
+(cement
+process,
+refining,
+hybrids,
+hydrogen
+steel,
+CCS) &
+Step 3;
+audit
+§B4 \\
+No primary
+PM2.5 or
+PM10 &
+audit
+§B2 \\
+\end{longtable}
+
+\hypertarget{the-power-sector-what-is-and-isnt-lumped}{%
+\subsubsection*{5.2 The power sector: what is and isn't lumped}\addcontentsline{toc}{subsubsection}{5.2 The power sector: what is and isn't lumped}\label{the-power-sector-what-is-and-isnt-lumped}}
+
+Power is
+the
+best-resolved
+part of
+GCAM-KAIST,
+so it
+needs a
+precise
+statement:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Each
+  fuel has
+  its own
+  factor.}
+  Coal,
+  gas, oil
+  and
+  biomass
+  power
+  are
+  separate,
+  so a
+  coal-to-gas
+  switch
+  does
+  change
+  GCAM's
+  emissions
+  in the
+  right
+  direction.
+\item
+  \textbf{Lumping
+  happens
+  \emph{within}
+  a fuel.}
+  Combined-cycle
+  and
+  steam/turbine
+  gas
+  plants
+  share
+  one
+  factor
+  per unit
+  of fuel
+  (Figure
+  3). The
+  coal
+  IGCC and
+  coal CCS
+  variants
+  have no
+  activity
+  in these
+  runs,
+  and gas
+  with CCS
+  runs
+  only at
+  small
+  scale in
+  2050
+  (\texttt{nz}).
+\item
+  \textbf{How
+  the
+  base-year
+  factors
+  compare
+  with
+  Korean
+  evidence}
+  (\texttt{figures/\allowbreak{}data/\allowbreak{}table\_\allowbreak{}power\_\allowbreak{}factors.\allowbreak{}csv};
+  Korean
+  values
+  from
+  \texttt{docs/\allowbreak{}gcam\_\allowbreak{}kaist\_\allowbreak{}ef\_\allowbreak{}target\_\allowbreak{}table.\allowbreak{}csv},
+  not
+  production-ready):
+\end{itemize}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1602}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1657}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1657}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2541}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2541}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Technology,
+pollutant
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+GCAM-KAIST
+2015
+(kg/MWh)
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+GCAM-KAIST
+2021
+(kg/MWh)
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Korean
+reference
+(kg/MWh)
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Coal, NOx
+& 0.458 &
+0.150 &
+0.291
+(2017
+official);
+0.102
+(2022
+fleet) &
+Within
+about
+1.6×, same
+downward
+trend \\
+Coal, SOx
+& 0.267 &
+0.071 &
+0.258
+(2017
+official);
+0.110
+(2022
+fleet) &
+Close in
+2015; 2021
+is 0.65×
+the 2022
+fleet
+value \\
+Gas
+combined
+cycle, NOx
+& 0.134 &
+0.040 &
+0.171
+(2017
+official
+fleet
+average) &
+2015
+close;
+2021 4.3×
+lower \\
+Gas
+steam/turbine,
+NOx &
+0.201 &
+0.060 &
+0.171
+(same
+fleet
+average) &
+2015
+close;
+2021 2.9×
+lower \\
+Oil, NOx &
+0.509 &
+0.320 &
+0.711--0.727
+(2015--17)
+& About
+1.4× lower
+in 2015 \\
+Oil, SOx &
+0.520 &
+0.374 &
+1.264--1.367
+(2015--17)
+& About
+2.5× lower
+in the
+same
+years \\
+\end{longtable}
+
+In short:
+\textbf{coal
+roughly
+tracks the
+Korean
+evidence;
+gas tracks
+in 2015
+but not
+2021; oil
+doesn't
+track.}
+Even where
+a factor
+tracks, it
+is a fleet
+average.
+It carries
+no
+information
+about
+which
+plants
+have which
+controls,
+and after
+2021 it
+follows
+the shared
+curve
+rather
+than
+policy.
+
+\hypertarget{beyond-this-project}{%
+\subsubsection*{5.3 Beyond this project}\addcontentsline{toc}{subsubsection}{5.3 Beyond this project}\label{beyond-this-project}}
+
+Because
+these
+properties
+come from
+GCAM's
+standard
+non-CO2
+approach,
+they apply
+to any
+study that
+uses
+GCAM's
+native
+non-CO2
+emissions
+to
+evaluate
+technology
+transitions,
+not only
+to
+GCAM-KAIST.
+Whether
+the same
+lumping
+holds in
+GCAM-USA,
+which has
+its own US
+emission
+inputs,
+has not
+been
+checked
+here and
+is the
+subject of
+a separate
+note.
+
+\hypertarget{our-approach-bottom-up-emission-factors}{%
+\subsection*{6. Our approach: bottom-up emission factors \plainmark{}}\addcontentsline{toc}{subsection}{6. Our approach: bottom-up emission factors}\label{our-approach-bottom-up-emission-factors}}
+
+The
+project
+builds a
+non-power
+(and
+interim
+power)
+emission-factor
+inventory
+that pairs
+\textbf{GCAM-KAIST
+activity}
+with
+\textbf{technology-specific
+Korean
+emission
+factors}.
+It keeps
+three legs
+separate:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Activity:}
+  which
+  GCAM
+  path and
+  unit
+  gives
+  the
+  physical
+  quantity,
+  for
+  example
+  tonnes
+  of
+  clinker
+  or
+  vehicle-km.
+\item
+  \textbf{Factor:}
+  which
+  CAPSS or
+  Korean
+  source
+  supplies
+  the
+  emission
+  factor
+  for that
+  quantity.
+\item
+  \textbf{Spatial:}
+  where
+  the
+  emissions
+  are
+  placed
+  on the
+  grid.
+\end{itemize}
+
+How it
+addresses
+each
+limitation:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4651}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5349}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+GCAM
+limitation
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Bottom-up
+remedy
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Circular
+agreement
+with CAPSS
+& Factors
+come from
+source-level
+evidence,
+not from
+dividing
+inventory
+totals.
+Agreement
+with CAPSS
+in the
+base years
+then
+becomes a
+genuine
+validation
+test. \\
+Shared
+factors
+across
+technologies
+& One
+factor per
+technology
+and
+control
+configuration
+(for
+example
+combined-cycle
+vs
+steam/turbine;
+plants
+with and
+without
+flue-gas
+desulfurization). \\
+Untagged
+sources
+count as
+zero &
+Every
+activity
+gets a
+factor or
+an
+explicit,
+recorded
+gap; a
+missing
+factor
+never
+becomes
+zero. \\
+Placeholder
+drivers &
+Process
+emissions
+are tied
+to
+physical
+activity:
+clinker,
+crude
+throughput,
+solvent
+use. \\
+No
+pollution-control
+lever &
+Factors
+can differ
+by
+scenario
+where a
+policy
+changes
+controls
+or
+standards. \\
+No PM2.5
+or PM10 &
+CAPSS
+factors
+include
+PM2.5,
+PM10 and
+TSP. \\
+\end{longtable}
+
+This
+approach
+has its
+own costs:
+
+\begin{itemize}
+\tightlist
+\item
+  GCAM's
+  units
+  (EJ, Mt,
+  passenger-km)
+  must be
+  converted
+  to the
+  factors'
+  units
+  (tonnes
+  of
+  clinker,
+  vehicle-km,
+  animal-years).
+\item
+  Korean
+  factors
+  must be
+  collected
+  and
+  reviewed.
+\item
+  A
+  spatial
+  allocation
+  must be
+  built.
+\end{itemize}
+
+The
+inventory
+is a work
+in
+progress.
+Current
+status is
+tracked in
+{\texttt{roadmap.\allowbreak{}md}},
+and the
+method
+will be
+described
+fully once
+it is
+complete.
+
+\hypertarget{caveats-and-open-items}{%
+\subsection*{7. Caveats and open items}\addcontentsline{toc}{subsection}{7. Caveats and open items}\label{caveats-and-open-items}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{KAIST
+  inputs.}
+  GCAM-KAIST's
+  input
+  files
+  were not
+  examined.
+  The
+  provenance
+  argument
+  (Step 4)
+  rests on
+  its
+  outputs
+  matching
+  stock
+  GCAM v9.
+  Requested
+  from
+  KAIST:
+  the run
+  configurations
+  and
+  emissions
+  input
+  files.
+\item
+  \textbf{CEDS
+  release.}
+  The CEDS
+  → CAPSS
+  link
+  rests on
+  CEDS
+  documentation
+  and on
+  the
+  near-exact
+  agreement.
+  It has
+  not been
+  traced
+  through
+  the CEDS
+  release
+  that
+  GCAM v9
+  uses.
+\item
+  \textbf{Refinery
+  emissions.}
+  That
+  they sit
+  in
+  \texttt{other\ industrial\ energy\ use\ /\allowbreak{}\ refined\ liquids}
+  is an
+  inference
+  (Step 5;
+  audit
+  §B5.5).
+\item
+  \textbf{Mapping
+  search.}
+  Choosing
+  the best
+  of
+  49,152
+  mappings
+  flatters
+  the fit;
+  only the
+  ``remapping
+  can't
+  create
+  agreement''
+  conclusion
+  is drawn
+  from it.
+\item
+  \textbf{Policy
+  experiment.}
+  Illustrative,
+  with
+  factors
+  that are
+  not
+  production-ready
+  (§4.4).
+\item
+  \textbf{Region.}
+  Only
+  South
+  Korea
+  was
+  examined.
+\end{itemize}
+
+\hypertarget{figures-tables-and-reproduction}{%
+\subsection*{8. Figures, tables and reproduction}\addcontentsline{toc}{subsection}{8. Figures, tables and reproduction}\label{figures-tables-and-reproduction}}
+
+All
+figures
+and tables
+are
+produced
+by one
+script,
+{\texttt{figures/\allowbreak{}make\_\allowbreak{}figures.\allowbreak{}py}},
+run from
+the repo
+root. Each
+figure's
+plotted
+numbers
+are saved
+in
+\texttt{figures/\allowbreak{}data/\allowbreak{}}
+(the table
+view). The
+script
+reads
+local
+diagnostics
+under
+\texttt{results/\allowbreak{}}
+and
+\texttt{data/\allowbreak{}},
+which are
+untracked,
+so it can
+only be
+re-run
+where
+those
+files
+exist.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2756}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3622}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3622}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Item
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+File
+\end{minipage}
+&
+\begin{minipage}[b]{\linewidth}\raggedright
+Data
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Figure 1 &
+\texttt{figures/\allowbreak{}fig01\_\allowbreak{}capss\_\allowbreak{}vs\_\allowbreak{}gcam\_\allowbreak{}2021.\allowbreak{}png}
+(2015:
+\texttt{.\allowbreak{}.\allowbreak{}.\allowbreak{}\_\allowbreak{}2015.\allowbreak{}png})
+&
+\texttt{data/\allowbreak{}fig01\_\allowbreak{}capss\_\allowbreak{}vs\_\allowbreak{}gcam\_\allowbreak{}\{2015,2021\}.\allowbreak{}csv} \\
+Figure 2 &
+\texttt{figures/\allowbreak{}fig02\_\allowbreak{}capss\_\allowbreak{}agreement.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig02\_\allowbreak{}capss\_\allowbreak{}agreement.\allowbreak{}csv} \\
+Figure 3 &
+\texttt{figures/\allowbreak{}fig03\_\allowbreak{}gas\_\allowbreak{}cc\_\allowbreak{}vs\_\allowbreak{}steamct.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig03\_\allowbreak{}gas\_\allowbreak{}cc\_\allowbreak{}vs\_\allowbreak{}steamct.\allowbreak{}csv} \\
+Figure 4 &
+\texttt{figures/\allowbreak{}fig04\_\allowbreak{}mobile\_\allowbreak{}vs\_\allowbreak{}stationary.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig04\_\allowbreak{}mobile\_\allowbreak{}vs\_\allowbreak{}stationary.\allowbreak{}csv} \\
+Figure 5 &
+\texttt{figures/\allowbreak{}fig05\_\allowbreak{}base\_\allowbreak{}year\_\allowbreak{}swing.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig05\_\allowbreak{}base\_\allowbreak{}year\_\allowbreak{}swing.\allowbreak{}csv} \\
+Figure 6 &
+\texttt{figures/\allowbreak{}fig06\_\allowbreak{}placeholder\_\allowbreak{}shares.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig06\_\allowbreak{}placeholder\_\allowbreak{}shares.\allowbreak{}csv} \\
+Figure 7 &
+\texttt{figures/\allowbreak{}fig07\_\allowbreak{}coefficient\_\allowbreak{}trajectories.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig07\_\allowbreak{}coefficient\_\allowbreak{}trajectories.\allowbreak{}csv} \\
+Figure 8 &
+\texttt{figures/\allowbreak{}fig08\_\allowbreak{}policy\_\allowbreak{}power.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig08\_\allowbreak{}policy\_\allowbreak{}power.\allowbreak{}csv} \\
+Figure 9 &
+\texttt{figures/\allowbreak{}fig09\_\allowbreak{}policy\_\allowbreak{}steel.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig09\_\allowbreak{}policy\_\allowbreak{}steel.\allowbreak{}csv} \\
+Figure 10
+&
+\texttt{figures/\allowbreak{}fig10\_\allowbreak{}policy\_\allowbreak{}road.\allowbreak{}png}
+&
+\texttt{data/\allowbreak{}fig10\_\allowbreak{}policy\_\allowbreak{}road.\allowbreak{}csv} \\
+Mapping-search
+table
+(Step 5) &
+&
+\texttt{data/\allowbreak{}table\_\allowbreak{}mapping\_\allowbreak{}search.\allowbreak{}csv} \\
+Power-factor
+table
+(§5.2) & &
+\texttt{data/\allowbreak{}table\_\allowbreak{}power\_\allowbreak{}factors.\allowbreak{}csv} \\
+\end{longtable}
+
+Upstream
+evidence
+scripts
+are listed
+in audit
+§B9. The
+experiment's
+script and
+outputs
+are in
+\texttt{results/\allowbreak{}diagnostics/\allowbreak{}policy\_\allowbreak{}experiment/\allowbreak{}}.

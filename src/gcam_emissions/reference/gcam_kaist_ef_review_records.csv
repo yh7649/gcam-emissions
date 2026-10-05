@@ -1,0 +1,2 @@
+review_id,review_date,reviewer,scope,decision,note
+gcam_kaist_target_20260908,2026-09-08,project_owner,"All 135 rows in docs/gcam_kaist_ef_target_table.csv",approve_for_catalog_with_row_status,"Owner explicitly authorized production preparation. Only exact or no-direct-emissions rows may be production_ready; proxy, unresolved, formula-weighting, and denominator-conversion rows remain blocked as recorded in the generated audit."

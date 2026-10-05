@@ -1,0 +1,134 @@
+sector_name_gcam_usa,subsector_gcam_usa,gcam_kaist_equivalent,activity_unit,korea_specific_ef,capss_equivalent_sector,capss_emission_value,ef_source,match_note
+base load generation,biomass,sector: elec_biomass (IGCC)|elec_biomass (conv),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+base load generation,coal,sector: elec_coal (conv pul),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+base load generation,gas,sector: elec_gas (CC CCS)|elec_gas (CC)|elec_gas (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+base load generation,refined liquids,sector: elec_refined liquids (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+intermediate generation,biomass,sector: elec_biomass (IGCC)|elec_biomass (conv),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+intermediate generation,coal,sector: elec_coal (conv pul),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+intermediate generation,gas,sector: elec_gas (CC CCS)|elec_gas (CC)|elec_gas (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+intermediate generation,refined liquids,sector: elec_refined liquids (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+subpeak generation,coal,sector: elec_coal (conv pul),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+subpeak generation,gas,sector: elec_gas (CC CCS)|elec_gas (CC)|elec_gas (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+subpeak generation,refined liquids,sector: elec_refined liquids (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+peak generation,coal,sector: elec_coal (conv pul),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+peak generation,gas,sector: elec_gas (CC CCS)|elec_gas (CC)|elec_gas (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+peak generation,refined liquids,sector: elec_refined liquids (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+backup_electricity,gas,sector: elec_gas (CC CCS)|elec_gas (CC)|elec_gas (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+csp_backup,gas,sector: elec_gas (CC CCS)|elec_gas (CC)|elec_gas (steam/CT),EJ|km^3,,,,,KAIST has no dispatch-segment axis (baseload/intermediate/peak/subpeak); every KAIST elec_<fuel> tech maps here regardless of USA segment.
+other industrial energy use,biomass,other industrial energy use,EJ,,,,,
+other industrial energy use,coal,other industrial energy use,EJ,,,,,
+other industrial energy use,gas,other industrial energy use,EJ,,,,,
+other industrial energy use,refined liquids,other industrial energy use,EJ,,,,,
+cement,cement,cement,EJ|EJ or Mt|Mt,,,,,
+process heat cement,biomass,process heat cement,EJ,,,,,
+process heat cement,coal,process heat cement,EJ,,,,,
+process heat cement,gas,process heat cement,EJ,,,,,
+process heat cement,refined liquids,process heat cement,EJ,,,,,
+N fertilizer,gas,N fertilizer,Mt N|Mt NH3,,,,,
+other industrial feedstocks,gas,other industrial feedstocks,EJ,,,,,
+regional biomass,regional biomass,regional biomass,EJ,,,,,
+regional biomassOil,regional biomassOil,regional biomassOil,EJ|Mt,,,,,
+regional corn for ethanol,regional corn for ethanol,regional corn for ethanol,EJ|Mt,,,,,
+regional coal,regional coal,regional coal,EJ|km^3,,,,,
+regional oil,crude oil,regional oil,EJ|km^3,,,,,
+unconventional oil production,unconventional oil production,null (no GCAM-KAIST match found),,,,,,
+regional natural gas,regional natural gas,regional natural gas,EJ,,,,,
+gas pipeline,gas pipeline,gas pipeline,EJ,,,,,
+gas processing,biomass gasification,gas processing,EJ,,,,,
+gas processing,coal gasification,gas processing,EJ,,,,,
+oil refining,oil refining,subsector: oil refining,EJ,,,,,
+biomass liquids,biomass liquids,subsector: biomass liquids,EJ,,,,,
+gas to liquids,gas to liquids,subsector: gas to liquids,EJ,,,,,
+H2 central production,gas,H2 central production,EJ|km^3,,,,,
+H2 forecourt production,gas,null (no GCAM-KAIST match found),,,,,,
+comm cooking,gas,"node: comm others (bundled, 1 fuel/decile variants)",EJ,,,,,KAIST has no separate cooking end-use; it is bundled into 'comm others' with heating/cooling's leftover demand. Not separable with current data.
+comm cooling,electricity,comm cooling,EJ,,,,,
+comm cooling,gas,comm cooling,EJ,,,,,
+comm heating,biomass,comm heating,EJ,,,,,
+comm heating,coal,comm heating,EJ,,,,,
+comm heating,gas,comm heating,EJ,,,,,
+comm heating,refined liquids,comm heating,EJ,,,,,
+comm hot water,gas,"node: comm others (bundled, 1 fuel/decile variants)",EJ,,,,,KAIST has no separate hot water end-use; it is bundled into 'comm others' with heating/cooling's leftover demand. Not separable with current data.
+comm hot water,refined liquids,"node: comm others (bundled, 1 fuel/decile variants)",EJ,,,,,KAIST has no separate hot water end-use; it is bundled into 'comm others' with heating/cooling's leftover demand. Not separable with current data.
+comm other,gas,"node: comm others (bundled, 1 fuel/decile variants)",EJ,,,,,KAIST has no separate other end-use; it is bundled into 'comm others' with heating/cooling's leftover demand. Not separable with current data.
+comm other,refined liquids,"node: comm others (bundled, 1 fuel/decile variants)",EJ,,,,,KAIST has no separate other end-use; it is bundled into 'comm others' with heating/cooling's leftover demand. Not separable with current data.
+resid clothes dryers,gas,"node: resid others (bundled, 30 fuel/decile variants)",EJ,,,,,KAIST has no separate clothes dryers end-use; it is bundled into 'resid others' with heating/cooling's leftover demand. Not separable with current data.
+resid cooking,gas,"node: resid others (bundled, 30 fuel/decile variants)",EJ,,,,,KAIST has no separate cooking end-use; it is bundled into 'resid others' with heating/cooling's leftover demand. Not separable with current data.
+resid cooking,refined liquids,"node: resid others (bundled, 30 fuel/decile variants)",EJ,,,,,KAIST has no separate cooking end-use; it is bundled into 'resid others' with heating/cooling's leftover demand. Not separable with current data.
+resid cooling,electricity,node: resid cooling modern_d1..d10 (10 deciles),EJ,,,,,"KAIST bundles gas/refined-liquids/electricity into one 'modern' fuel class for cooling (not separable by USA's fuel split); shown here is the whole 'modern' bucket, not electricity alone."
+resid heating,biomass,node: resid heating TradBio_d1..d10 (10 deciles),EJ,,,,,KAIST models this as resid heating TradBio_d1..d10 (10 building-vintage deciles); aggregated across deciles.
+resid heating,coal,node: resid heating coal_d1..d10 (10 deciles),EJ,,,,,KAIST models this as resid heating coal_d1..d10 (10 building-vintage deciles); aggregated across deciles.
+resid heating,gas,node: resid heating modern_d1..d10 (10 deciles),EJ,,,,,"KAIST bundles gas/refined-liquids/electricity into one 'modern' fuel class for heating (not separable by USA's fuel split); shown here is the whole 'modern' bucket, not gas alone."
+resid heating,refined liquids,node: resid heating modern_d1..d10 (10 deciles),EJ,,,,,"KAIST bundles gas/refined-liquids/electricity into one 'modern' fuel class for heating (not separable by USA's fuel split); shown here is the whole 'modern' bucket, not refined liquids alone."
+resid hot water,gas,"node: resid others (bundled, 30 fuel/decile variants)",EJ,,,,,KAIST has no separate hot water end-use; it is bundled into 'resid others' with heating/cooling's leftover demand. Not separable with current data.
+resid hot water,refined liquids,"node: resid others (bundled, 30 fuel/decile variants)",EJ,,,,,KAIST has no separate hot water end-use; it is bundled into 'resid others' with heating/cooling's leftover demand. Not separable with current data.
+resid other,gas,"node: resid others (bundled, 30 fuel/decile variants)",EJ,,,,,KAIST has no separate other end-use; it is bundled into 'resid others' with heating/cooling's leftover demand. Not separable with current data.
+resid other,refined liquids,"node: resid others (bundled, 30 fuel/decile variants)",EJ,,,,,KAIST has no separate other end-use; it is bundled into 'resid others' with heating/cooling's leftover demand. Not separable with current data.
+trn_freight,Domestic Ship,trn_freight,EJ|billion ton-km,,,,,
+trn_freight,Freight Rail,trn_freight,EJ|billion ton-km,,,,,
+trn_freight_road,Truck (>12t),trn_freight_road,EJ|billion ton-km,,,,,
+trn_freight_road,Truck (0-2.7t),trn_freight_road,EJ|billion ton-km,,,,,
+trn_freight_road,Truck (2.7-4.5t),trn_freight_road,EJ|billion ton-km,,,,,
+trn_freight_road,Truck (4.5-12t),trn_freight_road,EJ|billion ton-km,,,,,
+trn_pass,Domestic Aviation,trn_pass,EJ|billion pass-km,,,,,
+trn_pass,Passenger Rail,trn_pass,EJ|billion pass-km,,,,,
+trn_pass_road,Bus,trn_pass_road,EJ|billion pass-km,,,,,
+trn_pass_road_LDV_2W,Motorcycle (>250cc),null (no GCAM-KAIST match found),,,,,,
+trn_pass_road_LDV_4W,Compact Car,trn_pass_road_LDV_4W,EJ|billion pass-km,,,,,
+trn_pass_road_LDV_4W,Large Car,trn_pass_road_LDV_4W,EJ|billion pass-km,,,,,
+trn_pass_road_LDV_4W,Light Truck and SUV,trn_pass_road_LDV_4W,EJ|billion pass-km,,,,,
+trn_pass_road_LDV_4W,Midsize Car,trn_pass_road_LDV_4W,EJ|billion pass-km,,,,,
+trn_aviation_intl,International Aviation,trn_aviation_intl,EJ|billion pass-km,,,,,
+trn_shipping_intl,International Ship,trn_shipping_intl,EJ|billion ton-km,,,,,
+trn_pass_road_LDV,2W and 3W,trn_pass_road_LDV,EJ|billion pass-km,,,,,
+trn_pass_road_LDV_4W,Car,trn_pass_road_LDV_4W,EJ|billion pass-km,,,,,
+trn_pass_road_LDV_4W,Large Car and Truck,trn_pass_road_LDV_4W,EJ|billion pass-km,,,,,
+trn_freight_road,Heavy truck,trn_freight_road,EJ|billion ton-km,,,,,
+trn_freight_road,Medium truck,trn_freight_road,EJ|billion ton-km,,,,,
+trn_freight_road,Light truck,trn_freight_road,EJ|billion ton-km,,,,,
+coal to liquids,coal to liquids,subsector: coal to liquids,EJ,,,,,
+industrial processes,other industrial processes,industrial processes,,,,,,
+industrial processes,solvents,industrial processes,,,,,,
+urban processes,landfills,urban processes,,,,,,
+urban processes,wastewater,urban processes,,,,,,
+urban processes,waste_incineration,urban processes,,,,,,
+H2 central production,biomass,H2 central production,EJ|km^3,,,,,
+H2 central production,coal,H2 central production,EJ|km^3,,,,,
+nuclearFuelGenII,enrichedUranium,nuclearFuelGenII,EJ|Mt|km^3,,,,,
+nuclearFuelGenIII,enrichedUranium,nuclearFuelGenIII,EJ|Mt|km^3,,,,,
+regional coal,domestic coal,regional coal,EJ|km^3,,,,,
+regional coal,imported coal,regional coal,EJ|km^3,,,,,
+regional natural gas,domestic natural gas,regional natural gas,EJ,,,,,
+regional natural gas,imported natural gas,regional natural gas,EJ,,,,,
+regional oil,domestic crude oil,regional oil,EJ|km^3,,,,,
+regional oil,imported crude oil,regional oil,EJ|km^3,,,,,
+coal,coal,subsector: coal,EJ,,,,,
+crude oil,crude oil,technology: crude oil,EJ,,,,,
+natural gas,natural gas,subsector: natural gas,EJ,,,,,
+crude oil,unconventional oil,technology: crude oil,EJ,,,,,
+airCO2,airCO2,airCO2,Mt,,,,,
+process heat dac,process heat dac,process heat dac,EJ,,,,,
+H2 wholesale dispensing,forecourt production,null (no GCAM-KAIST match found),,,,,,
+UnmanagedLand,,UnmanagedLand,none|thous km2,,,,,
+Beef,,Beef,Mt|billion$|km^3|mil pers,,,,,
+Corn,,Corn,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+Dairy,,Dairy,Mt|billion$|km^3|mil pers,,,,,
+FiberCrop,,FiberCrop,Mt|Mt N|billion$|mil pers,,,,,
+FodderGrass,,FodderGrass,Mt|Mt N|billion$|mil pers,,,,,
+FodderHerb,,subsector: FodderHerb,Mt,,,,,
+Fruits,,Fruits,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+Legumes,,Legumes,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+MiscCrop,,MiscCrop,EJ|Mt|Mt N|billion$|mil pers,,,,,
+NutsSeeds,,NutsSeeds,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+OilCrop,,OilCrop,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+OtherGrain,,OtherGrain,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+Pork,,Pork,Mt|billion$|km^3|mil pers,,,,,
+Poultry,,Poultry,Mt|billion$|km^3|mil pers,,,,,
+Rice,,Rice,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+RootTuber,,RootTuber,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+SheepGoat,,SheepGoat,Mt|billion$|km^3|mil pers,,,,,
+Soybean,,Soybean,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+SugarCrop,,subsector: SugarCrop,Mt|Pcal,,,,,
+Vegetables,,Vegetables,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+Wheat,,Wheat,EJ|Mt|Mt N|billion$|km^3|mil pers,,,,,
+biomass,,biomass,EJ|Mt N|billion$|km^3|mil pers,,,,,

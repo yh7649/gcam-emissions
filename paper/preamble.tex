@@ -1,0 +1,32 @@
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% Tables and links (used by the GCAM-KAIST audit in sections/methods_prior.tex)
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{fvextra}       % breakable code blocks
+\setlength{\emergencystretch}{3em}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Unicode characters pdflatex doesn't know by default
+\usepackage{newunicodechar}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{↔}{\ensuremath{\leftrightarrow}}
+\newunicodechar{⁹}{\textsuperscript{9}}
+\newunicodechar{⁸}{\textsuperscript{8}}
+\newunicodechar{⁻}{\textsuperscript{\textminus}}
+
+% Tables: single-spaced, slightly smaller
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\singlespacing\small}
+\AtBeginEnvironment{tabular}{\singlespacing}
+\AtBeginEnvironment{Verbatim}{\singlespacing}
+\newunicodechar{−}{\textminus}

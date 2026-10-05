@@ -1,7 +1,7 @@
 PYTHON_INTERPRETER ?= .venv/bin/python
 export GCAM_EMISSIONS_HOME ?= $(CURDIR)
 
-.PHONY: help install validate inventory factors scrape-capss emissions spatial format lint test check clean
+.PHONY: help install validate inventory factors fill-kaist-efs scrape-capss scrape-capss-verified emissions spatial format lint test check clean
 
 help:
 	@grep -E '^[a-zA-Z-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
@@ -20,8 +20,14 @@ inventory:  ## Build the sector inventory and its diagnostics
 factors:  ## Build and validate the emission-factor catalog
 	$(PYTHON_INTERPRETER) -m gcam_emissions.factors.catalog
 
+fill-kaist-efs:  ## Populate the 135-row GCAM-KAIST EF research target and audit
+	$(PYTHON_INTERPRETER) -m gcam_emissions.factors.kaist_target
+
 scrape-capss:  ## Extract factor candidates from the CAPSS Handbook VII PDF
 	$(PYTHON_INTERPRETER) -m gcam_emissions.factors.capss_handbook
+
+scrape-capss-verified:  ## Extract CAPSS VII candidates after matching the official PDF
+	$(PYTHON_INTERPRETER) -m gcam_emissions.factors.capss_handbook --verify-official-source
 
 emissions:  ## Map GCAM activity through the factor catalog to annual mass
 	$(PYTHON_INTERPRETER) -m gcam_emissions.native
