@@ -477,8 +477,7 @@ def placeholder_shares() -> None:
 VARIANT_LABELS = {
     "native": "GCAM-KAIST native",
     "gcam_2021": "GCAM's 2021 factors, held fixed",
-    "korea_fleet": "Korean fleet factors",
-    "korea_2017": "Korean 2017 official factors",
+    "kepco_2021": "KEPCO 2021 factors",
     "filled_low": "Untagged routes filled (CAPSS EAF factor)",
     "filled": "Hybrids filled (conventional factor)",
 }
@@ -487,12 +486,12 @@ VARIANT_LABELS = {
 def policy_power() -> None:
     s = pd.read_csv(POLICY / "policy_experiment_summary.csv")
     s = s[(s.leg == "power") & s.pollutant.isin(["NOx", "SOx"])].copy()
-    order = ["native", "gcam_2021", "korea_fleet", "korea_2017"]
+    order = ["native", "gcam_2021", "kepco_2021"]
     fig, axes = plt.subplots(1, 2, figsize=(10, 3.2), sharey=True)
     for ax, pol in zip(axes, ["NOx", "SOx"]):
         p = s[s.pollutant == pol].set_index("variant").reindex(order)
         y = np.arange(len(order))
-        colors = [MUTED] + [BLUE] * 3
+        colors = [MUTED] + [BLUE] * (len(order) - 1)
         ax.barh(y, p.reduction_kt, height=0.42, color=colors)
         for yi, (v, r) in enumerate(p.iterrows()):
             label = f"{r.reduction_kt:.1f} kt" + (
@@ -512,8 +511,10 @@ def policy_power() -> None:
         ax.set_xlabel("kt avoided in 2050 (ref − nz)")
         ax.set_title(f"{pol} avoided by nz, power sector", loc="left")
         _style(ax)
+    lo, hi = s[s.variant != "native"].reduction_vs_native.agg(["min", "max"])
     fig.suptitle(
-        "Power: same direction, but the avoided emissions vary 2.6–9.7× with the factors",
+        f"Power: same direction, but the avoided emissions are {lo:.1f}–{hi:.1f}× native"
+        " with other factors",
         x=0.01,
         ha="left",
         fontsize=11,
@@ -598,13 +599,17 @@ def policy_road() -> None:
 
 
 # --------------------------------------------------------------------------- power table
-KOREAN_POWER = [  # docs/gcam_kaist_ef_target_table.csv (not production-ready)
-    ("coal (conv pul)", "NOx", "0.291 (2017 official); 0.102 (2022 fleet)"),
-    ("coal (conv pul)", "SO2_2", "0.258 (2017 official); 0.110 (2022 fleet)"),
-    ("gas (CC)", "NOx", "0.171 (2017 official gas-fleet average)"),
-    ("gas (steam/CT)", "NOx", "0.171 (2017 official gas-fleet average)"),
-    ("refined liquids (steam/CT)", "NOx", "0.711–0.727 (2015–2017)"),
-    ("refined liquids (steam/CT)", "SO2_2", "1.264–1.367 (2015–2017)"),
+# KEPCO generation-weighted factors, kg/MWh, `operational_primary` specification, hand-calculated in
+# NZK-APHIAM (data/processed/kepco/emission_factors/
+# kepco_annual_ef_distribution_long_by_fuel_technology.csv). Not production-ready.
+# (GCAM technology, GCAM pollutant, KEPCO cohort, KEPCO 2015, KEPCO 2021); None = no KEPCO cohort.
+KEPCO_POWER = [
+    ("coal (conv pul)", "NOx", "coal, conventional steam turbine", 0.533871, 0.126384),
+    ("coal (conv pul)", "SO2_2", "coal, conventional steam turbine", 0.335044, 0.139140),
+    ("gas (CC)", "NOx", "natural gas, combined cycle", 0.202786, 0.164474),
+    ("gas (steam/CT)", "NOx", "none (no KEPCO gas steam/turbine cohort)", None, None),
+    ("refined liquids (steam/CT)", "NOx", "oil, conventional steam turbine", 0.570967, 0.301207),
+    ("refined liquids (steam/CT)", "SO2_2", "oil, conventional steam turbine", 0.334059, 0.010989),
 ]
 
 
@@ -612,7 +617,7 @@ def power_factor_table() -> None:
     x = pd.read_csv(COVERAGE / "driver_consistent_coef.csv")
     x = x[(x.scenario == "ref") & (x.sector == "electricity") & x.year.isin([2015, 2021])]
     rows = []
-    for tech, pol, korean in KOREAN_POWER:
+    for tech, pol, cohort, kepco_2015, kepco_2021 in KEPCO_POWER:
         q = (
             x[(x.technology == tech) & (x.native_pollutant == pol)]
             .set_index("year")
@@ -624,7 +629,9 @@ def power_factor_table() -> None:
                 "pollutant": pol,
                 "gcam_kaist_2015_kg_per_MWh": round(q[2015] * MWH_PER_EJ_FACTOR, 3),
                 "gcam_kaist_2021_kg_per_MWh": round(q[2021] * MWH_PER_EJ_FACTOR, 3),
-                "korean_reference_kg_per_MWh": korean,
+                "kepco_cohort": cohort,
+                "kepco_2015_kg_per_MWh": None if kepco_2015 is None else round(kepco_2015, 3),
+                "kepco_2021_kg_per_MWh": None if kepco_2021 is None else round(kepco_2021, 3),
             }
         )
     pd.DataFrame(rows).to_csv(DATA_DIR / "table_power_factors.csv", index=False)

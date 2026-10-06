@@ -34,7 +34,7 @@ We can't. The core reasons:
    net-zero scenario shifts activity toward exactly those technologies.
 4. **These limits change the policy answer.** Keeping GCAM-KAIST's activity and swapping only the
    emission factors, the projected net-zero change in steel SOx flips from −88% to +19%, and the
-   power-sector NOx and SOx avoided varies 2.6–9.7×.
+   power-sector NOx and SOx avoided is 2.6–5.2× larger.
 
 **What we do instead:** keep GCAM-KAIST's *activity*, and replace its *emission factors* with
 bottom-up, technology-specific Korean factors, validated against CAPSS in the base years.
@@ -151,20 +151,73 @@ which carry tags (audit §B4).
 
 **What we found.**
 - GCAM-KAIST's base-year emissions are stock GCAM v9's: 2,244 of 2,251 values match within 0.1%.
-- Stock GCAM calibrates to CEDS, and CEDS documents scaling its Korean estimates to NIER's national
-  inventory, which is published as CAPSS.
+- Stock GCAM calibrates to CEDS, and CEDS's own code rescales its Korean estimates to CAPSS, sector
+  group by sector group (audit §A3 item 2 walks through the steps; audit §B5.3 has the code
+  evidence).
+- For 2000–2018, CEDS then rescales Korea a second time, to the EDGAR-HTAP inventory. 2021 is
+  outside that window, which makes it the cleaner year for comparing with CAPSS.
 - **11 of the 102 comparable cells agree with CAPSS to within 0.12%**, several to four or five
   significant figures. For example, agricultural NH3 is 200,384.0 t vs CAPSS 200,384 t in 2021
   (Figure 2).
 
 ![Agreement with CAPSS](figures/fig02_capss_agreement.png)
 
-*Figure 2. Relative difference from CAPSS for every comparable cell (log scale). The 11 blue cells
-agree within 0.12%; the rest differ by 1% to over 1,000%.*
+*Figure 2. Relative difference from CAPSS for every comparable cell (log scale). Each dot is one pair
+of bars from Figure 1 (2021) or its 2015 version: the blue CAPSS bar and the orange GCAM-KAIST bar
+for the same category and pollutant. Its position is the percent difference between the two,
+|GCAM-KAIST / CAPSS − 1|. A cell is comparable when both bars are non-zero, which gives 102 cells
+across the two years. Blue has a different meaning here than in Figure 1: the 11 blue dots agree
+within 0.12%, and the rest differ by 1% to over 1,000%.*
+
+**Why do only 11 cells match?** Among the other 91 cells, 13 are within 5% of CAPSS and 71 are more
+than 10% off. The calibration chain (CAPSS → CEDS → stock GCAM → GCAM-KAIST) explains both patterns.
+It forces agreement with CAPSS only at the level where CEDS rescales to it, and each step after that
+can move mass across CAPSS's category boundaries. Our proposed explanations are below. The first four
+rest on evidence in this document or the audit; the fifth is untested.
+
+1. **A CAPSS total survives only where the categories line up at every step.**
+   - CEDS rescales its Korean estimates to CAPSS one sector group at a time.
+   - Inside each group, CEDS's own sector shares divide the total.
+   - GCAM then maps CEDS sectors onto its own sectors, and we map those onto CAPSS categories.
+   - A CAPSS category total comes back out intact only if all of these boundaries cover the same
+     sources.
+   - All 11 matching cells fall in four places: agricultural NH3, road transport, industrial-process
+     NH3, and waste SOx. These appear to be the places where the boundaries coincide (inferred).
+   - Elsewhere, mass that CAPSS counts in one category lands in another. Under our crosswalk, 44.4% of
+     CAPSS's emitted mass ends up in the wrong category (Step 5). Step 5 also shows that no
+     reassignment of GCAM sectors repairs this, so the boundaries are lost before our crosswalk is
+     applied.
+2. **Some pollutants were never rescaled to CAPSS.** For Korean BC, CEDS rescales only road transport
+   (audit §B5.3). Everywhere else, BC keeps CEDS's own estimate. That fits the pattern: road-transport
+   BC is within 5% of CAPSS, while stationary-combustion BC is 9–65× CAPSS (audit §B5.4).
+3. **A second rescaling can pull 2015 away from CAPSS.** For 2000–2018, CEDS also rescales Korea to
+   EDGAR-HTAP (audit §B5.3).
+   - Road NOx agrees with CAPSS within 0.03% in 2021, which is outside that window, but is 25% high in
+     2015.
+   - The effect is uneven: five of the 11 matching cells are from 2015.
+   - We haven't checked which Korean sectors this step actually changes.
+4. **Some sources sit in a different place in GCAM, or nowhere.**
+   - Refinery fuel combustion appears to sit in GCAM's industrial energy use rather than with energy
+     production (audit §B5.5, inferred).
+   - Several activities carry no tag at all (Step 3).
+   - Two categories are mostly missing:
+     - **Energy transport and storage VOCs** are only 12–18% of CAPSS. CAPSS's category covers fuel
+       storage and distribution losses, but the GCAM rows we map there are resource-extraction
+       fugitives and hydrogen delivery. We found no GCAM tag that covers fuel distribution.
+     - **Biomass-burning CO and VOCs** are only 6–11% of CAPSS. In GCAM, this category holds only
+       crop-residue burning and forest, grassland and deforestation fires; residential wood burning is
+       mapped to Non-industry. The remainder of CAPSS's category is likely missing or sitting in
+       another category.
+5. **Different CAPSS editions (untested).** CAPSS revises past years. CEDS keeps its own copy of the
+   inventory (`Korea_CAPSS_Emissions.xlsx`), which may be an older edition than the totals we compared
+   against. That would produce misses even where the categories line up. The 11 exact matches show
+   that, at least for those cells, the editions agree.
 
 > 🟢 **Takeaway.** Agreement to five significant figures doesn't happen by independent estimation.
 > These base-year numbers were built from the inventory itself, so their agreement with CAPSS is
-> circular: it shows the calibration worked, not that GCAM represents emissions correctly.
+> circular: it shows the calibration worked, not that GCAM represents emissions correctly. The 91
+> misses aren't independent evidence either. They mark the places where the chain blurred CAPSS's
+> categories, never rescaled a pollutant to CAPSS, or dropped a source.
 
 ### Step 5. Stress-test the category mapping
 
@@ -269,6 +322,28 @@ value (audit §B6.5).
 
 **What we found.**
 - **After 2021, 46% of factors stay frozen and 52% decline along the pre-set curve.**
+- **The pre-set curve is GCAM's "GDP control".** It assumes pollution controls tighten as a country
+  gets richer.
+  - After the last base year (2021), GCAM multiplies each controlled factor by
+    1 / (1 + (GDP per capita in that year − GDP per capita in 2021) / steepness).
+  - Each factor's `max-reduction` sets the floor. A factor with `max-reduction` 60, for example, never
+    drops below 40% of its 2021 value.
+  - Source: `GDPControl::calcEmissionsReduction` in the GCAM v9.0 source code
+    (`cvs/objects/emissions/source/gdp_control.cpp`) and GCAM's emissions documentation.
+  - In stock GCAM v9, South Korea has 469 of these controls. All of them use steepness 3.5, and their
+    `max-reduction` values range from 0 to 100. A factor stays frozen when it has no GDP control, or
+    when its `max-reduction` is 0.
+  - GCAM-KAIST's own control settings can't be inspected, because its input files aren't available.
+    Its outputs, however, show that one curve does almost all the work. Of the 243 declining factors,
+    195 fall to exactly 0.515× their 2021 value by 2030, and 161 fall to 0.289× by 2050. The decline
+    is the same for coal power, cars, chemical-industry boilers and commercial buildings, whatever the
+    pollutant. Of the other 82, 68 look like the same curve stopped at a `max-reduction` floor: they
+    either stay flat from 2030 to 2050, or follow 0.515× in 2030 and then level off above 0.289× (for
+    example, 0.4× in 2050 matches a `max-reduction` of 60). The remaining 14 include international
+    shipping SO2, which `emission_factor_controls.xml` sets directly (audit §B5.1), and several
+    gas power and natural-gas car factors.
+  - The curve depends only on GDP per capita. The net-zero scenario evidently assumes the same GDP
+    path, because the shared multipliers are identical in `ref` and `nz`.
 - **In 2050, 93% are identical in the reference and net-zero scenarios** (Figure 7).
 - The net-zero scenario therefore changes emissions almost only through activity: how much of each
   technology runs. It does not change how clean each technology is.
@@ -313,17 +388,41 @@ We ran it for three sectors, each testing a different weakness from Section 3:
 |---|---|---|
 | Power | native | GCAM-KAIST's own emissions |
 | | GCAM 2021, fixed | GCAM's own 2021 factor per MWh for each technology, held constant to 2050 |
-| | Korean fleet | Korean factors per MWh × GCAM generation: coal 2022 fleet (NOx 0.102, SOx 0.110); gas 2017 official (NOx 0.171); oil 2015–17 (NOx 0.719, SOx 1.316) |
-| | Korean 2017 | Same, but coal at the 2017 official national factor (NOx 0.291, SOx 0.258) |
+| | KEPCO 2021 | Our hand-calculated KEPCO 2021 factors per MWh × GCAM generation, by technology (kg/MWh): coal (NOx 0.126, SOx 0.139); gas (NOx 0.164, SOx 0); oil (NOx 0.301, SOx 0.011); biomass (NOx 0.180, SOx 0.003) |
 | Steel | native | GCAM-KAIST's own emissions; hydrogen-based DRI and blast furnace with CCS count as zero |
 | | filled | Hydrogen-based DRI at the CAPSS electric-arc-furnace process factor (NOx 0.2, SOx 0.35, VOCs 0.09 kg/t); blast furnace with CCS at GCAM's own blast-furnace factor |
 | Road | native | GCAM-KAIST's own emissions; hybrids count as zero |
 | | filled | Hybrids at the same vehicle type's conventional-fuel factor per unit of fuel |
 
+**What the power comparison covers.**
+- **Sector.** GCAM-KAIST's `electricity` sector: the technologies in its coal, gas, refined liquids
+  and biomass subsectors. Nuclear and renewables have no tags in any variant, and the `elec_*`
+  cooling-system pass-through sectors carry no emissions. Industrial cogeneration is not included.
+- **Quantity.** NOx and SOx in 2050, reference minus net-zero, in kt. Each variant applies the same
+  factors to both scenarios.
+- **Activity.** GCAM-KAIST's electricity output by technology (EJ, converted to MWh). In 2050 the
+  reference scenario generates 101.0 TWh from coal, 99.6 TWh from gas combined cycle, 3.9 TWh from gas
+  steam/turbine, 5.1 TWh from biomass and 0.25 TWh from oil. The net-zero scenario generates 2.9 TWh
+  from gas combined cycle with CCS and almost nothing else from these fuels.
+
+**Where the KEPCO factors come from.** We calculated them by hand in NZK-APHIAM from the monthly
+generation and stack-emission records of KEPCO's five thermal power subsidiaries (East-West, Western,
+Southern, South-East and Midland).
+- Each factor is the generation-weighted average of plant-level factors (kg emitted per MWh
+  generated) for one fuel × technology cohort in 2021, under NZK-APHIAM's `operational_primary`
+  screening rule.
+- Table: `NZK-APHIAM/data/processed/kepco/emission_factors/kepco_annual_ef_distribution_long_by_fuel_technology.csv`.
+- Plausibility screen: `NZK-APHIAM/docs/references/thermal/kepco_ef_external_validation.md`.
+
+| GCAM technology | KEPCO 2021 cohort | Plants | NOx (kg/MWh) | SOx (kg/MWh) |
+|---|---|---|---|---|
+| `coal (conv pul)` | coal, conventional steam turbine | 9 | 0.126 | 0.139 |
+| `gas (CC)`, `gas (CC CCS)` | natural gas, combined cycle | 8 (NOx); 6 (SOx) | 0.164 | 0 (reported) |
+| `gas (steam/CT)` | same combined-cycle cohort; KEPCO has no 2021 gas steam/turbine cohort | | 0.164 | 0 |
+| `refined liquids (steam/CT)` | oil, conventional steam turbine | 1 | 0.301 | 0.011 |
+| `biomass (conv)`, `biomass (IGCC)` | biomass, conventional steam turbine | 1 | 0.180 | 0.003 |
+
 Notes on the design:
-- Biomass power stays at GCAM's native emissions in the Korean variants. The repo has no usable Korean
-  power-plant biomass factor: biomass IGCC is an explicit gap, and the conventional-biomass factor
-  comes from small boilers.
 - The steel fill is a **lower bound**: hydrogen-based DRI also burns gas and oil (audit §B4), and that
   combustion isn't counted.
 
@@ -339,15 +438,14 @@ because that depends on how dirty the reference scenario's power is:
 |---|---|---|
 | GCAM-KAIST native | 7.5 | 2.7 |
 | GCAM's 2021 factors, fixed | 19.7 (2.6×) | 7.4 (2.7×) |
-| Korean fleet factors | 27.9 (3.7×) | 11.6 (4.3×) |
-| Korean 2017 official factors | 47.0 (6.3×) | 26.5 (9.7×) |
+| KEPCO 2021 factors | 30.3 (4.0×) | 14.1 (5.2×) |
 
-Holding GCAM's *own* factors fixed already gives 2.6×. Most of the gap therefore comes from the
-pre-set curve that shrinks the reference scenario's factors. The curve is an assumption shared by
+Holding GCAM's *own* factors fixed already gives 2.6×. Most of the gap between native and KEPCO
+therefore comes from the pre-set curve that shrinks the reference scenario's factors. The curve is an assumption shared by
 both scenarios, not a policy outcome.
 
-For context, in 2021 Korean fleet factors × GCAM generation give 1.4× GCAM's native power NOx and
-1.7× its SOx.
+For context, in 2021 KEPCO's 2021 factors × GCAM generation give 1.5× GCAM's native power NOx and
+1.8× its SOx.
 
 ![Policy experiment: power](figures/fig08_policy_power.png)
 
@@ -381,18 +479,24 @@ The relative cut barely changes (NOx −48% native vs −46% filled).
 *Figure 10. 2050 road emissions with and without hybrids counted.*
 
 > 🟢 **Takeaway.** Using GCAM-KAIST's native emissions would get the *direction* wrong for steel, and
-> the *size* of the power-sector benefit wrong by 2.6–9.7×. Road emission levels would be too low by a
+> the *size* of the power-sector benefit too small by 2.6–5.2×. Road emission levels would be too low by a
 > fifth to a third or more. Because the health benefit of a policy is computed from the emissions it
 > avoids, these errors carry straight through to the health results.
 
 ### 4.4 Limits of the experiment
 
-- **It is illustrative.** None of the Korean or CAPSS factors used are production-ready. The steel
-  factor is from CAPSS VI and is flagged as superseded pending the CAPSS VII update. The power factors
-  mix 2017 and 2022 evidence.
-- **Gas power isn't resolved by technology.** The Korean gas factor is itself a fleet average, so this
-  experiment can't separate combined-cycle from steam/turbine plants. The evidence for that lumping is
-  GCAM's own identical factors (Step 6a).
+- **It is illustrative.** None of the KEPCO or CAPSS factors used are production-ready. The steel
+  factor is from CAPSS VI and is flagged as superseded pending the CAPSS VII update.
+- **The KEPCO factors cover KEPCO's plants, not every Korean plant.** They come from KEPCO's five
+  thermal subsidiaries, which excludes independent power producers. The oil and biomass cohorts are
+  one plant each. Gas SOx is reported as zero for a cohort covering 57% of its generation.
+- **The KEPCO factors are held at 2021 values.** NZK-APHIAM also has later years (2025 coal NOx is
+  0.087 kg/MWh, for example). Projecting those factors to 2050 is a separate assumption that this
+  experiment doesn't make.
+- **Gas steam/turbine has no KEPCO cohort.** It takes the combined-cycle factor, so this experiment
+  can't separate combined-cycle from steam/turbine plants. The evidence for that lumping is GCAM's own
+  identical factors (Step 6a). Gas steam/turbine is 3.9 TWh of the reference scenario's 2050
+  generation.
 - **Why there is no upper bound for steel.** Filling hydrogen-based DRI with GCAM's own `EAF with DRI`
   factor instead makes net-zero steel NOx *rise* 40%. That factor is itself the anomalous stock
   coefficient (11.66 kg NOx/t; audit §B6.2), so we don't use it as a bound.
@@ -428,21 +532,27 @@ Power is the best-resolved part of GCAM-KAIST, so it needs a precise statement:
 - **Lumping happens *within* a fuel.** Combined-cycle and steam/turbine gas plants share one factor
   per unit of fuel (Figure 3). The coal IGCC and coal CCS variants have no activity in these runs, and
   gas with CCS runs only at small scale in 2050 (`nz`).
-- **How the base-year factors compare with Korean evidence** (`figures/data/table_power_factors.csv`;
-  Korean values from `docs/gcam_kaist_ef_target_table.csv`, not production-ready):
+- **How the base-year factors compare with KEPCO's measured factors.** We compare like years: GCAM-KAIST
+  2015 with KEPCO 2015, and GCAM-KAIST 2021 with KEPCO 2021. The KEPCO factors are the hand-calculated,
+  generation-weighted factors described in Section 4.2 and are not production-ready
+  (`figures/data/table_power_factors.csv`).
 
-| Technology, pollutant | GCAM-KAIST 2015 (kg/MWh) | GCAM-KAIST 2021 (kg/MWh) | Korean reference (kg/MWh) | Comparison |
-|---|---|---|---|---|
-| Coal, NOx | 0.458 | 0.150 | 0.291 (2017 official); 0.102 (2022 fleet) | Within about 1.6×, same downward trend |
-| Coal, SOx | 0.267 | 0.071 | 0.258 (2017 official); 0.110 (2022 fleet) | Close in 2015; 2021 is 0.65× the 2022 fleet value |
-| Gas combined cycle, NOx | 0.134 | 0.040 | 0.171 (2017 official fleet average) | 2015 close; 2021 4.3× lower |
-| Gas steam/turbine, NOx | 0.201 | 0.060 | 0.171 (same fleet average) | 2015 close; 2021 2.9× lower |
-| Oil, NOx | 0.509 | 0.320 | 0.711–0.727 (2015–17) | About 1.4× lower in 2015 |
-| Oil, SOx | 0.520 | 0.374 | 1.264–1.367 (2015–17) | About 2.5× lower in the same years |
+| Technology, pollutant | GCAM-KAIST 2015 | KEPCO 2015 | GCAM-KAIST 2021 | KEPCO 2021 | GCAM-KAIST ÷ KEPCO |
+|---|---|---|---|---|---|
+| Coal, NOx | 0.458 | 0.534 | 0.150 | 0.126 | 0.86 (2015), 1.19 (2021) |
+| Coal, SOx | 0.267 | 0.335 | 0.071 | 0.139 | 0.80 (2015), 0.51 (2021) |
+| Gas combined cycle, NOx | 0.134 | 0.203 | 0.040 | 0.164 | 0.66 (2015), 0.24 (2021) |
+| Gas steam/turbine, NOx | 0.201 | — | 0.060 | — | no KEPCO cohort |
+| Oil, NOx | 0.509 | 0.571 | 0.320 | 0.301 | 0.89 (2015), 1.06 (2021) |
+| Oil, SOx | 0.520 | 0.334 | 0.374 | 0.011 | 1.56 (2015), 34 (2021) |
 
-In short: **coal roughly tracks the Korean evidence; gas tracks in 2015 but not 2021; oil doesn't
-track.** Even where a factor tracks, it is a fleet average. It carries no information about which
-plants have which controls, and after 2021 it follows the shared curve rather than policy.
+*All values in kg/MWh. KEPCO cohorts: coal and gas combined cycle from 5–9 plants; oil from one plant.*
+
+In short: **coal NOx and oil NOx track KEPCO within about 20% in both years. Coal SOx tracks in 2015
+but is half of KEPCO's in 2021. Gas combined-cycle NOx is too low in both years, 4.1× too low by
+2021. Oil SOx is far too high in 2021.** Even where a factor tracks, it is a fleet average. It
+carries no information about which plants have which controls, and after 2021 it follows the shared
+curve rather than policy.
 
 ### 5.3 Beyond this project
 
@@ -490,8 +600,9 @@ method will be described fully once it is complete.
 - **KAIST inputs.** GCAM-KAIST's input files were not examined. The provenance argument (Step 4) rests
   on its outputs matching stock GCAM v9. Requested from KAIST: the run configurations and emissions
   input files.
-- **CEDS release.** The CEDS → CAPSS link rests on CEDS documentation and on the near-exact
-  agreement. It has not been traced through the CEDS release that GCAM v9 uses.
+- **CEDS release.** CEDS's code confirms the scaling to CAPSS. But the release GCAM v9 uses isn't
+  recorded (inferred to be 2024 or later), and CEDS's second Korea scaling step (EDGAR-HTAP,
+  2000–2018) covers 2015 but not 2021 (audit §B5.3).
 - **Refinery emissions.** That they sit in `other industrial energy use / refined liquids` is an
   inference (Step 5; audit §B5.5).
 - **Mapping search.** Choosing the best of 49,152 mappings flatters the fit; only the "remapping can't

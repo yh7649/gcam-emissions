@@ -103,7 +103,9 @@ def load_gcam_by_category(
     # process sources (adipic/nitric acid, HCFC-22, semiconductors, Al_Mg); CAPSS reports it as
     # its own first-level category. Mapping the sector whole-hog overstates Industrial process
     # VOCs ~4x and leaves Solvent use with no GCAM counterpart at all.
-    is_solvents = (merged["sector"] == "industrial processes") & (merged["subsector"] == "solvents")
+    is_solvents = (merged["sector"] == "industrial processes") & (
+        merged["subsector"] == "solvents"
+    )
     merged["capss_category"] = merged["capss_category"].where(~is_solvents, "Solvent use")
 
     merged = merged.loc[merged["capss_category"] != EXCLUDED_CATEGORY]

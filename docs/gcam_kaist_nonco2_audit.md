@@ -114,13 +114,40 @@ the activity.
    - **Several technologies that grow in the net-zero scenario:** hybrid vehicles, hydrogen-based
      steel, and steel and cement with carbon capture. These show zero emissions even though, for
      example, hydrogen-based steel still burns gas and oil.
-2. **For most sectors, base-year numbers are inventory numbers, not model results.**
-   - GCAM-KAIST's 2015 and 2021 tags equal those in stock GCAM v9 (2,244 of 2,251 checked values match
-     within 0.1%), so KAIST largely kept GCAM's standard calibration.
-   - Stock GCAM's calibration comes from CEDS, the Community Emissions Data System. CEDS documents
-     scaling its Korean estimates to NIER's national inventory, which is published as CAPSS.
-   - Eleven GCAM-KAIST totals reproduce CAPSS category totals to within 0.12%, for example agricultural
-     NH3: 200,384.0 t vs CAPSS 200,384 t in 2021.
+2. **For most sectors, base-year numbers are inventory numbers, not model results.** They reach
+   GCAM-KAIST in four steps:
+   1. **CAPSS.** Korea's National Institute of Environmental Research (NIER) estimates national
+      emissions source by source. Example: 200,384 t of agricultural NH3 in 2021.
+   2. **CEDS.** The Community Emissions Data System makes its own estimates for every country, then
+      rescales them to match national inventories where available. For South Korea, CEDS's code reads
+      the CAPSS inventory and rescales its Korean estimates so that each of its sector groups adds up to
+      the CAPSS total. This covers SO2, NOx, CO, VOCs and NH3; for BC and OC it covers road transport
+      only.
+   3. **Stock GCAM.** GCAM's data pipeline takes the CEDS totals, divides them among GCAM's
+      technologies, and stores each piece as that technology's base-year emission mass. Dividing by
+      GCAM's own activity then gives the emission factor.
+   4. **GCAM-KAIST.** It keeps stock GCAM's base-year numbers almost unchanged: 2,244 of 2,251 checked
+      values match within 0.1%.
+
+   Some examples of what survives the trip:
+   - **Agricultural NH3 arrives intact.** CAPSS reports 200,384 t for 2021; GCAM-KAIST reports
+     200,384.0 t. Agriculture lines up cleanly across CAPSS, CEDS and GCAM, so the total passes
+     through unchanged.
+   - **Road-transport NOx in 2021 also arrives intact:** 287,279 t in CAPSS, 287,340.6 t in GCAM-KAIST.
+   - **Black carbon from power plants, factories and buildings doesn't.** CEDS rescales Korean BC for
+     road transport only, so GCAM-KAIST's BC in those categories is 9–65× CAPSS's, while road BC
+     matches.
+   - **Gas power shows what the last step does.** GCAM receives one total for gas-fired generation and
+     divides it between combined-cycle and steam/turbine plants in proportion to the gas they burn, so
+     both get the same factor (B6.2). The inventory says how much the sector emitted, not which
+     technology emitted it.
+
+   Eleven GCAM-KAIST totals reproduce CAPSS category totals to within 0.12%. Two qualifications:
+   - CEDS rescales by sector *group*, so exact agreement appears only where a group lines up with a
+     CAPSS category.
+   - Every CEDS release recent enough for GCAM's 2021 base year also rescales Korea a second time, to
+     another inventory (EDGAR-HTAP), for 2000–2018. That second step doesn't touch 2021, but it does
+     cover 2015 (B5.3).
 3. **Technologies inside the same inventory total share one coefficient.** Because the coefficient is a
    by-product of dividing a total, distinct technologies end up with the same value:
    - combined-cycle and steam/turbine gas plants have identical coefficients per unit of fuel in every
@@ -449,14 +476,51 @@ exceptions listed, stock GCAM v9's.
 
 #### B5.3 Upstream of stock GCAM: CEDS and CAPSS
 
-- GCAM's base-year non-CO2 emissions are calibrated to CEDS. `ceds_sector_map.csv` maps CEDS sectors to
-  GCAM sector groups. For example `1A1a_Electricity-public` → `elec_heat`, and
-  `1A1bc_Other-transformation` → `industry_energy`.
-- CEDS documentation states that its default estimates are scaled to country-level inventories where
-  available. It lists `http://airemiss.nier.go.kr/`, NIER's national air pollutant emission service,
-  which publishes CAPSS, as the South Korea source (see Sources).
-- **Not verified here:** which CEDS release GCAM v9 uses, and which Korean sectors and species that
-  release actually scales to CAPSS.
+**GCAM → CEDS.** GCAM's base-year non-CO2 emissions are calibrated to CEDS. `ceds_sector_map.csv`
+maps CEDS sectors to GCAM sector groups. For example `1A1a_Electricity-public` → `elec_heat`, and
+`1A1bc_Other-transformation` → `industry_energy`. GCAM v9 ships its CEDS-derived results as prebuilt
+data. The raw CEDS files are not included locally (the gcamdata code describes them as proprietary),
+and the CEDS release used is not recorded.
+
+**CEDS → CAPSS.** CEDS's code (<https://github.com/JGCRI/CEDS>, checked 2026-10-05) carries the CAPSS
+inventory and scales its Korean estimates to it:
+
+| CEDS file | Role |
+|---|---|
+| `input/emissions-inventories/Korea/Korea_CAPSS_Emissions.xlsx` | The CAPSS inventory, stored in CEDS |
+| `code/module-E/E.South_Korea_emissions.R` | Reads it as the inventory `Korea_CAPSS_Emissions` |
+| `code/module-F/F1.1.South_Korea_scaling.R` | Scales CEDS's default Korea estimates to CAPSS by sector (`mapping_method <- 'sector'`, replacement method `replace`): SO2, NOx, CO, NMVOC and NH3 for 1999–2021; BC and OC for 2011–2021 |
+| `input/mappings/scaling/South_Korea_BCOC_scaling_method.csv` | Lists only `1A3b_Road` for Korea, so BC and OC are scaled for road transport only |
+
+This scaling step is present, with these parameters, in the v_2024_07_08 release. The CEDS README
+also notes that the April 2021 release (v_2021_04_21) updated emissions for South Korea specifically.
+
+**A second scaling step (EDGAR-HTAP).** Immediately after the CAPSS step, CEDS's scaling driver
+(`code/module-F/F1.inventory_scaling.R`) rescales Korea again, by sector with replacement, to the
+EDGAR-HTAP inventory for 2000–2018:
+- In v_2024_04_01 and v_2024_07_08 this is `F1.1.South_Korea_EDGAR-HTAPv3_scaling.R`, run for CO,
+  NH3, NMVOC, NOx and SO2.
+- In the current code it is `F1.1.South_Korea_EDGAR-HTAPv3.1_scaling.R`, first committed with the
+  v_2025_03_18 release.
+
+**Which release GCAM v9 used (Inferred).** It is not recorded. But the v_2021_04_21 release has data
+only to 2019 (`BP_last_year <- 2019` in `code/parameters/common_data.R`), so it cannot supply GCAM's
+2021 base year. GCAM v9 must therefore use v_2024_04_01 or later, and every such release includes
+both Korean scaling steps.
+
+**Consequences for the comparison with CAPSS.**
+- 2021 lies outside the EDGAR-HTAP window, so GCAM-KAIST's 2021 Korean values are scaled to CAPSS
+  only.
+- 2015 lies inside it. Several 2015 cells still match CAPSS almost exactly: agricultural NH3, road
+  SOx and VOCs, waste SOx, and industrial-process NH3. But road NOx in 2015 is 25% above CAPSS while
+  matching in 2021. Whether the second step explains such differences was not determined.
+- Because scaling is by sector group, exact agreement is expected only where a CEDS scaling group
+  maps cleanly onto a CAPSS category (B5.4).
+
+**Not verified here:**
+- the exact CEDS release in GCAM v9;
+- CEDS's Korean scaling-sector definitions, and how they line up with CAPSS categories;
+- how EDGAR-HTAP's Korean values relate to CAPSS.
 
 #### B5.4 Agreement with CAPSS
 
@@ -493,6 +557,9 @@ categories while agreeing closely in Road transport and Biomass burning:
 | Waste disposal | 37.8 | 28.4 |
 | Road transport | 1.0 | 1.0 |
 | Biomass burning | 1.0 | 0.9 |
+
+Road transport is the only sector where CEDS scales Korean BC to CAPSS (B5.3), which fits its ratio of
+1.0.
 
 **Inferred.** Agreement to four or five significant figures cannot arise from independent estimation.
 Together with B5.2 and B5.3, it indicates that these base-year values are CAPSS totals, passed through
@@ -687,8 +754,9 @@ inspected, because its input files are not available.
 
 - **KAIST inputs.** GCAM-KAIST's input XMLs were not examined. Statements about how its tags are set
   rely on its outputs and on stock GCAM v9's inputs.
-- **CEDS link.** The CEDS → CAPSS link rests on CEDS documentation and on the numerical agreement in
-  B5.4. It has not been traced through the CEDS release used by GCAM v9.
+- **CEDS link.** CEDS's code confirms the scaling to CAPSS (B5.3). But the CEDS release used by GCAM
+  v9 is inferred, not recorded, and the effect of CEDS's second Korea scaling step (EDGAR-HTAP,
+  2000–2018) on the 2015 values was not determined.
 - **Refinery location.** B5.5 is an inference from a sector map and a mapping test, not from an explicit
   source record.
 - **Coefficient scope.** Implied coefficients use the driver stock GCAM declares. Where GCAM-KAIST
@@ -720,7 +788,13 @@ Related analyses that build on this audit, not part of it:
 
 ### Sources
 
-- JGCRI, *Community Emissions Data System (CEDS)*, <https://www.github.com/JGCRI/CEDS>.
+- JGCRI, *Community Emissions Data System (CEDS)*, <https://www.github.com/JGCRI/CEDS>. Files cited in
+  B5.3:
+  - CAPSS scaling: <https://github.com/JGCRI/CEDS/blob/master/code/module-F/F1.1.South_Korea_scaling.R>
+  - BC/OC method: <https://github.com/JGCRI/CEDS/blob/master/input/mappings/scaling/South_Korea_BCOC_scaling_method.csv>
+  - Scaling driver at v_2024_07_08:
+    <https://github.com/JGCRI/CEDS/blob/2024_07_08_Release/code/module-F/F1.inventory_scaling.R>
+  - Release notes: <https://github.com/JGCRI/CEDS/wiki/Release-Notes>
 - CEDS reviewer-response supplement, ESSD preprint essd-2020-103,
   <https://essd.copernicus.org/preprints/essd-2020-103/essd-2020-103-AC1-supplement.pdf>.
 - Stock GCAM v9 files listed in B1.

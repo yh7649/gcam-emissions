@@ -770,95 +770,68 @@ found}\label{a3.-what-we-found}}
     oil.
   \end{itemize}
 \item
-  \textbf{For
-  most
-  sectors,
-  base-year
-  numbers
-  are
-  inventory
-  numbers,
-  not
-  model
-  results.}
+  \textbf{For most sectors, base-year numbers are inventory numbers, not model
+  results.} They reach GCAM-KAIST in four steps:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    \textbf{CAPSS.} Korea's National Institute of Environmental Research (NIER)
+    estimates national emissions source by source. Example: 200,384 t of
+    agricultural NH3 in 2021.
+  \item
+    \textbf{CEDS.} The Community Emissions Data System makes its own estimates
+    for every country, then rescales them to match national inventories where
+    available. For South Korea, CEDS's code reads the CAPSS inventory and
+    rescales its Korean estimates so that each of its sector groups adds up to
+    the CAPSS total. This covers SO2, NOx, CO, VOCs and NH3; for BC and OC it
+    covers road transport only.
+  \item
+    \textbf{Stock GCAM.} GCAM's data pipeline takes the CEDS totals, divides
+    them among GCAM's technologies, and stores each piece as that technology's
+    base-year emission mass. Dividing by GCAM's own activity then gives the
+    emission factor.
+  \item
+    \textbf{GCAM-KAIST.} It keeps stock GCAM's base-year numbers almost
+    unchanged: 2,244 of 2,251 checked values match within 0.1\%.
+  \end{enumerate}
+
+  Some examples of what survives the trip:
 
   \begin{itemize}
   \tightlist
   \item
-    GCAM-KAIST's
-    2015
-    and
-    2021
-    tags
-    equal
-    those
-    in
-    stock
-    GCAM
-    v9
-    (2,244
-    of
-    2,251
-    checked
-    values
-    match
-    within
-    0.1\%),
-    so
-    KAIST
-    largely
-    kept
-    GCAM's
-    standard
-    calibration.
+    \textbf{Agricultural NH3 arrives intact.} CAPSS reports 200,384 t for 2021;
+    GCAM-KAIST reports 200,384.0 t. Agriculture lines up cleanly across CAPSS,
+    CEDS and GCAM, so the total passes through unchanged.
   \item
-    Stock
-    GCAM's
-    calibration
-    comes
-    from
-    CEDS,
-    the
-    Community
-    Emissions
-    Data
-    System.
-    CEDS
-    documents
-    scaling
-    its
-    Korean
-    estimates
-    to
-    NIER's
-    national
-    inventory,
-    which
-    is
-    published
-    as
-    CAPSS.
+    \textbf{Road-transport NOx in 2021 also arrives intact:} 287,279 t in CAPSS,
+    287,340.6 t in GCAM-KAIST.
   \item
-    Eleven
-    GCAM-KAIST
-    totals
-    reproduce
-    CAPSS
-    category
-    totals
-    to
-    within
-    0.12\%,
-    for
-    example
-    agricultural
-    NH3:
-    200,384.0
-    t vs
-    CAPSS
-    200,384
-    t in
-    2021.
+    \textbf{Black carbon from power plants, factories and buildings doesn't.}
+    CEDS rescales Korean BC for road transport only, so GCAM-KAIST's BC in those
+    categories is 9--65$\times$ CAPSS's, while road BC matches.
+  \item
+    \textbf{Gas power shows what the last step does.} GCAM receives one total
+    for gas-fired generation and divides it between combined-cycle and
+    steam/turbine plants in proportion to the gas they burn, so both get the
+    same factor (B6.2). The inventory says how much the sector emitted, not
+    which technology emitted it.
+  \end{itemize}
+
+  Eleven GCAM-KAIST totals reproduce CAPSS category totals to within 0.12\%.
+  Two qualifications:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    CEDS rescales by sector \emph{group}, so exact agreement appears only where
+    a group lines up with a CAPSS category.
+  \item
+    Every CEDS release recent enough for GCAM's 2021 base year also rescales
+    Korea a second time, to another inventory (EDGAR-HTAP), for 2000--2018.
+    That second step doesn't touch 2021, but it does cover 2015 (B5.3).
   \end{itemize}
 \item
   \textbf{Technologies
@@ -2848,91 +2821,102 @@ stock GCAM
 v9's.
 
 \hypertarget{b5.3-upstream-of-stock-gcam-ceds-and-capss}{%
-\paragraph{B5.3
-Upstream
-of stock
-GCAM: CEDS
-and
+\paragraph{B5.3 Upstream of stock GCAM: CEDS and
 CAPSS}\label{b5.3-upstream-of-stock-gcam-ceds-and-capss}}
+\mbox{}\par
+
+\textbf{GCAM $\rightarrow$ CEDS.} GCAM's base-year non-CO2 emissions are calibrated to
+CEDS. \texttt{ceds\_\allowbreak{}sector\_\allowbreak{}map.\allowbreak{}csv} maps CEDS
+sectors to GCAM sector groups. For example
+\texttt{1A1a\_\allowbreak{}Electricity-\allowbreak{}public} $\rightarrow$
+\texttt{elec\_\allowbreak{}heat}, and
+\texttt{1A1bc\_\allowbreak{}Other-\allowbreak{}transformation} $\rightarrow$
+\texttt{industry\_\allowbreak{}energy}. GCAM v9 ships its CEDS-derived results as
+prebuilt data. The raw CEDS files are not included locally (the gcamdata code
+describes them as proprietary), and the CEDS release used is not recorded.
+
+\textbf{CEDS $\rightarrow$ CAPSS.} CEDS's code (\url{https://github.com/JGCRI/CEDS},
+checked 2026-10-05) carries the CAPSS inventory and scales its Korean estimates to
+it:
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.45\linewidth}>{\raggedright\arraybackslash}p{0.5\linewidth}@{}}
+\toprule
+CEDS file & Role \\
+\midrule
+\endhead
+\texttt{input/\allowbreak{}emissions-\allowbreak{}inventories/\allowbreak{}Korea/\allowbreak{}Korea\_\allowbreak{}CAPSS\_\allowbreak{}Emissions.\allowbreak{}xlsx}
+  & The CAPSS inventory, stored in CEDS \\
+\texttt{code/\allowbreak{}module-\allowbreak{}E/\allowbreak{}E.\allowbreak{}South\_\allowbreak{}Korea\_\allowbreak{}emissions.\allowbreak{}R}
+  & Reads it as the inventory \texttt{Korea\_\allowbreak{}CAPSS\_\allowbreak{}Emissions} \\
+\texttt{code/\allowbreak{}module-\allowbreak{}F/\allowbreak{}F1.\allowbreak{}1.\allowbreak{}South\_\allowbreak{}Korea\_\allowbreak{}scaling.\allowbreak{}R}
+  & Scales CEDS's default Korea estimates to CAPSS by sector
+    (\texttt{mapping\_\allowbreak{}method <- 'sector'}, replacement method
+    \texttt{replace}): SO2, NOx, CO, NMVOC and NH3 for 1999--2021; BC and OC for
+    2011--2021 \\
+\texttt{input/\allowbreak{}mappings/\allowbreak{}scaling/\allowbreak{}South\_\allowbreak{}Korea\_\allowbreak{}BCOC\_\allowbreak{}scaling\_\allowbreak{}method.\allowbreak{}csv}
+  & Lists only \texttt{1A3b\_\allowbreak{}Road} for Korea, so BC and OC are scaled
+    for road transport only \\
+\bottomrule
+\end{longtable}
+
+This scaling step is present, with these parameters, in the v\_2024\_07\_08 release.
+The CEDS README also notes that the April 2021 release (v\_2021\_04\_21) updated
+emissions for South Korea specifically.
+
+\textbf{A second scaling step (EDGAR-HTAP).} Immediately after the CAPSS step,
+CEDS's scaling driver
+(\texttt{code/\allowbreak{}module-\allowbreak{}F/\allowbreak{}F1.\allowbreak{}inventory\_\allowbreak{}scaling.\allowbreak{}R})
+rescales Korea again, by sector with replacement, to the EDGAR-HTAP inventory for
+2000--2018:
 
 \begin{itemize}
 \tightlist
 \item
-  GCAM's
-  base-year
-  non-CO2
-  emissions
-  are
-  calibrated
-  to CEDS.
-  \texttt{ceds\_\allowbreak{}sector\_\allowbreak{}map.\allowbreak{}csv}
-  maps
-  CEDS
-  sectors
-  to GCAM
-  sector
-  groups.
-  For
-  example
-  \texttt{1A1a\_\allowbreak{}Electricity-\allowbreak{}public}
-  →
-  \texttt{elec\_\allowbreak{}heat},
-  and
-  \texttt{1A1bc\_\allowbreak{}Other-\allowbreak{}transformation}
-  →
-  \texttt{industry\_\allowbreak{}energy}.
+  In v\_2024\_04\_01 and v\_2024\_07\_08 this is
+  \texttt{F1.\allowbreak{}1.\allowbreak{}South\_\allowbreak{}Korea\_\allowbreak{}EDGAR-\allowbreak{}HTAPv3\_\allowbreak{}scaling.\allowbreak{}R},
+  run for CO, NH3, NMVOC, NOx and SO2.
 \item
-  CEDS
-  documentation
-  states
-  that its
-  default
-  estimates
-  are
-  scaled
-  to
-  country-level
-  inventories
-  where
-  available.
-  It lists
-  \texttt{http:/\allowbreak{}/\allowbreak{}airemiss.\allowbreak{}nier.\allowbreak{}go.\allowbreak{}kr/\allowbreak{}},
-  NIER's
-  national
-  air
-  pollutant
-  emission
-  service,
-  which
-  publishes
-  CAPSS,
-  as the
-  South
-  Korea
-  source
-  (see
-  Sources).
+  In the current code it is
+  \texttt{F1.\allowbreak{}1.\allowbreak{}South\_\allowbreak{}Korea\_\allowbreak{}EDGAR-\allowbreak{}HTAPv3.\allowbreak{}1\_\allowbreak{}scaling.\allowbreak{}R},
+  first committed with the v\_2025\_03\_18 release.
+\end{itemize}
+
+\textbf{Which release GCAM v9 used (Inferred).} It is not recorded. But the
+v\_2021\_04\_21 release has data only to 2019
+(\texttt{BP\_\allowbreak{}last\_\allowbreak{}year <- 2019} in
+\texttt{code/\allowbreak{}parameters/\allowbreak{}common\_\allowbreak{}data.\allowbreak{}R}),
+so it cannot supply GCAM's 2021 base year. GCAM v9 must therefore use
+v\_2024\_04\_01 or later, and every such release includes both Korean scaling
+steps.
+
+\textbf{Consequences for the comparison with CAPSS.}
+
+\begin{itemize}
+\tightlist
 \item
-  \textbf{Not
-  verified
-  here:}
-  which
-  CEDS
-  release
-  GCAM v9
-  uses,
-  and
-  which
-  Korean
-  sectors
-  and
-  species
-  that
-  release
-  actually
-  scales
-  to
-  CAPSS.
+  2021 lies outside the EDGAR-HTAP window, so GCAM-KAIST's 2021 Korean values
+  are scaled to CAPSS only.
+\item
+  2015 lies inside it. Several 2015 cells still match CAPSS almost exactly:
+  agricultural NH3, road SOx and VOCs, waste SOx, and industrial-process NH3. But
+  road NOx in 2015 is 25\% above CAPSS while matching in 2021. Whether the second
+  step explains such differences was not determined.
+\item
+  Because scaling is by sector group, exact agreement is expected only where a
+  CEDS scaling group maps cleanly onto a CAPSS category (B5.4).
+\end{itemize}
+
+\textbf{Not verified here:}
+
+\begin{itemize}
+\tightlist
+\item
+  the exact CEDS release in GCAM v9;
+\item
+  CEDS's Korean scaling-sector definitions, and how they line up with CAPSS
+  categories;
+\item
+  how EDGAR-HTAP's Korean values relate to CAPSS.
 \end{itemize}
 
 \hypertarget{b5.4-agreement-with-capss}{%
@@ -3147,6 +3131,9 @@ burning &
 1.0 &
 0.9 \\
 \end{longtable}
+
+Road transport is the only sector where CEDS scales Korean BC to CAPSS (B5.3),
+which fits its ratio of 1.0.
 
 \textbf{Inferred.}
 Agreement
@@ -4438,27 +4425,10 @@ audit}\label{b8.-limitations-of-this-audit}}
   v9's
   inputs.
 \item
-  \textbf{CEDS
-  link.}
-  The CEDS
-  → CAPSS
-  link
-  rests on
-  CEDS
-  documentation
-  and on
-  the
-  numerical
-  agreement
-  in B5.4.
-  It has
-  not been
-  traced
-  through
-  the CEDS
-  release
-  used by
-  GCAM v9.
+  \textbf{CEDS link.} CEDS's code confirms the scaling to CAPSS (B5.3). But
+  the CEDS release used by GCAM v9 is inferred, not recorded, and the effect of
+  CEDS's second Korea scaling step (EDGAR-HTAP, 2000--2018) on the 2015 values
+  was not determined.
 \item
   \textbf{Refinery
   location.}
@@ -4694,7 +4664,22 @@ it:
   Data
   System
   (CEDS)},
-  \url{https://www.github.com/JGCRI/CEDS}.
+  \url{https://www.github.com/JGCRI/CEDS}. Files cited in B5.3:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    CAPSS scaling:
+    \url{https://github.com/JGCRI/CEDS/blob/master/code/module-F/F1.1.South_Korea_scaling.R}
+  \item
+    BC/OC method:
+    \url{https://github.com/JGCRI/CEDS/blob/master/input/mappings/scaling/South_Korea_BCOC_scaling_method.csv}
+  \item
+    Scaling driver at v\_2024\_07\_08:
+    \url{https://github.com/JGCRI/CEDS/blob/2024_07_08_Release/code/module-F/F1.inventory_scaling.R}
+  \item
+    Release notes: \url{https://github.com/JGCRI/CEDS/wiki/Release-Notes}
+  \end{itemize}
 \item
   CEDS
   reviewer-response

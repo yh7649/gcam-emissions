@@ -1,7 +1,7 @@
-technology,pollutant,gcam_kaist_2015_kg_per_MWh,gcam_kaist_2021_kg_per_MWh,korean_reference_kg_per_MWh
-coal (conv pul),NOx,0.458,0.15,0.291 (2017 official); 0.102 (2022 fleet)
-coal (conv pul),SO2_2,0.267,0.071,0.258 (2017 official); 0.110 (2022 fleet)
-gas (CC),NOx,0.134,0.04,0.171 (2017 official gas-fleet average)
-gas (steam/CT),NOx,0.201,0.06,0.171 (2017 official gas-fleet average)
-refined liquids (steam/CT),NOx,0.509,0.32,0.711–0.727 (2015–2017)
-refined liquids (steam/CT),SO2_2,0.52,0.374,1.264–1.367 (2015–2017)
+technology,pollutant,gcam_kaist_2015_kg_per_MWh,gcam_kaist_2021_kg_per_MWh,kepco_cohort,kepco_2015_kg_per_MWh,kepco_2021_kg_per_MWh
+coal (conv pul),NOx,0.458,0.15,"coal, conventional steam turbine",0.534,0.126
+coal (conv pul),SO2_2,0.267,0.071,"coal, conventional steam turbine",0.335,0.139
+gas (CC),NOx,0.134,0.04,"natural gas, combined cycle",0.203,0.164
+gas (steam/CT),NOx,0.201,0.06,none (no KEPCO gas steam/turbine cohort),,
+refined liquids (steam/CT),NOx,0.509,0.32,"oil, conventional steam turbine",0.571,0.301
+refined liquids (steam/CT),SO2_2,0.52,0.374,"oil, conventional steam turbine",0.334,0.011
